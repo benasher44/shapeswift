@@ -10,6 +10,12 @@
 		13EC2A6E1CACC93C000063A1 /* ShapeSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		13EC2A751CACC93C000063A1 /* ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13EC2A6A1CACC93C000063A1 /* ShapeSwift.framework */; };
 		13EC2A7A1CACC93C000063A1 /* ShapeSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2A791CACC93C000063A1 /* ShapeSwiftTests.swift */; };
+		13EC2B0E1CACCC84000063A1 /* ShapeFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2B0D1CACCC84000063A1 /* ShapeFileParser.swift */; };
+		13EC2B141CACCD93000063A1 /* sfsweeproutes.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B101CACCD93000063A1 /* sfsweeproutes.dbf */; };
+		13EC2B151CACCD93000063A1 /* sfsweeproutes.prj in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B111CACCD93000063A1 /* sfsweeproutes.prj */; };
+		13EC2B161CACCD93000063A1 /* sfsweeproutes.shp in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */; };
+		13EC2B171CACCD93000063A1 /* sfsweeproutes.shx in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */; };
+		13EC2B181CACCF3F000063A1 /* sfsweeproutes.shp in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +35,11 @@
 		13EC2A741CACC93C000063A1 /* ShapeSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShapeSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EC2A791CACC93C000063A1 /* ShapeSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeSwiftTests.swift; sourceTree = "<group>"; };
 		13EC2A7B1CACC93C000063A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		13EC2B0D1CACCC84000063A1 /* ShapeFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFileParser.swift; sourceTree = "<group>"; };
+		13EC2B101CACCD93000063A1 /* sfsweeproutes.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.dbf; sourceTree = "<group>"; };
+		13EC2B111CACCD93000063A1 /* sfsweeproutes.prj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sfsweeproutes.prj; sourceTree = "<group>"; };
+		13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shp; sourceTree = "<group>"; };
+		13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +82,7 @@
 		13EC2A6C1CACC93C000063A1 /* ShapeSwift */ = {
 			isa = PBXGroup;
 			children = (
+				13EC2B0D1CACCC84000063A1 /* ShapeFileParser.swift */,
 				13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */,
 				13EC2A6F1CACC93C000063A1 /* Info.plist */,
 			);
@@ -80,10 +92,22 @@
 		13EC2A781CACC93C000063A1 /* ShapeSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				13EC2B0F1CACCD93000063A1 /* sfsweeproutes */,
 				13EC2A791CACC93C000063A1 /* ShapeSwiftTests.swift */,
 				13EC2A7B1CACC93C000063A1 /* Info.plist */,
 			);
 			path = ShapeSwiftTests;
+			sourceTree = "<group>";
+		};
+		13EC2B0F1CACCD93000063A1 /* sfsweeproutes */ = {
+			isa = PBXGroup;
+			children = (
+				13EC2B101CACCD93000063A1 /* sfsweeproutes.dbf */,
+				13EC2B111CACCD93000063A1 /* sfsweeproutes.prj */,
+				13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */,
+				13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */,
+			);
+			path = sfsweeproutes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +201,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13EC2B181CACCF3F000063A1 /* sfsweeproutes.shp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +209,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13EC2B151CACCD93000063A1 /* sfsweeproutes.prj in Resources */,
+				13EC2B171CACCD93000063A1 /* sfsweeproutes.shx in Resources */,
+				13EC2B141CACCD93000063A1 /* sfsweeproutes.dbf in Resources */,
+				13EC2B161CACCD93000063A1 /* sfsweeproutes.shp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13EC2B0E1CACCC84000063A1 /* ShapeFileParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +340,7 @@
 		13EC2A7F1CACC93C000063A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -320,12 +351,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = benasher44.ShapeSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		13EC2A801CACC93C000063A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
