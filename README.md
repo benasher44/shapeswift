@@ -1,3 +1,3 @@
 # shapeswift
-Swift wrapper around the Shapefile C Library
+Swift Shapefile Parser
 
