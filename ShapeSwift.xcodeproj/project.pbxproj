@@ -16,6 +16,7 @@
 		13EC2B161CACCD93000063A1 /* sfsweeproutes.shp in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */; };
 		13EC2B171CACCD93000063A1 /* sfsweeproutes.shx in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */; };
 		13EC2B181CACCF3F000063A1 /* sfsweeproutes.shp in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */; };
+		4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		13EC2B111CACCD93000063A1 /* sfsweeproutes.prj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sfsweeproutes.prj; sourceTree = "<group>"; };
 		13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shp; sourceTree = "<group>"; };
 		13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shx; sourceTree = "<group>"; };
+		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				13EC2B0D1CACCC84000063A1 /* ShapeFileParser.swift */,
 				13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */,
 				13EC2A6F1CACC93C000063A1 /* Info.plist */,
+				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,
 			);
 			path = ShapeSwift;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13EC2B0E1CACCC84000063A1 /* ShapeFileParser.swift in Sources */,
+				4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +415,7 @@
 				13EC2A801CACC93C000063A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		13EC2A811CACC93C000063A1 /* Build configuration list for PBXNativeTarget "ShapeSwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +424,7 @@
 				13EC2A831CACC93C000063A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
