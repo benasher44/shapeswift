@@ -8,72 +8,76 @@
 
 import Foundation
 
-private let headerRange = NSRange(location: 0, length: 100)
+struct ShapeDataDefinition<T: ByteParseable> {
+  let range: NSRange
+  let endianness: Endianness
+  func parse(data: NSData) throws -> T? {
+    return T(data: data, range: range, endianness: endianness)
+  }
+}
 
 struct BoundingBox {
-  let xMin: Double
-  let xMax: Double
-  let yMin: Double
-  let yMax: Double
-  let zMin: Double
-  let zMax: Double
-  let mMin: Double
-  let mMax: Double
+  let x: CoordinateBounds
+  let y: CoordinateBounds
+  let z: CoordinateBounds
+  let m: CoordinateBounds
 }
 
-enum ShapeType {
-  case NullShape
-  case Point
-  case PolyLine
-  case Polygon
-  case MultiPoint
-  case PointZ
-  case PolyLineZ
-  case PolygonZ
-  case MultiPointZ
-  case PointM
-  case PolyLineM
-  case PolygonM
-  case MultiPointM
-  case MultiPatch
-  case Unknown
+struct CoordinateBounds {
+  let min: Double
+  let max: Double
 }
 
-extension ShapeType: IntegerLiteralConvertible {
-  init(integerLiteral value: Int) {
-    switch (value) {
-    case 0:
-      self = .NullShape
-    case 1:
-      self = .Point
-    case 3:
-      self = .PolyLine
-    case 5:
-      self = .Polygon
-    case 8:
-      self = .MultiPoint
-    case 11:
-      self = .PointZ
-    case 13:
-      self = .PolyLineZ
-    case 15:
-      self = .PolygonZ
-    case 18:
-      self = .MultiPointZ
-    case 21:
-      self = .PointZ
-    case 23:
-      self = .PolyLineZ
-    case 25:
-      self = .PolygonZ
-    case 28:
-      self = .MultiPointZ
-    case 31:
-      self = .MultiPatch
-    default:
-      self = .Unknown
+enum ShapeType: Int {
+  case NullShape = 0
+  case Point = 1
+  case PolyLine = 3
+  case Polygon = 5
+  case MultiPoint = 8
+  case PointZ = 11
+  case PolyLineZ = 13
+  case PolygonZ = 15
+  case MultiPointZ = 18
+  case PointM = 21
+  case PolyLineM = 23
+  case PolygonM = 25
+  case MultiPointM = 28
+  case MultiPatch = 31
+}
+
+extension ShapeType: ByteParseable {
+  init?(data: NSData, range: NSRange, endianness: Endianness) {
+    if let shapeType = ShapeType(rawValue: Int(data: data, range: range, endianness: endianness)) {
+      self = shapeType
+    } else {
+      return nil
     }
   }
+}
+
+extension BoundingBox: ByteParseable {
+  init(data: NSData, range: NSRange, endianness: Endianness) {
+    // TODO: fix lengths
+    let byteRange = NSRange(location: range.location, length: 8)
+    self = BoundingBox(x: CoordinateBounds(min: Double(data: data, range: byteRange, endianness: endianness),
+                                           max: Double(data: data, range: byteRange.shifted(8), endianness: endianness)),
+                       y: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(4), endianness: endianness),
+                                           max: Double(data: data, range: byteRange.shifted(12), endianness: endianness)),
+                       z: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(16), endianness: endianness),
+                                           max: Double(data: data, range: byteRange.shifted(20), endianness: endianness)),
+                       m: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(24), endianness: endianness),
+                                           max: Double(data: data, range: byteRange.shifted(28), endianness: endianness)))
+  }
+}
+
+private let headerRange = NSRange(location: 0, length: 100)
+
+struct ShapeFileHeaderDefinition {
+  let fileCode = ShapeDataDefinition<Int>(range: NSRange(location: 0, length: 4), endianness: .Big)
+  let fileLength = ShapeDataDefinition<Int>(range: NSRange(location: 24, length: 4), endianness: .Big)
+  let version = ShapeDataDefinition<Int>(range: NSRange(location: 28, length: 4), endianness: .Little)
+  let shapeType = ShapeDataDefinition<ShapeType>(range: NSRange(location: 32, length: 4), endianness: .Little)
+  let boundingBox = ShapeDataDefinition<BoundingBox>(range: NSRange(location: 36, length: 4), endianness: .Little)
 }
 
 struct ShapeFileHeader {
@@ -82,34 +86,17 @@ struct ShapeFileHeader {
   let version: Int
   let shapeType: ShapeType
   let boundingBox: BoundingBox
-}
-
-func parseInt(data: NSData, location: Int, bigEndian: Bool) -> Int {
-  var rawInt: Int32 = 0
-  data.getBytes(&rawInt, range: NSRange(location: location, length: 4))
-  if bigEndian {
-    return Int(Int32(bigEndian: rawInt))
-  } else {
-    return Int(Int32(littleEndian: rawInt))
+  init?(data: NSData) throws {
+    let def = ShapeFileHeaderDefinition()
+    fileCode = try def.fileCode.parse(data)!
+    fileLength = try def.fileLength.parse(data)!
+    version = try def.version.parse(data)!
+    shapeType = try def.shapeType.parse(data)!
+    boundingBox = try def.boundingBox.parse(data)!
   }
-}
-
-func parseDouble(data: NSData, location: Int) -> Double {
-  var rawDouble: Int64 = 0
-  data.getBytes(&rawDouble, range: NSRange(location: location, length: 8))
-  return unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
-}
-
-func parseHeader(data: NSData) {
-  let fileCode = parseInt(data, location: headerRange.location, bigEndian: true)
-  let fileLength = parseInt(data, location: headerRange.location + 24, bigEndian: true)
-  let version = parseInt(data, location: headerRange.location + 28, bigEndian: false)
-  let shapeType = ShapeType(integerLiteral: parseInt(data, location: headerRange.location + 32, bigEndian: false))
-  let xMin = parseDouble(data, location: headerRange.location + 36)
-  let xMax = parseDouble(data, location: headerRange.location + 52)
 }
 
 public func parseFromURL(fileURL: NSURL) throws -> Void {
   let data = try NSData(contentsOfURL: fileURL, options: .DataReadingMappedIfSafe)
-  parseHeader(data)
+//  parseHeader(data)
 }
