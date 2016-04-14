@@ -28,6 +28,12 @@ struct CoordinateBounds {
   let max: Double
 }
 
+extension CoordinateBounds: CustomDebugStringConvertible {
+  var debugDescription: String {
+    return "{\(min), \(max)}"
+  }
+}
+
 enum ShapeType: Int {
   case NullShape = 0
   case Point = 1
@@ -69,6 +75,17 @@ extension BoundingBox: ByteParseable {
   }
 }
 
+extension BoundingBox: CustomDebugStringConvertible {
+  var debugDescription: String {
+    return [
+      "X: \(x)",
+      "Y: \(y)",
+      "Z: \(z)",
+      "M: \(m)",
+      ].joinWithSeparator(" ")
+  }
+}
+
 private let headerRange = NSRange(location: 0, length: 100)
 
 struct ShapeFileHeaderDefinition {
@@ -95,7 +112,20 @@ struct ShapeFileHeader {
   }
 }
 
+extension ShapeFileHeader: CustomDebugStringConvertible {
+  var debugDescription: String {
+    return [
+      "File Code: \(fileCode)",
+      "File Length: \(fileLength)",
+      "Version: \(version)",
+      "Shape Type: \(shapeType)",
+      "Bounding Box: \(boundingBox.debugDescription)",
+      ].joinWithSeparator("\n")
+  }
+}
+
 public func parseFromURL(fileURL: NSURL) throws -> Void {
   let data = try NSData(contentsOfURL: fileURL, options: .DataReadingMappedIfSafe)
   let header = try ShapeFileHeader(data: data)
+  print("header - \(header.debugDescription)")
 }
