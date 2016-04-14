@@ -9,7 +9,7 @@
 import Foundation
 
 struct ShapeDataDefinition<T: ByteParseable> {
-  let range: NSRange
+  let range: Range<Int>
   let endianness: Endianness
   func parse(data: NSData) throws -> T? {
     return T(data: data, range: range, endianness: endianness)
@@ -46,7 +46,7 @@ enum ShapeType: Int {
 }
 
 extension ShapeType: ByteParseable {
-  init?(data: NSData, range: NSRange, endianness: Endianness) {
+  init?(data: NSData, range: Range<Int>, endianness: Endianness) {
     if let shapeType = ShapeType(rawValue: Int(Int32(data: data, range: range, endianness: endianness))) {
       self = shapeType
     } else {
@@ -56,28 +56,27 @@ extension ShapeType: ByteParseable {
 }
 
 extension BoundingBox: ByteParseable {
-  init(data: NSData, range: NSRange, endianness: Endianness) {
-    // TODO: fix lengths
-    let byteRange = NSRange(location: range.location, length: 8)
+  init(data: NSData, range: Range<Int>, endianness: Endianness) {
+    let byteRange = (range.startIndex)..<(range.startIndex + 8)
     self = BoundingBox(x: CoordinateBounds(min: Double(data: data, range: byteRange, endianness: endianness),
-                                           max: Double(data: data, range: byteRange.shifted(8), endianness: endianness)),
-                       y: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(4), endianness: endianness),
-                                           max: Double(data: data, range: byteRange.shifted(12), endianness: endianness)),
-                       z: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(16), endianness: endianness),
-                                           max: Double(data: data, range: byteRange.shifted(20), endianness: endianness)),
-                       m: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(24), endianness: endianness),
-                                           max: Double(data: data, range: byteRange.shifted(28), endianness: endianness)))
+                                           max: Double(data: data, range: byteRange.shifted(16), endianness: endianness)),
+                       y: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(8), endianness: endianness),
+                                           max: Double(data: data, range: byteRange.shifted(24), endianness: endianness)),
+                       z: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(32), endianness: endianness),
+                                           max: Double(data: data, range: byteRange.shifted(40), endianness: endianness)),
+                       m: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(48), endianness: endianness),
+                                           max: Double(data: data, range: byteRange.shifted(56), endianness: endianness)))
   }
 }
 
 private let headerRange = NSRange(location: 0, length: 100)
 
 struct ShapeFileHeaderDefinition {
-  let fileCode = ShapeDataDefinition<Int32>(range: NSRange(location: 0, length: 4), endianness: .Big)
-  let fileLength = ShapeDataDefinition<Int32>(range: NSRange(location: 24, length: 4), endianness: .Big)
-  let version = ShapeDataDefinition<Int32>(range: NSRange(location: 28, length: 4), endianness: .Little)
-  let shapeType = ShapeDataDefinition<ShapeType>(range: NSRange(location: 32, length: 4), endianness: .Little)
-  let boundingBox = ShapeDataDefinition<BoundingBox>(range: NSRange(location: 36, length: 4), endianness: .Little)
+  let fileCode = ShapeDataDefinition<Int32>(range: 0..<4, endianness: .Big)
+  let fileLength = ShapeDataDefinition<Int32>(range: 24..<28, endianness: .Big)
+  let version = ShapeDataDefinition<Int32>(range: 28..<32, endianness: .Little)
+  let shapeType = ShapeDataDefinition<ShapeType>(range: 32..<36, endianness: .Little)
+  let boundingBox = ShapeDataDefinition<BoundingBox>(range: 36..<100, endianness: .Little)
 }
 
 struct ShapeFileHeader {

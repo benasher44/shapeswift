@@ -19,13 +19,13 @@ enum ByteParseableError: ErrorType {
 }
 
 protocol ByteParseable {
-  init?(data: NSData, range: NSRange, endianness: Endianness)
+  init?(data: NSData, range: Range<Int>, endianness: Endianness)
 }
 
 extension Int32: ByteParseable {
-  init(data: NSData, range: NSRange, endianness: Endianness) {
+  init(data: NSData, range: Range<Int>, endianness: Endianness) {
     var rawInt: Int32 = 0
-    data.getBytes(&rawInt, range: range)
+    data.getBytes(&rawInt, range: NSRange(fromRange: range))
     switch endianness {
     case .Big:
       self = Int32(bigEndian: rawInt)
@@ -35,10 +35,23 @@ extension Int32: ByteParseable {
   }
 }
 
+extension Int64: ByteParseable {
+  init(data: NSData, range: Range<Int>, endianness: Endianness) {
+    var rawInt: Int64 = 0
+    data.getBytes(&rawInt, range: NSRange(fromRange: range))
+    switch endianness {
+    case .Big:
+      self = Int64(bigEndian: rawInt)
+    case .Little:
+      self = Int64(littleEndian: rawInt)
+    }
+  }
+}
+
 extension Double: ByteParseable {
-  init(data: NSData, range: NSRange, endianness: Endianness) {
+  init(data: NSData, range: Range<Int>, endianness: Endianness) {
     var rawDouble: Int64 = 0
-    data.getBytes(&rawDouble, range: range)
+    data.getBytes(&rawDouble, range: NSRange(fromRange: range))
     switch endianness {
     case .Big:
       self = unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
@@ -49,8 +62,14 @@ extension Double: ByteParseable {
 }
 
 extension NSRange {
-  func shifted(amount: Int) -> NSRange {
-    return NSRange(location: location + amount, length: length)
+  init(fromRange range: Range<Int>) {
+    self.init(location: range.startIndex, length: range.endIndex - range.startIndex)
+  }
+}
+
+extension Range where Element: IntegerArithmeticType {
+  func shifted(amount: Element) -> Range {
+    return (startIndex + amount)...(endIndex + amount)
   }
 }
 
