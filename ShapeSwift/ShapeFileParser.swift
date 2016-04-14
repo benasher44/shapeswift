@@ -47,7 +47,7 @@ enum ShapeType: Int {
 
 extension ShapeType: ByteParseable {
   init?(data: NSData, range: NSRange, endianness: Endianness) {
-    if let shapeType = ShapeType(rawValue: Int(data: data, range: range, endianness: endianness)) {
+    if let shapeType = ShapeType(rawValue: Int(Int32(data: data, range: range, endianness: endianness))) {
       self = shapeType
     } else {
       return nil
@@ -73,9 +73,9 @@ extension BoundingBox: ByteParseable {
 private let headerRange = NSRange(location: 0, length: 100)
 
 struct ShapeFileHeaderDefinition {
-  let fileCode = ShapeDataDefinition<Int>(range: NSRange(location: 0, length: 4), endianness: .Big)
-  let fileLength = ShapeDataDefinition<Int>(range: NSRange(location: 24, length: 4), endianness: .Big)
-  let version = ShapeDataDefinition<Int>(range: NSRange(location: 28, length: 4), endianness: .Little)
+  let fileCode = ShapeDataDefinition<Int32>(range: NSRange(location: 0, length: 4), endianness: .Big)
+  let fileLength = ShapeDataDefinition<Int32>(range: NSRange(location: 24, length: 4), endianness: .Big)
+  let version = ShapeDataDefinition<Int32>(range: NSRange(location: 28, length: 4), endianness: .Little)
   let shapeType = ShapeDataDefinition<ShapeType>(range: NSRange(location: 32, length: 4), endianness: .Little)
   let boundingBox = ShapeDataDefinition<BoundingBox>(range: NSRange(location: 36, length: 4), endianness: .Little)
 }
@@ -88,9 +88,9 @@ struct ShapeFileHeader {
   let boundingBox: BoundingBox
   init?(data: NSData) throws {
     let def = ShapeFileHeaderDefinition()
-    fileCode = try def.fileCode.parse(data)!
-    fileLength = try def.fileLength.parse(data)!
-    version = try def.version.parse(data)!
+    fileCode = try Int(def.fileCode.parse(data)!)
+    fileLength = try Int(def.fileLength.parse(data)!)
+    version = try Int(def.version.parse(data)!)
     shapeType = try def.shapeType.parse(data)!
     boundingBox = try def.boundingBox.parse(data)!
   }
@@ -98,5 +98,5 @@ struct ShapeFileHeader {
 
 public func parseFromURL(fileURL: NSURL) throws -> Void {
   let data = try NSData(contentsOfURL: fileURL, options: .DataReadingMappedIfSafe)
-//  parseHeader(data)
+  let header = try ShapeFileHeader(data: data)
 }

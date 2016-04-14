@@ -22,15 +22,15 @@ protocol ByteParseable {
   init?(data: NSData, range: NSRange, endianness: Endianness)
 }
 
-extension Int: ByteParseable {
+extension Int32: ByteParseable {
   init(data: NSData, range: NSRange, endianness: Endianness) {
     var rawInt: Int32 = 0
     data.getBytes(&rawInt, range: range)
     switch endianness {
     case .Big:
-      self = Int(Int32(bigEndian: rawInt))
+      self = Int32(bigEndian: rawInt)
     case .Little:
-      self = Int(Int32(littleEndian: rawInt))
+      self = Int32(littleEndian: rawInt)
     }
   }
 }
