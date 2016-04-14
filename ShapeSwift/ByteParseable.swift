@@ -54,7 +54,7 @@ extension Double: ByteParseable {
     data.getBytes(&rawDouble, range: NSRange(fromRange: range))
     switch endianness {
     case .Big:
-      self = unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
+      self = unsafeBitCast(Int64(bigEndian: rawDouble), Double.self)
     case .Little:
       self = unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
     }
