@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A4539FA46153FC6EB9F3C2205B2C141871EDB062",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "120DFD113CA37527010434FD79A7F661D4572921" : 0,
+    "A4539FA46153FC6EB9F3C2205B2C141871EDB062" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "86CB7FA6-8FA5-444D-B0EB-4738ECF4F350",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "120DFD113CA37527010434FD79A7F661D4572921" : "",
+    "A4539FA46153FC6EB9F3C2205B2C141871EDB062" : "shapeswift\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ShapeSwift",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ShapeSwift.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:yuxinzhu\/socialtable.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "120DFD113CA37527010434FD79A7F661D4572921"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:benasher44\/shapeswift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A4539FA46153FC6EB9F3C2205B2C141871EDB062"
+    }
+  ]
+}
