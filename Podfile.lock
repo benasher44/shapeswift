@@ -1,12 +1,16 @@
 PODS:
-  - proj4 (4.8.0)
+  - proj4 (4.9.2)
 
 DEPENDENCIES:
-  - proj4 (= 4.8.0)
+  - proj4 (from `./podspecs/proj4.podspec`)
+
+EXTERNAL SOURCES:
+  proj4:
+    :podspec: "./podspecs/proj4.podspec"
 
 SPEC CHECKSUMS:
-  proj4: 234525105d05a33b2ae9a90a6fe3935f7a246f7e
+  proj4: edb2a6e8ade02488f0bb3f8f52ba8802e83928ba
 
-PODFILE CHECKSUM: 5b387bdf33fa694092d41938362ac0e758b2fd4f
+PODFILE CHECKSUM: e3701a30029bf4d411744eb93687d753b95fdcf4
 
 COCOAPODS: 1.0.0.beta.8

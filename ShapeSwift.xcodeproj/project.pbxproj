@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		136869C51CC929CE00D2DD81 /* Projection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136869C41CC929CE00D2DD81 /* Projection.swift */; };
+		136869C71CC9325C00D2DD81 /* GeoTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136869C61CC9325C00D2DD81 /* GeoTypes.swift */; };
 		13EC2A6E1CACC93C000063A1 /* ShapeSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		13EC2A751CACC93C000063A1 /* ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13EC2A6A1CACC93C000063A1 /* ShapeSwift.framework */; };
 		13EC2A7A1CACC93C000063A1 /* ShapeSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2A791CACC93C000063A1 /* ShapeSwiftTests.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		012DA10185ED815FA5D0C0FD /* Pods_ShapeSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EEA02A6DACBA0CFE43274B6 /* Pods-ShapeSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwift/Pods-ShapeSwift.debug.xcconfig"; sourceTree = "<group>"; };
+		136869C41CC929CE00D2DD81 /* Projection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Projection.swift; sourceTree = "<group>"; };
+		136869C61CC9325C00D2DD81 /* GeoTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoTypes.swift; sourceTree = "<group>"; };
 		13EC2A6A1CACC93C000063A1 /* ShapeSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShapeSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShapeSwift.h; sourceTree = "<group>"; };
 		13EC2A6F1CACC93C000063A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 				13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */,
 				13EC2A6F1CACC93C000063A1 /* Info.plist */,
 				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,
+				136869C41CC929CE00D2DD81 /* Projection.swift */,
+				136869C61CC9325C00D2DD81 /* GeoTypes.swift */,
 			);
 			path = ShapeSwift;
 			sourceTree = "<group>";
@@ -344,8 +350,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				136869C51CC929CE00D2DD81 /* Projection.swift in Sources */,
 				13EC2B0E1CACCC84000063A1 /* ShapeFileParser.swift in Sources */,
 				4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */,
+				136869C71CC9325C00D2DD81 /* GeoTypes.swift in Sources */,
 				13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

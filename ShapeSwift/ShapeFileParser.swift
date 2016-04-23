@@ -35,20 +35,20 @@ extension CoordinateBounds: CustomDebugStringConvertible {
 }
 
 enum ShapeType: Int {
-  case NullShape = 0
-  case Point = 1
-  case PolyLine = 3
-  case Polygon = 5
-  case MultiPoint = 8
-  case PointZ = 11
-  case PolyLineZ = 13
-  case PolygonZ = 15
-  case MultiPointZ = 18
-  case PointM = 21
-  case PolyLineM = 23
-  case PolygonM = 25
-  case MultiPointM = 28
-  case MultiPatch = 31
+  case nullShape = 0
+  case point = 1
+  case polyLine = 3
+  case polygon = 5
+  case multiPoint = 8
+  case pointZ = 11
+  case polyLineZ = 13
+  case polygonZ = 15
+  case multiPointZ = 18
+  case pointM = 21
+  case polyLineM = 23
+  case polygonM = 25
+  case multiPointM = 28
+  case multiPatch = 31
 }
 
 extension ShapeType: ByteParseable {
