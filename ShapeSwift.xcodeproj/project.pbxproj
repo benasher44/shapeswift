@@ -102,8 +102,8 @@
 		13EC2A6C1CACC93C000063A1 /* ShapeSwift */ = {
 			isa = PBXGroup;
 			children = (
-				13EC2B0D1CACCC84000063A1 /* ShapeFileParser.swift */,
 				13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */,
+				13EC2B0D1CACCC84000063A1 /* ShapeFileParser.swift */,
 				13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */,
 				13EC2A6F1CACC93C000063A1 /* Info.plist */,
 				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,

@@ -13,16 +13,51 @@ protocol Projection {
   var projInitArgs: String { get }
 }
 
-extension Projection {
-  func convertForward(coordinates: [Coordinate], to: Projection) {
+enum ProjectionConversionFunction: String {
+  case pjInit = "pj_init_plus"
+  case pjTransform = "pj_transform"
+}
 
+enum ProjectionConversionError: ErrorType {
+  case error(errorNumber: Int32, function: ProjectionConversionFunction)
+}
+
+extension ProjectionConversionError: CustomDebugStringConvertible {
+  var debugDescription: String {
+    switch self {
+    case let .error(errorNumber, function):
+      let errStr = String.fromCString(pj_strerrno(errorNumber)) ?? ""
+      return "\(function): \(errStr)"
+    }
   }
 }
 
-struct SFSweepRoutesProjection: Projection {
-  let projInitArgs = "+proj=lcc +lat_1=37.06666666666667 +lat_2=38.43333333333333 +lat_0=36.5 +lon_0=-120.5 +x_0=2000000 +y_0=500000.0000000001 +datum=NAD83 +units=us-ft +no_defs"
+
+extension Projection {
+  func convertForward(coordinates: [RadianCoordinate], to otherProjection: Projection) throws -> [RadianCoordinate] {
+    let src = pj_init_plus(projInitArgs.cStringUsingEncoding(NSUTF8StringEncoding)!)
+    if let err = pjInitError {
+      throw ProjectionConversionError.error(errorNumber: err, function: .pjInit)
+    }
+    let dest = pj_init_plus(otherProjection.projInitArgs.cStringUsingEncoding(NSUTF8StringEncoding)!)
+    if let err = pjInitError {
+      throw ProjectionConversionError.error(errorNumber: err, function: .pjInit)
+    }
+    return try coordinates.map { coordinate in
+      var x = coordinate.x
+      var y = coordinate.y
+      let err = pj_transform(src, dest, 1, 1, &x, &y, nil)
+      if err != 0 {
+        throw ProjectionConversionError.error(errorNumber: err, function: .pjTransform)
+      }
+      return RadianCoordinate(x, y)
+    }
+  }
 }
 
-struct WGS84Projection: Projection {
-  let projInitArgs = "+proj=latlong +ellps=WGS84"
+private extension Projection {
+  var pjInitError: Int32? {
+    let err = pj_get_default_ctx().memory.last_errno
+    return err == 0 ? nil : err
+  }
 }
