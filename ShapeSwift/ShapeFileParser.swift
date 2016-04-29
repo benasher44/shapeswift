@@ -28,12 +28,6 @@ struct CoordinateBounds {
   let max: Double
 }
 
-extension CoordinateBounds: CustomDebugStringConvertible {
-  var debugDescription: String {
-    return "{\(min), \(max)}"
-  }
-}
-
 enum ShapeType: Int {
   case nullShape = 0
   case point = 1
@@ -75,18 +69,7 @@ extension BoundingBox: ByteParseable {
   }
 }
 
-extension BoundingBox: CustomDebugStringConvertible {
-  var debugDescription: String {
-    return [
-      "X: \(x)",
-      "Y: \(y)",
-      "Z: \(z)",
-      "M: \(m)",
-      ].joinWithSeparator(" ")
-  }
-}
-
-private let headerRange = NSRange(location: 0, length: 100)
+private let headerRange = 0..<100
 
 struct ShapeFileHeaderDefinition {
   let fileCode = ShapeDataDefinition<Int32>(range: 0..<4, endianness: .Big)
@@ -112,15 +95,22 @@ struct ShapeFileHeader {
   }
 }
 
-extension ShapeFileHeader: CustomDebugStringConvertible {
-  var debugDescription: String {
-    return [
-      "File Code: \(fileCode)",
-      "File Length: \(fileLength)",
-      "Version: \(version)",
-      "Shape Type: \(shapeType)",
-      "Bounding Box: \(boundingBox.debugDescription)",
-      ].joinWithSeparator("\n")
+struct ShapeFileRecordHeaderDefinition {
+  let start: Int
+  lazy var recordNumber: ShapeDataDefinition<Int32> = ShapeDataDefinition<Int32>(range: self.start..<(self.start + 4), endianness: .Big)
+  lazy var contentLength: ShapeDataDefinition<Int32> = ShapeDataDefinition<Int32>(range: (self.start + 4)..<(self.start + 8), endianness: .Big)
+  init(start: Int) {
+    self.start = start
+  }
+}
+
+struct ShapeFileRecordHeader {
+  let recordNumber: Int
+  let contentLength: Int
+  init?(data: NSData, start: Int) throws {
+    var def = ShapeFileRecordHeaderDefinition(start: start)
+    recordNumber = try Int(def.recordNumber.parse(data)!)
+    contentLength = try Int(def.contentLength.parse(data)!)
   }
 }
 

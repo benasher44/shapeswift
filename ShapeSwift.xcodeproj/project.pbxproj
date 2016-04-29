@@ -22,6 +22,7 @@
 		4A184A88E0900D649785A48E /* Pods_ShapeSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 012DA10185ED815FA5D0C0FD /* Pods_ShapeSwiftTests.framework */; };
 		4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */; };
 		5F1ADDED9752C5645F9BA1B1 /* Pods_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B4B27BB11FB17DB3FF4162A /* Pods_ShapeSwift.framework */; };
+		A89C6DCF1CD3B060002A60BD /* ShapeFileParserDebugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89C6DCE1CD3B060002A60BD /* ShapeFileParserDebugging.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
 		6D285E97411DBCF751E129D7 /* Pods-ShapeSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		898E1A910A6293F2E204509D /* Pods-ShapeSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwift/Pods-ShapeSwift.release.xcconfig"; sourceTree = "<group>"; };
+		A89C6DCE1CD3B060002A60BD /* ShapeFileParserDebugging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFileParserDebugging.swift; sourceTree = "<group>"; };
 		EE583859CC6F3AF0C779D899 /* Pods-ShapeSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +106,7 @@
 			children = (
 				13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */,
 				13EC2B0D1CACCC84000063A1 /* ShapeFileParser.swift */,
+				A89C6DCE1CD3B060002A60BD /* ShapeFileParserDebugging.swift */,
 				13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */,
 				13EC2A6F1CACC93C000063A1 /* Info.plist */,
 				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,
@@ -355,6 +358,7 @@
 				4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */,
 				136869C71CC9325C00D2DD81 /* GeoTypes.swift in Sources */,
 				13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */,
+				A89C6DCF1CD3B060002A60BD /* ShapeFileParserDebugging.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
