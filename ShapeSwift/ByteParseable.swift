@@ -10,8 +10,8 @@ import Foundation
 
 
 enum Endianness {
-  case Big
-  case Little
+  case big
+  case little
 }
 
 enum ByteParseableError: ErrorType {
@@ -27,9 +27,9 @@ extension Int32: ByteParseable {
     var rawInt: Int32 = 0
     data.getBytes(&rawInt, range: NSRange(fromRange: range))
     switch endianness {
-    case .Big:
+    case .big:
       self = Int32(bigEndian: rawInt)
-    case .Little:
+    case .little:
       self = Int32(littleEndian: rawInt)
     }
   }
@@ -40,9 +40,9 @@ extension Double: ByteParseable {
     var rawDouble: Int64 = 0
     data.getBytes(&rawDouble, range: NSRange(fromRange: range))
     switch endianness {
-    case .Big:
+    case .big:
       self = unsafeBitCast(Int64(bigEndian: rawDouble), Double.self)
-    case .Little:
+    case .little:
       self = unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
     }
   }

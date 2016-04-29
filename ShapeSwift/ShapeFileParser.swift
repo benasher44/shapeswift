@@ -72,11 +72,11 @@ extension BoundingBox: ByteParseable {
 private let headerRange = 0..<100
 
 struct ShapeFileHeaderDefinition {
-  let fileCode = ShapeDataDefinition<Int32>(range: 0..<4, endianness: .Big)
-  let fileLength = ShapeDataDefinition<Int32>(range: 24..<28, endianness: .Big)
-  let version = ShapeDataDefinition<Int32>(range: 28..<32, endianness: .Little)
-  let shapeType = ShapeDataDefinition<ShapeType>(range: 32..<36, endianness: .Little)
-  let boundingBox = ShapeDataDefinition<BoundingBox>(range: 36..<100, endianness: .Little)
+  let fileCode = ShapeDataDefinition<Int32>(range: 0..<4, endianness: .big)
+  let fileLength = ShapeDataDefinition<Int32>(range: 24..<28, endianness: .big)
+  let version = ShapeDataDefinition<Int32>(range: 28..<32, endianness: .little)
+  let shapeType = ShapeDataDefinition<ShapeType>(range: 32..<36, endianness: .little)
+  let boundingBox = ShapeDataDefinition<BoundingBox>(range: 36..<100, endianness: .little)
 }
 
 struct ShapeFileHeader {
@@ -96,11 +96,11 @@ struct ShapeFileHeader {
 }
 
 struct ShapeFileRecordHeaderDefinition {
-  let start: Int
-  lazy var recordNumber: ShapeDataDefinition<Int32> = ShapeDataDefinition<Int32>(range: self.start..<(self.start + 4), endianness: .Big)
-  lazy var contentLength: ShapeDataDefinition<Int32> = ShapeDataDefinition<Int32>(range: (self.start + 4)..<(self.start + 8), endianness: .Big)
+  let recordNumber: ShapeDataDefinition<Int32>
+  let contentLength: ShapeDataDefinition<Int32>
   init(start: Int) {
-    self.start = start
+    recordNumber = ShapeDataDefinition<Int32>(range: start..<(start + 4), endianness: .big)
+    contentLength = ShapeDataDefinition<Int32>(range: (start + 4)..<(start + 8), endianness: .big)
   }
 }
 
@@ -108,7 +108,7 @@ struct ShapeFileRecordHeader {
   let recordNumber: Int
   let contentLength: Int
   init?(data: NSData, start: Int) throws {
-    var def = ShapeFileRecordHeaderDefinition(start: start)
+    let def = ShapeFileRecordHeaderDefinition(start: start)
     recordNumber = try Int(def.recordNumber.parse(data)!)
     contentLength = try Int(def.contentLength.parse(data)!)
   }
