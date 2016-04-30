@@ -26,12 +26,12 @@ extension ShapeFileRecord {
 }
 
 struct ShapeFilePointRecordDefinition {
-  let x: ShapeDataDefinition<Double>
-  let y: ShapeDataDefinition<Double>
+  let x: ShapeDataDefinition<LittleEndian<Double>>
+  let y: ShapeDataDefinition<LittleEndian<Double>>
 
   init(start: Int) {
-    x = ShapeDataDefinition<Double>(range: start..<(start + 8), endianness: .little)
-    y = ShapeDataDefinition<Double>(range: (start + 8)..<(start + 16), endianness: .little)
+    x = ShapeDataDefinition<LittleEndian<Double>>(range: start..<(start + 8))
+    y = ShapeDataDefinition<LittleEndian<Double>>(range: (start + 8)..<(start + 16))
   }
 }
 

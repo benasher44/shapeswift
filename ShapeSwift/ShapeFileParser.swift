@@ -8,11 +8,19 @@
 
 import Foundation
 
-struct ShapeDataDefinition<T: ByteParseable> {
+struct ShapeDataDefinition<T: ByteOrdered> {
   let range: Range<Int>
-  let endianness: Endianness
-  func parse(data: NSData) throws -> T? {
-    return T(data: data, range: range, endianness: endianness)
+}
+
+extension ShapeDataDefinition where T: LittleEndianByteOrdered {
+  func parse(data: NSData) throws -> T.ValueT? {
+    return T.ValueT.makeFromLittleEndian(data, range: range)
+  }
+}
+
+extension ShapeDataDefinition where T: BigEndianByteOrdered {
+  func parse(data: NSData) throws -> T.ValueT? {
+    return T.ValueT.makeFromBigEndian(data, range: range)
   }
 }
 
@@ -45,38 +53,42 @@ enum ShapeType: Int {
   case multiPatch = 31
 }
 
-extension ShapeType: ByteParseable {
-  init?(data: NSData, range: Range<Int>, endianness: Endianness) {
-    if let shapeType = ShapeType(rawValue: Int(Int32(data: data, range: range, endianness: endianness))) {
-      self = shapeType
-    } else {
-      return nil
-    }
+extension ShapeType: LittleEndianByteOrdered {
+  typealias ValueT = ShapeType
+}
+
+extension BoundingBox: LittleEndianByteOrdered {
+  typealias ValueT = BoundingBox
+}
+
+extension ShapeType: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> ShapeType? {
+    return ShapeType(rawValue: Int(Int32.makeFromLittleEndian(data, range: range)!))
   }
 }
 
-extension BoundingBox: ByteParseable {
-  init(data: NSData, range: Range<Int>, endianness: Endianness) {
+extension BoundingBox: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> BoundingBox? {
     let byteRange = (range.startIndex)..<(range.startIndex + 8)
-    self = BoundingBox(x: CoordinateBounds(min: Double(data: data, range: byteRange, endianness: endianness),
-                                           max: Double(data: data, range: byteRange.shifted(16), endianness: endianness)),
-                       y: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(8), endianness: endianness),
-                                           max: Double(data: data, range: byteRange.shifted(24), endianness: endianness)),
-                       z: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(32), endianness: endianness),
-                                           max: Double(data: data, range: byteRange.shifted(40), endianness: endianness)),
-                       m: CoordinateBounds(min: Double(data: data, range: byteRange.shifted(48), endianness: endianness),
-                                           max: Double(data: data, range: byteRange.shifted(56), endianness: endianness)))
+    return BoundingBox(x: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange)!,
+                                           max: Double.makeFromLittleEndian(data, range: byteRange.shifted(16))!),
+                       y: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(8))!,
+                                           max: Double.makeFromLittleEndian(data, range: byteRange.shifted(24))!),
+                       z: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(32))!,
+                                           max: Double.makeFromLittleEndian(data, range: byteRange.shifted(40))!),
+                       m: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(48))!,
+                                           max: Double.makeFromLittleEndian(data, range: byteRange.shifted(56))!))
   }
 }
 
 private let headerRange = 0..<100
 
 struct ShapeFileHeaderDefinition {
-  let fileCode = ShapeDataDefinition<Int32>(range: 0..<4, endianness: .big)
-  let fileLength = ShapeDataDefinition<Int32>(range: 24..<28, endianness: .big)
-  let version = ShapeDataDefinition<Int32>(range: 28..<32, endianness: .little)
-  let shapeType = ShapeDataDefinition<ShapeType>(range: 32..<36, endianness: .little)
-  let boundingBox = ShapeDataDefinition<BoundingBox>(range: 36..<100, endianness: .little)
+  let fileCode = ShapeDataDefinition<BigEndian<Int32>>(range: 0..<4)
+  let fileLength = ShapeDataDefinition<BigEndian<Int32>>(range: 24..<28)
+  let version = ShapeDataDefinition<LittleEndian<Int32>>(range: 28..<32)
+  let shapeType = ShapeDataDefinition<ShapeType>(range: 32..<36)
+  let boundingBox = ShapeDataDefinition<BoundingBox>(range: 36..<100)
 }
 
 struct ShapeFileHeader {
@@ -96,11 +108,11 @@ struct ShapeFileHeader {
 }
 
 struct ShapeFileRecordHeaderDefinition {
-  let recordNumber: ShapeDataDefinition<Int32>
-  let contentLength: ShapeDataDefinition<Int32>
+  let recordNumber: ShapeDataDefinition<BigEndian<Int32>>
+  let contentLength: ShapeDataDefinition<BigEndian<Int32>>
   init(start: Int) {
-    recordNumber = ShapeDataDefinition<Int32>(range: start..<(start + 4), endianness: .big)
-    contentLength = ShapeDataDefinition<Int32>(range: (start + 4)..<(start + 8), endianness: .big)
+    recordNumber = ShapeDataDefinition<BigEndian<Int32>>(range: start..<(start + 4))
+    contentLength = ShapeDataDefinition<BigEndian<Int32>>(range: (start + 4)..<(start + 8))
   }
 }
 

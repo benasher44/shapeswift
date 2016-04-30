@@ -8,6 +8,29 @@
 
 import Foundation
 
+struct BigEndian<T: BigEndianByteParseable> {
+  private init() {}
+}
+
+struct LittleEndian<T: LittleEndianByteParseable> {
+  private init() {}
+}
+
+protocol ByteOrdered {}
+
+protocol BigEndianByteOrdered: ByteOrdered {
+  associatedtype ValueT: BigEndianByteParseable
+}
+protocol LittleEndianByteOrdered: ByteOrdered {
+  associatedtype ValueT: LittleEndianByteParseable
+}
+
+extension BigEndian: BigEndianByteOrdered {
+  typealias ValueT = T
+}
+extension LittleEndian: LittleEndianByteOrdered {
+  typealias ValueT = T
+}
 
 enum Endianness {
   case big
@@ -18,33 +41,37 @@ enum ByteParseableError: ErrorType {
   case NotParseable(type: ByteParseable.Type)
 }
 
-protocol ByteParseable {
-  init?(data: NSData, range: Range<Int>, endianness: Endianness)
+protocol ByteParseable {}
+
+protocol BigEndianByteParseable: ByteParseable {
+  static func makeFromBigEndian(data: NSData, range: Range<Int>) -> Self?
 }
 
-extension Int32: ByteParseable {
-  init(data: NSData, range: Range<Int>, endianness: Endianness) {
+protocol LittleEndianByteParseable: ByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> Self?
+}
+
+extension Int32: BigEndianByteParseable {
+  static func makeFromBigEndian(data: NSData, range: Range<Int>) -> Int32? {
     var rawInt: Int32 = 0
     data.getBytes(&rawInt, range: NSRange(fromRange: range))
-    switch endianness {
-    case .big:
-      self = Int32(bigEndian: rawInt)
-    case .little:
-      self = Int32(littleEndian: rawInt)
-    }
+    return Int32(bigEndian: rawInt)
   }
 }
 
-extension Double: ByteParseable {
-  init(data: NSData, range: Range<Int>, endianness: Endianness) {
+extension Int32: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> Int32? {
+    var rawInt: Int32 = 0
+    data.getBytes(&rawInt, range: NSRange(fromRange: range))
+    return Int32(littleEndian: rawInt)
+  }
+}
+
+extension Double: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> Double? {
     var rawDouble: Int64 = 0
     data.getBytes(&rawDouble, range: NSRange(fromRange: range))
-    switch endianness {
-    case .big:
-      self = unsafeBitCast(Int64(bigEndian: rawDouble), Double.self)
-    case .little:
-      self = unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
-    }
+    return unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
   }
 }
 
