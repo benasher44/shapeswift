@@ -32,11 +32,6 @@ extension LittleEndian: LittleEndianByteOrdered {
   typealias ValueT = T
 }
 
-enum Endianness {
-  case big
-  case little
-}
-
 enum ByteParseableError: ErrorType {
   case NotParseable(type: ByteParseable.Type)
 }
