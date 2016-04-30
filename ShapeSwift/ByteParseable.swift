@@ -8,19 +8,25 @@
 
 import Foundation
 
+/// Ghost type that contains a type that should be parsed from big endian bytes
 struct BigEndian<T: BigEndianByteParseable> {
   private init() {}
 }
 
+/// Ghost type that contains a type that should be parsed from little endian bytes
 struct LittleEndian<T: LittleEndianByteParseable> {
   private init() {}
 }
 
+/// Empty protocol to allow constraining to ghost types that are ByteOrdered
 protocol ByteOrdered {}
 
+/// Allow constraining to ghost types that contain value types that can be parsed from big endian bytes
 protocol BigEndianByteOrdered: ByteOrdered {
   associatedtype ValueT: BigEndianByteParseable
 }
+
+/// Allow constraining to ghost types that contain value types that can be parsed from little endian bytes
 protocol LittleEndianByteOrdered: ByteOrdered {
   associatedtype ValueT: LittleEndianByteParseable
 }
