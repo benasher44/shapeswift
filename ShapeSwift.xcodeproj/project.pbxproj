@@ -109,10 +109,10 @@
 			isa = PBXGroup;
 			children = (
 				13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */,
+				13010F701CD64D5E00440342 /* SHPFileDataParsers.swift */,
+				13234D761CD5861900B037BE /* SHPFileDataTypes.swift */,
 				13EC2B0D1CACCC84000063A1 /* SHPFileParser.swift */,
 				A89C6DCE1CD3B060002A60BD /* SHPFileParserDebugging.swift */,
-				13234D761CD5861900B037BE /* SHPFileDataTypes.swift */,
-				13010F701CD64D5E00440342 /* SHPFileDataParsers.swift */,
 				A8E2D3E21CD3BEE200561BB3 /* SHPFileRecord.swift */,
 				13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */,
 				13EC2A6F1CACC93C000063A1 /* Info.plist */,

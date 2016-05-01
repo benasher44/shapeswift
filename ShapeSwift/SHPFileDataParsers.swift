@@ -37,8 +37,11 @@ struct ShapeDataArrayParser<T: ByteOrdered> {
   let size: Int
   let count: Int
 
+  var end: Int {
+    return start + (count * size)
+  }
+
   private func enumerateRanges(rangeEnumerationBlock: (Range<Int>) throws -> Void) rethrows {
-    let end = start + (count * size)
     for rangeStart in start.stride(to: end, by: size) {
       try rangeEnumerationBlock(rangeStart..<(rangeStart + size))
     }

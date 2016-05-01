@@ -26,23 +26,19 @@ extension ShapeFileRecord {
 }
 
 struct ShapeFilePointRecordParser {
-  let x: ShapeDataParser<LittleEndian<Double>>
-  let y: ShapeDataParser<LittleEndian<Double>>
+  let point: ShapeDataParser<LittleEndian<Coordinate>>
 
   init(start: Int) {
-    x = ShapeDataParser<LittleEndian<Double>>(range: start..<(start + 8))
-    y = ShapeDataParser<LittleEndian<Double>>(range: (start + 8)..<(start + 16))
+    point = ShapeDataParser<LittleEndian<Coordinate>>(range: start..<(start + 16))
   }
 }
 
 struct ShapeFilePointRecord: ShapeFileRecord {
-  let x: Double
-  let y: Double
+  let point: Coordinate
 
   init?(data: NSData, start: Int) throws {
     let parser = ShapeFilePointRecordParser(start: start)
-    x = try parser.x.parse(data)!
-    y = try parser.y.parse(data)!
+    point = try parser.point.parse(data)!
   }
 }
 
@@ -50,6 +46,7 @@ struct ShapeFileMultiPatchRecordParser {
   let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
   let numParts: ShapeDataParser<LittleEndian<Int32>>
   let numPoints: ShapeDataParser<LittleEndian<Int32>>
+  let parts: ShapeDataArrayParser<LittleEndian<MultiPatchPartType>>
 }
 
 struct ShapeFileMultiPatchRecord: ShapeFileRecord {
@@ -57,3 +54,4 @@ struct ShapeFileMultiPatchRecord: ShapeFileRecord {
 
   }
 }
+

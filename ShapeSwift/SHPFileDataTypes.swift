@@ -81,6 +81,14 @@ extension BoundingBoxXYZM: LittleEndianByteParseable {
   }
 }
 
+extension Coordinate: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> Coordinate? {
+    let byteRange = (range.startIndex)..<(range.startIndex + 8)
+    return Coordinate(x: Double.makeFromLittleEndian(data, range: byteRange)!,
+                      y: Double.makeFromLittleEndian(data, range: byteRange.shifted(8))!)
+  }
+}
+
 extension MultiPatchPartType: LittleEndianByteParseable {
   static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> MultiPatchPartType? {
     return MultiPatchPartType(rawValue: Int(Int32.makeFromLittleEndian(data, range: range)!))
