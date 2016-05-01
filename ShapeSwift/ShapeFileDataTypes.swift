@@ -8,6 +8,11 @@
 
 import Foundation
 
+struct BoundingBoxXY {
+  let x: CoordinateBounds
+  let y: CoordinateBounds
+}
+
 struct BoundingBoxXYZM {
   let x: CoordinateBounds
   let y: CoordinateBounds
@@ -42,17 +47,19 @@ enum ShapeType: Int {
   case multiPatch = 31
 }
 
-extension BoundingBoxXYZM: LittleEndianByteOrdered {
-  typealias ValueT = BoundingBoxXYZM
-}
-
-extension ShapeType: LittleEndianByteOrdered {
-  typealias ValueT = ShapeType
-}
-
 extension ShapeType: LittleEndianByteParseable {
   static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> ShapeType? {
     return ShapeType(rawValue: Int(Int32.makeFromLittleEndian(data, range: range)!))
+  }
+}
+
+extension BoundingBoxXY: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> BoundingBoxXY? {
+    let byteRange = (range.startIndex)..<(range.startIndex + 8)
+    return BoundingBoxXY(x: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange)!,
+                                             max: Double.makeFromLittleEndian(data, range: byteRange.shifted(16))!),
+                         y: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(8))!,
+                                             max: Double.makeFromLittleEndian(data, range: byteRange.shifted(24))!))
   }
 }
 
@@ -60,12 +67,12 @@ extension BoundingBoxXYZM: LittleEndianByteParseable {
   static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> BoundingBoxXYZM? {
     let byteRange = (range.startIndex)..<(range.startIndex + 8)
     return BoundingBoxXYZM(x: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange)!,
-      max: Double.makeFromLittleEndian(data, range: byteRange.shifted(16))!),
+                                               max: Double.makeFromLittleEndian(data, range: byteRange.shifted(16))!),
                            y: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(8))!,
-                            max: Double.makeFromLittleEndian(data, range: byteRange.shifted(24))!),
+                                               max: Double.makeFromLittleEndian(data, range: byteRange.shifted(24))!),
                            z: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(32))!,
-                            max: Double.makeFromLittleEndian(data, range: byteRange.shifted(40))!),
+                                               max: Double.makeFromLittleEndian(data, range: byteRange.shifted(40))!),
                            m: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(48))!,
-                            max: Double.makeFromLittleEndian(data, range: byteRange.shifted(56))!))
+                                               max: Double.makeFromLittleEndian(data, range: byteRange.shifted(56))!))
   }
 }

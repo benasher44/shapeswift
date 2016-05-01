@@ -38,8 +38,8 @@ struct ShapeFileHeaderDefinition {
   let fileCode = ShapeDataDefinition<BigEndian<Int32>>(range: 0..<4)
   let fileLength = ShapeDataDefinition<BigEndian<Int32>>(range: 24..<28)
   let version = ShapeDataDefinition<LittleEndian<Int32>>(range: 28..<32)
-  let shapeType = ShapeDataDefinition<ShapeType>(range: 32..<36)
-  let boundingBox = ShapeDataDefinition<BoundingBoxXYZM>(range: 36..<100)
+  let shapeType = ShapeDataDefinition<LittleEndian<ShapeType>>(range: 32..<36)
+  let boundingBox = ShapeDataDefinition<LittleEndian<BoundingBoxXYZM>>(range: 36..<100)
 }
 
 struct ShapeFileHeader {
