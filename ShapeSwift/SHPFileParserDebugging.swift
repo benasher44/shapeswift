@@ -1,5 +1,5 @@
 //
-//  ShapeFileParserDebugging.swift
+//  SHPFileParserDebugging.swift
 //  ShapeSwift
 //
 //  Created by Ben Asher on 4/29/16.

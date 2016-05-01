@@ -1,5 +1,5 @@
 //
-//  ShapeFileDataTypes.swift
+//  SHPFileDataTypes.swift
 //  ShapeSwift
 //
 //  Created by Benjamin Asher on 4/30/16.
