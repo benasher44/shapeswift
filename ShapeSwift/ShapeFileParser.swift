@@ -14,13 +14,21 @@ struct ShapeDataDefinition<T: ByteOrdered> {
 
 extension ShapeDataDefinition where T: LittleEndianByteOrdered {
   func parse(data: NSData) throws -> T.ValueT? {
-    return T.ValueT.makeFromLittleEndian(data, range: range)
+    if let value = T.ValueT.makeFromLittleEndian(data, range: range) {
+      return value
+    } else {
+      throw ByteParseableError.NotParseable(type: T.ValueT.self)
+    }
   }
 }
 
 extension ShapeDataDefinition where T: BigEndianByteOrdered {
   func parse(data: NSData) throws -> T.ValueT? {
-    return T.ValueT.makeFromBigEndian(data, range: range)
+    if let value = T.ValueT.makeFromBigEndian(data, range: range) {
+      return value
+    } else {
+      throw ByteParseableError.NotParseable(type: T.ValueT.self)
+    }
   }
 }
 
