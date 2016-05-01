@@ -32,7 +32,7 @@ extension ShapeFileHeader: CustomDebugStringConvertible {
       "File Length: \(fileLength)",
       "Version: \(version)",
       "Shape Type: \(shapeType)",
-      "Bounding Box: \(BoundingBoxXYZM.debugDescription)",
+      "Bounding Box: \(boundingBox.debugDescription)",
       ].joinWithSeparator("\n")
   }
 }

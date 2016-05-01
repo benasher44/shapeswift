@@ -34,7 +34,7 @@ extension ProjectionConversionError: CustomDebugStringConvertible {
 
 
 extension Projection {
-  func convertForward(coordinates: [RadianCoordinate], to otherProjection: Projection) throws -> [RadianCoordinate] {
+  func convertForward(coordinates: [Coordinate], to otherProjection: Projection) throws -> [Coordinate] {
     let src = pj_init_plus(projInitArgs.cStringUsingEncoding(NSUTF8StringEncoding)!)
     if let err = pjInitError {
       throw ProjectionConversionError.error(errorNumber: err, function: .pjInit)
@@ -50,7 +50,7 @@ extension Projection {
       if err != 0 {
         throw ProjectionConversionError.error(errorNumber: err, function: .pjTransform)
       }
-      return RadianCoordinate(x, y)
+      return Coordinate(x: x, y: y)
     }
   }
 }
