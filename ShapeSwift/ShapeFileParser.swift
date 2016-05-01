@@ -32,6 +32,47 @@ extension ShapeDataDefinition where T: BigEndianByteOrdered {
   }
 }
 
+struct ShapeDataArrayDefinition<T: ByteOrdered> {
+  let start: Int
+  let size: Int
+  let count: Int
+
+  private func enumerateRanges(rangeEnumerationBlock: (Range<Int>) throws -> Void) rethrows {
+    let end = start + (count * size)
+    for rangeStart in start.stride(to: end, by: size) {
+      try rangeEnumerationBlock(rangeStart..<(rangeStart + size))
+    }
+  }
+}
+
+extension ShapeDataArrayDefinition where T: LittleEndianByteOrdered {
+  func parse(data: NSData) throws -> [T.ValueT]? {
+    var values = Array<T.ValueT>()
+    try enumerateRanges { range in
+      if let value = T.ValueT.makeFromLittleEndian(data, range: range) {
+        values.append(value)
+      } else {
+        throw ByteParseableError.NotParseable(type: T.ValueT.self)
+      }
+    }
+    return values
+  }
+}
+
+extension ShapeDataArrayDefinition where T: BigEndianByteOrdered {
+  func parse(data: NSData) throws -> [T.ValueT]? {
+    var values = Array<T.ValueT>()
+    try enumerateRanges { range in
+      if let value = T.ValueT.makeFromBigEndian(data, range: range) {
+        values.append(value)
+      } else {
+        throw ByteParseableError.NotParseable(type: T.ValueT.self)
+      }
+    }
+    return values
+  }
+}
+
 private let headerRange = 0..<100
 
 struct ShapeFileHeaderDefinition {

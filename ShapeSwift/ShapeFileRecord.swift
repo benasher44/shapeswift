@@ -45,3 +45,15 @@ struct ShapeFilePointRecord: ShapeFileRecord {
     y = try def.y.parse(data)!
   }
 }
+
+struct ShapeFileMultiPatchRecordDefinition {
+  let box: ShapeDataDefinition<LittleEndian<BoundingBoxXY>>
+  let numParts: ShapeDataDefinition<LittleEndian<Int32>>
+  let numPoints: ShapeDataDefinition<LittleEndian<Int32>>
+}
+
+struct ShapeFileMultiPatchRecord: ShapeFileRecord {
+  init?(data: NSData, start: Int) throws {
+
+  }
+}

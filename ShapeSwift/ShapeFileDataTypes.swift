@@ -30,6 +30,15 @@ struct CoordinateBounds {
   let max: Double
 }
 
+enum MultiPatchPartType: Int {
+  case triangleStrip = 0
+  case triangleFan = 1
+  case outerRing = 2
+  case innerRing = 3
+  case firstRing = 4
+  case ring = 5
+}
+
 enum ShapeType: Int {
   case nullShape = 0
   case point = 1
@@ -47,11 +56,6 @@ enum ShapeType: Int {
   case multiPatch = 31
 }
 
-extension ShapeType: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> ShapeType? {
-    return ShapeType(rawValue: Int(Int32.makeFromLittleEndian(data, range: range)!))
-  }
-}
 
 extension BoundingBoxXY: LittleEndianByteParseable {
   static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> BoundingBoxXY? {
@@ -74,5 +78,17 @@ extension BoundingBoxXYZM: LittleEndianByteParseable {
                                                max: Double.makeFromLittleEndian(data, range: byteRange.shifted(40))!),
                            m: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(48))!,
                                                max: Double.makeFromLittleEndian(data, range: byteRange.shifted(56))!))
+  }
+}
+
+extension MultiPatchPartType: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> MultiPatchPartType? {
+    return MultiPatchPartType(rawValue: Int(Int32.makeFromLittleEndian(data, range: range)!))
+  }
+}
+
+extension ShapeType: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> ShapeType? {
+    return ShapeType(rawValue: Int(Int32.makeFromLittleEndian(data, range: range)!))
   }
 }
