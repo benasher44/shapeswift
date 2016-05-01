@@ -32,7 +32,7 @@ extension ShapeDataDefinition where T: BigEndianByteOrdered {
   }
 }
 
-struct BoundingBox {
+struct BoundingBoxXYZM {
   let x: CoordinateBounds
   let y: CoordinateBounds
   let z: CoordinateBounds
@@ -65,8 +65,8 @@ extension ShapeType: LittleEndianByteOrdered {
   typealias ValueT = ShapeType
 }
 
-extension BoundingBox: LittleEndianByteOrdered {
-  typealias ValueT = BoundingBox
+extension BoundingBoxXYZM: LittleEndianByteOrdered {
+  typealias ValueT = BoundingBoxXYZM
 }
 
 extension ShapeType: LittleEndianByteParseable {
@@ -75,10 +75,10 @@ extension ShapeType: LittleEndianByteParseable {
   }
 }
 
-extension BoundingBox: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> BoundingBox? {
+extension BoundingBoxXYZM: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> BoundingBoxXYZM? {
     let byteRange = (range.startIndex)..<(range.startIndex + 8)
-    return BoundingBox(x: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange)!,
+    return BoundingBoxXYZM(x: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange)!,
                                            max: Double.makeFromLittleEndian(data, range: byteRange.shifted(16))!),
                        y: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(8))!,
                                            max: Double.makeFromLittleEndian(data, range: byteRange.shifted(24))!),
@@ -96,7 +96,7 @@ struct ShapeFileHeaderDefinition {
   let fileLength = ShapeDataDefinition<BigEndian<Int32>>(range: 24..<28)
   let version = ShapeDataDefinition<LittleEndian<Int32>>(range: 28..<32)
   let shapeType = ShapeDataDefinition<ShapeType>(range: 32..<36)
-  let boundingBox = ShapeDataDefinition<BoundingBox>(range: 36..<100)
+  let BoundingBoxXYZM = ShapeDataDefinition<BoundingBoxXYZM>(range: 36..<100)
 }
 
 struct ShapeFileHeader {
@@ -104,14 +104,14 @@ struct ShapeFileHeader {
   let fileLength: Int
   let version: Int
   let shapeType: ShapeType
-  let boundingBox: BoundingBox
+  let BoundingBoxXYZM: BoundingBoxXYZM
   init?(data: NSData) throws {
     let def = ShapeFileHeaderDefinition()
     fileCode = try Int(def.fileCode.parse(data)!)
     fileLength = try Int(def.fileLength.parse(data)!)
     version = try Int(def.version.parse(data)!)
     shapeType = try def.shapeType.parse(data)!
-    boundingBox = try def.boundingBox.parse(data)!
+    BoundingBoxXYZM = try def.BoundingBoxXYZM.parse(data)!
   }
 }
 

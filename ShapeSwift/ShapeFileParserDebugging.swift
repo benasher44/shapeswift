@@ -14,7 +14,7 @@ extension CoordinateBounds: CustomDebugStringConvertible {
   }
 }
 
-extension BoundingBox: CustomDebugStringConvertible {
+extension BoundingBoxXYZM: CustomDebugStringConvertible {
   var debugDescription: String {
     return [
       "X: \(x)",
@@ -32,7 +32,7 @@ extension ShapeFileHeader: CustomDebugStringConvertible {
       "File Length: \(fileLength)",
       "Version: \(version)",
       "Shape Type: \(shapeType)",
-      "Bounding Box: \(boundingBox.debugDescription)",
+      "Bounding Box: \(BoundingBoxXYZM.debugDescription)",
       ].joinWithSeparator("\n")
   }
 }
