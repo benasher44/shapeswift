@@ -1,6 +1,9 @@
 Pods
 .DS_Store
 ShapeSwift.xcodeproj/project.xcworkspace/xcuserdata/
+ShapeSwift.xcworkspace/xcshareddata/
 ShapeSwift.xcodeproj/xcuserdata/
 ShapeSwift.xcworkspace/xcuserdata/
 *.swp
+.bundle/
+
