@@ -48,21 +48,23 @@ struct ShapeFilePointRecord: ShapeFileRecord {
 
 struct ShapeFileMultiPointRecordParser {
   let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let points: ShapeDataArrayParser<LittleEndian<ShapeFilePointRecord>>
+  let points: ShapeDataArrayParser<LittleEndian<Coordinate>>
 
   init?(data: NSData, start: Int) throws {
-    box = try ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPoints = try ShapeDataParser<LittleEndian<Int32>>(start: box.end).parse(data: data)
-    points = ShapeDataArrayParser<LittleEndian<ShapeFilePointRecord>>(start: start + BoundingBoxXY.sizeBytes + Int32.sizeBytes, count: numPoints)
+    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
+    let numPoints = try Int(ShapeDataParser<LittleEndian<Int32>>(start: box.end).parse(data)!)
+    points = ShapeDataArrayParser<LittleEndian<Coordinate>>(start: start + BoundingBoxXY.sizeBytes + Int32.sizeBytes, count: numPoints)
   }
 }
 
 struct ShapeFileMultiPointRecord: ShapeFileRecord {
   let box: BoundingBoxXY
-  let points: [ShapeFilePointRecord]
+  let points: [Coordinate]
 
   init?(data: NSData, start: Int) throws {
-    let parser = ShapeFileMultiPatchRecordParser(data: data, start: start)
+    let parser = try ShapeFileMultiPointRecordParser(data: data, start: start)!
+    box = try parser.box.parse(data)!
+    points = try parser.points.parse(data)!
   }
 }
 
