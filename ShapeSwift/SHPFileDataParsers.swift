@@ -12,6 +12,12 @@ struct ShapeDataParser<T: ByteOrdered> {
   let start: Int
 }
 
+extension ShapeDataParser where T.ValueT: ByteParseable {
+  var end: Int {
+    return start + T.ValueT.sizeBytes
+  }
+}
+
 extension ShapeDataParser where T: LittleEndianByteOrdered {
   func parse(data: NSData) throws -> T.ValueT? {
     if let value = T.ValueT.makeFromLittleEndian(data, start: start) {
