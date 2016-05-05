@@ -19,7 +19,9 @@ struct LittleEndian<T: LittleEndianByteParseable> {
 }
 
 /// Empty protocol to allow constraining to ghost types that are ByteOrdered
-protocol ByteOrdered {}
+protocol ByteOrdered {
+  associatedtype ValueT
+}
 
 /// Allow constraining to ghost types that contain value types that can be parsed from big endian bytes
 protocol BigEndianByteOrdered: ByteOrdered {
@@ -42,36 +44,46 @@ enum ByteParseableError: ErrorType {
   case NotParseable(type: ByteParseable.Type)
 }
 
-protocol ByteParseable {}
+protocol ByteParseable {
+  static var sizeBytes: Int { get }
+}
 
 protocol BigEndianByteParseable: ByteParseable {
-  static func makeFromBigEndian(data: NSData, range: Range<Int>) -> Self?
+  static func makeFromBigEndian(data: NSData, start: Int) -> Self?
 }
 
 protocol LittleEndianByteParseable: ByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> Self?
+  static func makeFromLittleEndian(data: NSData, start: Int) -> Self?
+}
+
+extension Int32: ByteParseable {
+  static let sizeBytes = 4
 }
 
 extension Int32: BigEndianByteParseable {
-  static func makeFromBigEndian(data: NSData, range: Range<Int>) -> Int32? {
+  static func makeFromBigEndian(data: NSData, start: Int) -> Int32? {
     var rawInt: Int32 = 0
-    data.getBytes(&rawInt, range: NSRange(fromRange: range))
+    data.getBytes(&rawInt, range: NSRange(location: start, length: sizeBytes))
     return Int32(bigEndian: rawInt)
   }
 }
 
 extension Int32: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> Int32? {
+  static func makeFromLittleEndian(data: NSData, start: Int) -> Int32? {
     var rawInt: Int32 = 0
-    data.getBytes(&rawInt, range: NSRange(fromRange: range))
+    data.getBytes(&rawInt, range: NSRange(location: start, length: sizeBytes))
     return Int32(littleEndian: rawInt)
   }
 }
 
+extension Double: ByteParseable {
+  static let sizeBytes = 8
+}
+
 extension Double: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> Double? {
+  static func makeFromLittleEndian(data: NSData, start: Int) -> Double? {
     var rawDouble: Int64 = 0
-    data.getBytes(&rawDouble, range: NSRange(fromRange: range))
+    data.getBytes(&rawDouble, range: NSRange(location: start, length: sizeBytes))
     return unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
   }
 }

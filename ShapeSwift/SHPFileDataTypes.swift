@@ -56,47 +56,63 @@ enum ShapeType: Int {
   case multiPatch = 31
 }
 
+extension BoundingBoxXY: ByteParseable {
+  static let sizeBytes = Double.sizeBytes * 4
+}
 
 extension BoundingBoxXY: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> BoundingBoxXY? {
-    let byteRange = (range.startIndex)..<(range.startIndex + 8)
-    return BoundingBoxXY(x: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange)!,
-                                             max: Double.makeFromLittleEndian(data, range: byteRange.shifted(16))!),
-                         y: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(8))!,
-                                             max: Double.makeFromLittleEndian(data, range: byteRange.shifted(24))!))
+  static func makeFromLittleEndian(data: NSData, start: Int) -> BoundingBoxXY? {
+    return BoundingBoxXY(x: CoordinateBounds(min: Double.makeFromLittleEndian(data, start: start)!,
+                                             max: Double.makeFromLittleEndian(data, start: start + Double.sizeBytes * 2)!),
+                         y: CoordinateBounds(min: Double.makeFromLittleEndian(data, start: start + Double.sizeBytes)!,
+                                             max: Double.makeFromLittleEndian(data, start: start + 3 * Double.sizeBytes)!))
   }
+}
+
+extension BoundingBoxXYZM: ByteParseable {
+  static let sizeBytes = Double.sizeBytes * 8
 }
 
 extension BoundingBoxXYZM: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> BoundingBoxXYZM? {
-    let byteRange = (range.startIndex)..<(range.startIndex + 8)
-    return BoundingBoxXYZM(x: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange)!,
-                                               max: Double.makeFromLittleEndian(data, range: byteRange.shifted(16))!),
-                           y: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(8))!,
-                                               max: Double.makeFromLittleEndian(data, range: byteRange.shifted(24))!),
-                           z: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(32))!,
-                                               max: Double.makeFromLittleEndian(data, range: byteRange.shifted(40))!),
-                           m: CoordinateBounds(min: Double.makeFromLittleEndian(data, range: byteRange.shifted(48))!,
-                                               max: Double.makeFromLittleEndian(data, range: byteRange.shifted(56))!))
+  static func makeFromLittleEndian(data: NSData, start: Int) -> BoundingBoxXYZM? {
+    return BoundingBoxXYZM(x: CoordinateBounds(min: Double.makeFromLittleEndian(data, start: start)!,
+                                               max: Double.makeFromLittleEndian(data, start: start + 2 * Double.sizeBytes)!),
+                           y: CoordinateBounds(min: Double.makeFromLittleEndian(data, start: start + Double.sizeBytes)!,
+                                               max: Double.makeFromLittleEndian(data, start: start + 3 * Double.sizeBytes)!),
+                           z: CoordinateBounds(min: Double.makeFromLittleEndian(data, start: start + 4 * Double.sizeBytes)!,
+                                               max: Double.makeFromLittleEndian(data, start: start + 5 * Double.sizeBytes)!),
+                           m: CoordinateBounds(min: Double.makeFromLittleEndian(data, start: start + 6 * Double.sizeBytes)!,
+                                               max: Double.makeFromLittleEndian(data, start: start + 7 * Double.sizeBytes)!))
   }
+}
+
+extension Coordinate: ByteParseable {
+  static let sizeBytes = Double.sizeBytes * 2
 }
 
 extension Coordinate: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> Coordinate? {
-    let byteRange = (range.startIndex)..<(range.startIndex + 8)
-    return Coordinate(x: Double.makeFromLittleEndian(data, range: byteRange)!,
-                      y: Double.makeFromLittleEndian(data, range: byteRange.shifted(8))!)
+  static func makeFromLittleEndian(data: NSData, start: Int) -> Coordinate? {
+    return Coordinate(x: Double.makeFromLittleEndian(data, start: start)!,
+                      y: Double.makeFromLittleEndian(data, start: start + Double.sizeBytes)!)
   }
+}
+
+extension MultiPatchPartType: ByteParseable {
+  static let sizeBytes = Int32.sizeBytes
 }
 
 extension MultiPatchPartType: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> MultiPatchPartType? {
-    return MultiPatchPartType(rawValue: Int(Int32.makeFromLittleEndian(data, range: range)!))
+  static func makeFromLittleEndian(data: NSData, start: Int) -> MultiPatchPartType? {
+    return MultiPatchPartType(rawValue: Int(Int32.makeFromLittleEndian(data, start: start)!))
   }
 }
 
+extension ShapeType: ByteParseable {
+  static let sizeBytes = Int32.sizeBytes
+}
+
 extension ShapeType: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, range: Range<Int>) -> ShapeType? {
-    return ShapeType(rawValue: Int(Int32.makeFromLittleEndian(data, range: range)!))
+  static func makeFromLittleEndian(data: NSData, start: Int) -> ShapeType? {
+    return ShapeType(rawValue: Int(Int32.makeFromLittleEndian(data, start: start)!))
   }
 }

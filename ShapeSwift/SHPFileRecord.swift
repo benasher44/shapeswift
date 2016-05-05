@@ -29,7 +29,7 @@ struct ShapeFilePointRecordParser {
   let point: ShapeDataParser<LittleEndian<Coordinate>>
 
   init(start: Int) {
-    point = ShapeDataParser<LittleEndian<Coordinate>>(range: start..<(start + 16))
+    point = ShapeDataParser<LittleEndian<Coordinate>>(start: start)
   }
 }
 

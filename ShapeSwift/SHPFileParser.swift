@@ -11,11 +11,11 @@ import Foundation
 private let headerRange = 0..<100
 
 struct ShapeFileHeaderParser {
-  let fileCode = ShapeDataParser<BigEndian<Int32>>(range: 0..<4)
-  let fileLength = ShapeDataParser<BigEndian<Int32>>(range: 24..<28)
-  let version = ShapeDataParser<LittleEndian<Int32>>(range: 28..<32)
-  let shapeType = ShapeDataParser<LittleEndian<ShapeType>>(range: 32..<36)
-  let boundingBox = ShapeDataParser<LittleEndian<BoundingBoxXYZM>>(range: 36..<100)
+  let fileCode = ShapeDataParser<BigEndian<Int32>>(start: 0)
+  let fileLength = ShapeDataParser<BigEndian<Int32>>(start: 24)
+  let version = ShapeDataParser<LittleEndian<Int32>>(start: 28)
+  let shapeType = ShapeDataParser<LittleEndian<ShapeType>>(start: 32)
+  let boundingBox = ShapeDataParser<LittleEndian<BoundingBoxXYZM>>(start: 36)
 }
 
 struct ShapeFileHeader {
@@ -38,8 +38,8 @@ struct ShapeFileRecordHeaderParser {
   let recordNumber: ShapeDataParser<BigEndian<Int32>>
   let contentLength: ShapeDataParser<BigEndian<Int32>>
   init(start: Int) {
-    recordNumber = ShapeDataParser<BigEndian<Int32>>(range: start..<(start + 4))
-    contentLength = ShapeDataParser<BigEndian<Int32>>(range: (start + 4)..<(start + 8))
+    recordNumber = ShapeDataParser<BigEndian<Int32>>(start: start)
+    contentLength = ShapeDataParser<BigEndian<Int32>>(start: start + Int32.sizeBytes)
   }
 }
 

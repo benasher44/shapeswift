@@ -9,12 +9,12 @@
 import Foundation
 
 struct ShapeDataParser<T: ByteOrdered> {
-  let range: Range<Int>
+  let start: Int
 }
 
 extension ShapeDataParser where T: LittleEndianByteOrdered {
   func parse(data: NSData) throws -> T.ValueT? {
-    if let value = T.ValueT.makeFromLittleEndian(data, range: range) {
+    if let value = T.ValueT.makeFromLittleEndian(data, start: start) {
       return value
     } else {
       throw ByteParseableError.NotParseable(type: T.ValueT.self)
@@ -24,7 +24,7 @@ extension ShapeDataParser where T: LittleEndianByteOrdered {
 
 extension ShapeDataParser where T: BigEndianByteOrdered {
   func parse(data: NSData) throws -> T.ValueT? {
-    if let value = T.ValueT.makeFromBigEndian(data, range: range) {
+    if let value = T.ValueT.makeFromBigEndian(data, start: start) {
       return value
     } else {
       throw ByteParseableError.NotParseable(type: T.ValueT.self)
@@ -32,18 +32,17 @@ extension ShapeDataParser where T: BigEndianByteOrdered {
   }
 }
 
-struct ShapeDataArrayParser<T: ByteOrdered> {
+struct ShapeDataArrayParser<T: ByteOrdered where T.ValueT: ByteParseable> {
   let start: Int
-  let size: Int
   let count: Int
 
   var end: Int {
-    return start + (count * size)
+    return start + (count * T.ValueT.sizeBytes)
   }
 
-  private func enumerateRanges(rangeEnumerationBlock: (Range<Int>) throws -> Void) rethrows {
-    for rangeStart in start.stride(to: end, by: size) {
-      try rangeEnumerationBlock(rangeStart..<(rangeStart + size))
+  private func enumerateByteOffsets(byteOffsetEnumerationBlock: (Int) throws -> Void) rethrows {
+    for byteOffset in start.stride(to: end, by: T.ValueT.sizeBytes) {
+      try byteOffsetEnumerationBlock(byteOffset)
     }
   }
 }
@@ -51,8 +50,8 @@ struct ShapeDataArrayParser<T: ByteOrdered> {
 extension ShapeDataArrayParser where T: LittleEndianByteOrdered {
   func parse(data: NSData) throws -> [T.ValueT]? {
     var values = Array<T.ValueT>()
-    try enumerateRanges { range in
-      if let value = T.ValueT.makeFromLittleEndian(data, range: range) {
+    try enumerateByteOffsets { start in
+      if let value = T.ValueT.makeFromLittleEndian(data, start: start) {
         values.append(value)
       } else {
         throw ByteParseableError.NotParseable(type: T.ValueT.self)
@@ -65,8 +64,8 @@ extension ShapeDataArrayParser where T: LittleEndianByteOrdered {
 extension ShapeDataArrayParser where T: BigEndianByteOrdered {
   func parse(data: NSData) throws -> [T.ValueT]? {
     var values = Array<T.ValueT>()
-    try enumerateRanges { range in
-      if let value = T.ValueT.makeFromBigEndian(data, range: range) {
+    try enumerateByteOffsets { start in
+      if let value = T.ValueT.makeFromBigEndian(data, start: start) {
         values.append(value)
       } else {
         throw ByteParseableError.NotParseable(type: T.ValueT.self)
