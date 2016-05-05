@@ -97,6 +97,17 @@ extension Coordinate: LittleEndianByteParseable {
   }
 }
 
+extension CoordinateBounds: ByteParseable {
+  static let sizeBytes = Double.sizeBytes * 2
+}
+
+extension CoordinateBounds: LittleEndianByteParseable {
+  static func makeFromLittleEndian(data: NSData, start: Int) -> CoordinateBounds? {
+    return CoordinateBounds(min: Double.makeFromLittleEndian(data, start: start)!,
+                            max: Double.makeFromLittleEndian(data, start: start + Double.sizeBytes)!)
+  }
+}
+
 extension MultiPatchPartType: ByteParseable {
   static let sizeBytes = Int32.sizeBytes
 }
