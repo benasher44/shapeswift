@@ -88,15 +88,3 @@ extension Double: LittleEndianByteParseable {
   }
 }
 
-extension NSRange {
-  init(fromRange range: Range<Int>) {
-    self.init(location: range.startIndex, length: range.endIndex - range.startIndex)
-  }
-}
-
-extension Range where Element: IntegerArithmeticType {
-  func shifted(amount: Element) -> Range {
-    return (startIndex + amount)...(endIndex + amount)
-  }
-}
-
