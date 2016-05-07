@@ -19,7 +19,7 @@ extension ShapeDataParser where T.ValueT: ByteParseable {
 }
 
 extension ShapeDataParser where T: LittleEndianByteOrdered {
-  func parse(data: NSData) throws -> T.ValueT? {
+  func parse(data: NSData) throws -> T.ValueT {
     if let value = T.ValueT.makeFromLittleEndian(data, start: start) {
       return value
     } else {
@@ -29,7 +29,7 @@ extension ShapeDataParser where T: LittleEndianByteOrdered {
 }
 
 extension ShapeDataParser where T: BigEndianByteOrdered {
-  func parse(data: NSData) throws -> T.ValueT? {
+  func parse(data: NSData) throws -> T.ValueT {
     if let value = T.ValueT.makeFromBigEndian(data, start: start) {
       return value
     } else {
@@ -54,7 +54,7 @@ struct ShapeDataArrayParser<T: ByteOrdered where T.ValueT: ByteParseable> {
 }
 
 extension ShapeDataArrayParser where T: LittleEndianByteOrdered {
-  func parse(data: NSData) throws -> [T.ValueT]? {
+  func parse(data: NSData) throws -> [T.ValueT] {
     var values = Array<T.ValueT>()
     try enumerateByteOffsets { start in
       if let value = T.ValueT.makeFromLittleEndian(data, start: start) {
@@ -68,7 +68,7 @@ extension ShapeDataArrayParser where T: LittleEndianByteOrdered {
 }
 
 extension ShapeDataArrayParser where T: BigEndianByteOrdered {
-  func parse(data: NSData) throws -> [T.ValueT]? {
+  func parse(data: NSData) throws -> [T.ValueT] {
     var values = Array<T.ValueT>()
     try enumerateByteOffsets { start in
       if let value = T.ValueT.makeFromBigEndian(data, start: start) {

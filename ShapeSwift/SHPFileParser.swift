@@ -26,11 +26,11 @@ struct ShapeFileHeader {
   let boundingBox: BoundingBoxXYZM
   init?(data: NSData) throws {
     let parser = ShapeFileHeaderParser()
-    fileCode = try Int(parser.fileCode.parse(data)!)
-    fileLength = try Int(parser.fileLength.parse(data)!)
-    version = try Int(parser.version.parse(data)!)
-    shapeType = try parser.shapeType.parse(data)!
-    boundingBox = try parser.boundingBox.parse(data)!
+    fileCode = try Int(parser.fileCode.parse(data))
+    fileLength = try Int(parser.fileLength.parse(data))
+    version = try Int(parser.version.parse(data))
+    shapeType = try parser.shapeType.parse(data)
+    boundingBox = try parser.boundingBox.parse(data)
   }
 }
 
@@ -48,8 +48,8 @@ struct ShapeFileRecordHeader {
   let contentLength: Int
   init?(data: NSData, start: Int) throws {
     let parser = ShapeFileRecordHeaderParser(start: start)
-    recordNumber = try Int(parser.recordNumber.parse(data)!)
-    contentLength = try Int(parser.contentLength.parse(data)!)
+    recordNumber = try Int(parser.recordNumber.parse(data))
+    contentLength = try Int(parser.contentLength.parse(data))
   }
 }
 

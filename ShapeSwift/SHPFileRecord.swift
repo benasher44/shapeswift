@@ -58,7 +58,7 @@ struct ShapeFilePointRecord: ShapeFileRecord {
 
   init?(data: NSData, range: Range<Int>) throws {
     let parser = ShapeFilePointRecordParser(start: range.startIndex)
-    point = try parser.point.parse(data)!
+    point = try parser.point.parse(data)
   }
 }
 
@@ -70,7 +70,7 @@ struct ShapeFileMultiPointRecordParser {
 
   init?(data: NSData, start: Int) throws {
     box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPoints = try Int(ShapeDataParser<LittleEndian<Int32>>(start: box.end).parse(data)!)
+    let numPoints = try Int(ShapeDataParser<LittleEndian<Int32>>(start: box.end).parse(data))
     points = ShapeDataArrayParser<LittleEndian<Coordinate>>(start: start + BoundingBoxXY.sizeBytes + Int32.sizeBytes, count: numPoints)
   }
 }
@@ -81,8 +81,8 @@ struct ShapeFileMultiPointRecord: ShapeFileRecord {
 
   init?(data: NSData, range: Range<Int>) throws {
     let parser = try ShapeFileMultiPointRecordParser(data: data, start: range.startIndex)!
-    box = try parser.box.parse(data)!
-    points = try parser.points.parse(data)!
+    box = try parser.box.parse(data)
+    points = try parser.points.parse(data)
   }
 }
 
@@ -101,9 +101,9 @@ struct ShapeFileMultiPatchRecordParser {
   init(data: NSData, start: Int) throws {
     box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
     let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-    let numParts = try Int(numPartsParser.parse(data)!)
+    let numParts = try Int(numPartsParser.parse(data))
     let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
-    let numPoints = try Int(numPointsParser.parse(data)!)
+    let numPoints = try Int(numPointsParser.parse(data))
     parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
     partTypes = ShapeDataArrayParser<LittleEndian<MultiPatchPartType>>(start: parts.end, count: numParts)
     points = ShapeDataArrayParser<LittleEndian<Coordinate>>(start: partTypes.end, count: numPoints)
@@ -125,15 +125,15 @@ struct ShapeFileMultiPatchRecord: ShapeFileRecord {
   let mPoints: [Coordinate]
   init?(data: NSData, range: Range<Int>) throws {
     let parser = try ShapeFileMultiPatchRecordParser(data: data, start: range.startIndex)
-    box = try parser.box.parse(data)!
-    parts = try parser.parts.parse(data)!.map(Int.init)
-    partTypes = try parser.partTypes.parse(data)!
-    points = try parser.points.parse(data)!
-    zBounds = try parser.zBounds.parse(data)!
-    zPoints = try parser.zPoints.parse(data)!
+    box = try parser.box.parse(data)
+    parts = try parser.parts.parse(data).map(Int.init)
+    partTypes = try parser.partTypes.parse(data)
+    points = try parser.points.parse(data)
+    zBounds = try parser.zBounds.parse(data)
+    zPoints = try parser.zPoints.parse(data)
     if range.endIndex > parser.mBounds.start {
-      mBounds = try parser.mBounds.parse(data).flatMap(valueOrNilForOptionalValue)
-      mPoints = try parser.mPoints.parse(data)!.flatMap(valueOrNilForOptionalValue)
+      mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
+      mPoints = try parser.mPoints.parse(data).flatMap(valueOrNilForOptionalValue)
     } else {
       mBounds = nil
       mPoints = []
