@@ -49,11 +49,11 @@ protocol ByteParseable {
 }
 
 protocol BigEndianByteParseable: ByteParseable {
-  static func makeFromBigEndian(data: NSData, start: Int) -> Self?
+  init?(bigEndianData data: NSData, start: Int)
 }
 
 protocol LittleEndianByteParseable: ByteParseable {
-  static func makeFromLittleEndian(data: NSData, start: Int) -> Self?
+  init?(littleEndianData data: NSData, start: Int)
 }
 
 extension Int32: ByteParseable {
@@ -61,18 +61,18 @@ extension Int32: ByteParseable {
 }
 
 extension Int32: BigEndianByteParseable {
-  static func makeFromBigEndian(data: NSData, start: Int) -> Int32? {
+  init?(bigEndianData data: NSData, start: Int) {
     var rawInt: Int32 = 0
-    data.getBytes(&rawInt, range: NSRange(location: start, length: sizeBytes))
-    return Int32(bigEndian: rawInt)
+    data.getBytes(&rawInt, range: NSRange(location: start, length: self.dynamicType.sizeBytes))
+    self = Int32(bigEndian: rawInt)
   }
 }
 
 extension Int32: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, start: Int) -> Int32? {
+  init?(littleEndianData data: NSData, start: Int) {
     var rawInt: Int32 = 0
-    data.getBytes(&rawInt, range: NSRange(location: start, length: sizeBytes))
-    return Int32(littleEndian: rawInt)
+    data.getBytes(&rawInt, range: NSRange(location: start, length: self.dynamicType.sizeBytes))
+    self = Int32(littleEndian: rawInt)
   }
 }
 
@@ -81,10 +81,10 @@ extension Double: ByteParseable {
 }
 
 extension Double: LittleEndianByteParseable {
-  static func makeFromLittleEndian(data: NSData, start: Int) -> Double? {
+  init?(littleEndianData data: NSData, start: Int) {
     var rawDouble: Int64 = 0
-    data.getBytes(&rawDouble, range: NSRange(location: start, length: sizeBytes))
-    return unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
+    data.getBytes(&rawDouble, range: NSRange(location: start, length: self.dynamicType.sizeBytes))
+    self = unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
   }
 }
 
