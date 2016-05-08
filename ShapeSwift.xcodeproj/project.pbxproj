@@ -21,6 +21,8 @@
 		13EC2B181CACCF3F000063A1 /* sfsweeproutes.shp in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */; };
 		13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */; };
 		4A184A88E0900D649785A48E /* Pods_ShapeSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 012DA10185ED815FA5D0C0FD /* Pods_ShapeSwiftTests.framework */; };
+		4FE0CF3D1CDE8AB800DD5F78 /* ByteEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */; };
+		4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */; };
 		4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */; };
 		5F1ADDED9752C5645F9BA1B1 /* Pods_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B4B27BB11FB17DB3FF4162A /* Pods_ShapeSwift.framework */; };
 		A89C6DCF1CD3B060002A60BD /* SHPFileParserDebugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89C6DCE1CD3B060002A60BD /* SHPFileParserDebugging.swift */; };
@@ -56,6 +58,8 @@
 		13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shx; sourceTree = "<group>"; };
 		13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteParseable.swift; sourceTree = "<group>"; };
 		4B4B27BB11FB17DB3FF4162A /* Pods_ShapeSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodable.swift; sourceTree = "<group>"; };
+		4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodableTest.swift; sourceTree = "<group>"; };
 		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
 		6D285E97411DBCF751E129D7 /* Pods-ShapeSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		898E1A910A6293F2E204509D /* Pods-ShapeSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwift/Pods-ShapeSwift.release.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +122,7 @@
 				13EC2A6F1CACC93C000063A1 /* Info.plist */,
 				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,
 				136869C41CC929CE00D2DD81 /* Projection.swift */,
+				4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */,
 			);
 			path = ShapeSwift;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 		13EC2A781CACC93C000063A1 /* ShapeSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */,
 				13EC2B0F1CACCD93000063A1 /* sfsweeproutes */,
 				13EC2A791CACC93C000063A1 /* ShapeSwiftTests.swift */,
 				13EC2A7B1CACC93C000063A1 /* Info.plist */,
@@ -365,6 +371,7 @@
 				4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */,
 				13010F711CD64D5E00440342 /* SHPFileDataParsers.swift in Sources */,
 				13234D771CD5861900B037BE /* SHPFileDataTypes.swift in Sources */,
+				4FE0CF3D1CDE8AB800DD5F78 /* ByteEncodable.swift in Sources */,
 				13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */,
 				A89C6DCF1CD3B060002A60BD /* SHPFileParserDebugging.swift in Sources */,
 			);
@@ -375,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13EC2A7A1CACC93C000063A1 /* ShapeSwiftTests.swift in Sources */,
+				4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

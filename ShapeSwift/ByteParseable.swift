@@ -8,14 +8,20 @@
 
 import Foundation
 
-/// Ghost type that contains a type that should be parsed from big endian bytes
+/// Container for a type that should be parsed from big endian bytes
 struct BigEndian<T: BigEndianByteParseable> {
-  private init() {}
+  let value: ValueT
+  init(value: ValueT) {
+    self.value = value
+  }
 }
 
-/// Ghost type that contains a type that should be parsed from little endian bytes
+/// Container for a type that should be parsed from little endian bytes
 struct LittleEndian<T: LittleEndianByteParseable> {
-  private init() {}
+  let value: ValueT
+  init(value: ValueT) {
+    self.value = value
+  }
 }
 
 /// Empty protocol to allow constraining to ghost types that are ByteOrdered
