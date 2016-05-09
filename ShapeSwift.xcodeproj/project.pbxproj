@@ -529,6 +529,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6D285E97411DBCF751E129D7 /* Pods-ShapeSwiftTests.debug.xcconfig */;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ShapeSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = benasher44.ShapeSwiftTests;
@@ -540,6 +541,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EE583859CC6F3AF0C779D899 /* Pods-ShapeSwiftTests.release.xcconfig */;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ShapeSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = benasher44.ShapeSwiftTests;

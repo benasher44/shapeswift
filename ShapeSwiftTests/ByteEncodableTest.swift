@@ -8,14 +8,15 @@
 
 import XCTest
 @testable import ShapeSwift
+import proj4
 
 class ByteEncodableTest: XCTestCase {
   func testByteEncodableDouble() {
     let value: Double = 32.0
     let data = NSData(
       byteEncodableArray: [
-        LittleEndian<Double>(value: value)
-        // other data here also, e.g. LittleEndian<BoundingBoxXY>(...)
+        LittleEndianEncoded<Double>(value: value),
+        BoundingBoxXY(x: CoordinateBounds(min: 0, max: 10), y: CoordinateBounds(min: 0, max: 10))
       ]
     )
     let parsedValue = Double(littleEndianData: data, start: 0)

@@ -10,18 +10,12 @@ import Foundation
 
 /// Container for a type that should be parsed from big endian bytes
 struct BigEndian<T: BigEndianByteParseable> {
-  let value: ValueT
-  init(value: ValueT) {
-    self.value = value
-  }
+  let value: T
 }
 
 /// Container for a type that should be parsed from little endian bytes
 struct LittleEndian<T: LittleEndianByteParseable> {
-  let value: ValueT
-  init(value: ValueT) {
-    self.value = value
-  }
+  let value: T
 }
 
 /// Empty protocol to allow constraining to ghost types that are ByteOrdered
