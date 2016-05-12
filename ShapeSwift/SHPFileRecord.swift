@@ -86,9 +86,53 @@ struct ShapeFileMultiPointRecord: ShapeFileRecord {
   }
 }
 
-// MARK: PolylineZ
+// MARK: MultiPointZ
 
-struct ShapeFilePolylineZRecordParser {
+struct ShapeFileMultiPointZRecordParser {
+  let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
+  let points: ShapeDataArrayParser<LittleEndian<Coordinate>>
+  let zBounds: ShapeDataParser<LittleEndian<CoordinateBounds>>
+  let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate>>
+  let mBounds: ShapeDataParser<LittleEndian<CoordinateBounds>>
+  let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate>>
+  init(data: NSData, start: Int) throws {
+    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
+    let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
+    let numPoints = try Int(numPointsParser.parse(data))
+    points = ShapeDataArrayParser<LittleEndian<Coordinate>>(start: numPointsParser.end, count: numPoints)
+    zBounds = ShapeDataParser<LittleEndian<CoordinateBounds>>(start: points.end)
+    zPoints = ShapeDataArrayParser<LittleEndian<Coordinate>>(start: zBounds.end, count: numPoints)
+    mBounds = ShapeDataParser<LittleEndian<CoordinateBounds>>(start: zPoints.end)
+    mPoints = ShapeDataArrayParser<LittleEndian<Coordinate>>(start: mBounds.end, count: numPoints)
+  }
+}
+
+struct ShapeFileMultiPointZRecord: ShapeFileRecord {
+  let box: BoundingBoxXY
+  let points: [Coordinate]
+  let zBounds: CoordinateBounds
+  let zPoints: [Coordinate]
+  let mBounds: CoordinateBounds?
+  let mPoints: [Coordinate]
+  init?(data: NSData, range: Range<Int>) throws {
+    let parser = try ShapeFileMultiPointZRecordParser(data: data, start: range.startIndex)
+    box = try parser.box.parse(data)
+    points = try parser.points.parse(data)
+    zBounds = try parser.zBounds.parse(data)
+    zPoints = try parser.zPoints.parse(data)
+    if range.endIndex > parser.mBounds.start {
+      mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
+      mPoints = try parser.mPoints.parse(data).flatMap(valueOrNilForOptionalValue)
+    } else {
+      mBounds = nil
+      mPoints = []
+    }
+  }
+}
+
+// MARK: PolyLineZ
+
+struct ShapeFilePolyLineZRecordParser {
   let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
   let parts: ShapeDataArrayParser<LittleEndian<Int32>>
   let points: ShapeDataArrayParser<LittleEndian<Coordinate>>
@@ -111,7 +155,7 @@ struct ShapeFilePolylineZRecordParser {
   }
 }
 
-struct ShapeFilePolylineZRecord: ShapeFileRecord {
+struct ShapeFilePolyLineZRecord: ShapeFileRecord {
   let box: BoundingBoxXY
   let parts: [Int]
   let points: [Coordinate]
@@ -120,7 +164,7 @@ struct ShapeFilePolylineZRecord: ShapeFileRecord {
   let mBounds: CoordinateBounds?
   let mPoints: [Coordinate]
   init?(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFilePolylineZRecordParser(data: data, start: range.startIndex)
+    let parser = try ShapeFilePolyLineZRecordParser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
     points = try parser.points.parse(data)
