@@ -16,7 +16,7 @@ class ByteEncodableTest: XCTestCase {
     let data = NSData(
       byteEncodableArray: [
         LittleEndianEncoded<Double>(value: value),
-        BoundingBoxXY(x: CoordinateBounds(min: 0, max: 10), y: CoordinateBounds(min: 0, max: 10))
+        BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
       ]
     )
     let parsedValue = Double(littleEndianData: data, start: 0)
@@ -24,9 +24,9 @@ class ByteEncodableTest: XCTestCase {
   }
 
   func testEncodingMultipoint() {
-    let box = BoundingBoxXY(x: CoordinateBounds(min: 0, max: 10), y: CoordinateBounds(min: 0, max: 10))
+    let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
     let points = [
-      Coordinate(x: 0, y: 0), Coordinate(x: 10, y: 10)
+      Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
     ]
     let multipoint = ShapeFileMultiPointRecord(box: box, points: points)
 

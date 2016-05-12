@@ -100,7 +100,7 @@ extension ShapeType: LittleEndianByteEncodable {
   }
 }
 
-extension Coordinate: ByteEncodable {
+extension Coordinate2D: ByteEncodable {
   func encode() -> [Byte] {
     return Array([
       LittleEndianEncoded<Double>(value: x).encode(),

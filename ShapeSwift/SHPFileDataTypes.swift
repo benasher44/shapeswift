@@ -9,8 +9,8 @@
 import Foundation
 
 struct BoundingBoxXY {
-  let x: CoordinateBounds
-  let y: CoordinateBounds
+  let x: Coordinate2DBounds
+  let y: Coordinate2DBounds
 }
 
 func ==(lhs: BoundingBoxXY, rhs: BoundingBoxXY) -> Bool {
@@ -20,33 +20,33 @@ func ==(lhs: BoundingBoxXY, rhs: BoundingBoxXY) -> Bool {
 extension BoundingBoxXY: Equatable {}
 
 struct BoundingBoxXYZM {
-  let x: CoordinateBounds
-  let y: CoordinateBounds
-  let z: CoordinateBounds
-  let m: CoordinateBounds
+  let x: Coordinate2DBounds
+  let y: Coordinate2DBounds
+  let z: Coordinate2DBounds
+  let m: Coordinate2DBounds
 }
 
-struct Coordinate {
+struct Coordinate2D {
   let x: Double
   let y: Double
 }
 
-func ==(lhs: Coordinate, rhs: Coordinate) -> Bool {
+func ==(lhs: Coordinate2D, rhs: Coordinate2D) -> Bool {
   return lhs.x == rhs.x && lhs.y == rhs.y
 }
 
-extension Coordinate: Equatable {}
+extension Coordinate2D: Equatable {}
 
-struct CoordinateBounds {
+struct Coordinate2DBounds {
   let min: Double
   let max: Double
 }
 
-func ==(lhs: CoordinateBounds, rhs: CoordinateBounds) -> Bool {
+func ==(lhs: Coordinate2DBounds, rhs: Coordinate2DBounds) -> Bool {
   return lhs.min == rhs.min && lhs.max == rhs.max
 }
 
-extension CoordinateBounds: Equatable {}
+extension Coordinate2DBounds: Equatable {}
 
 enum MultiPatchPartType: Int {
   case triangleStrip = 0
@@ -80,9 +80,9 @@ extension BoundingBoxXY: ByteParseable {
 
 extension BoundingBoxXY: LittleEndianByteParseable {
   init?(littleEndianData data: NSData, start: Int) {
-    self = BoundingBoxXY(x: CoordinateBounds(min: Double(littleEndianData: data, start: start)!,
+    self = BoundingBoxXY(x: Coordinate2DBounds(min: Double(littleEndianData: data, start: start)!,
                                              max: Double(littleEndianData: data, start: start + Double.sizeBytes * 2)!),
-                         y: CoordinateBounds(min: Double(littleEndianData: data, start: start + Double.sizeBytes)!,
+                         y: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + Double.sizeBytes)!,
                                              max: Double(littleEndianData: data, start: start + 3 * Double.sizeBytes)!))
   }
 }
@@ -93,35 +93,35 @@ extension BoundingBoxXYZM: ByteParseable {
 
 extension BoundingBoxXYZM: LittleEndianByteParseable {
   init?(littleEndianData data: NSData, start: Int) {
-    self = BoundingBoxXYZM(x: CoordinateBounds(min: Double(littleEndianData: data, start: start)!,
+    self = BoundingBoxXYZM(x: Coordinate2DBounds(min: Double(littleEndianData: data, start: start)!,
                                                max: Double(littleEndianData: data, start: start + 2 * Double.sizeBytes)!),
-                           y: CoordinateBounds(min: Double(littleEndianData: data, start: start + Double.sizeBytes)!,
+                           y: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + Double.sizeBytes)!,
                                                max: Double(littleEndianData: data, start: start + 3 * Double.sizeBytes)!),
-                           z: CoordinateBounds(min: Double(littleEndianData: data, start: start + 4 * Double.sizeBytes)!,
+                           z: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + 4 * Double.sizeBytes)!,
                                                max: Double(littleEndianData: data, start: start + 5 * Double.sizeBytes)!),
-                           m: CoordinateBounds(min: Double(littleEndianData: data, start: start + 6 * Double.sizeBytes)!,
+                           m: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + 6 * Double.sizeBytes)!,
                                                max: Double(littleEndianData: data, start: start + 7 * Double.sizeBytes)!))
   }
 }
 
-extension Coordinate: ByteParseable {
+extension Coordinate2D: ByteParseable {
   static let sizeBytes = Double.sizeBytes * 2
 }
 
-extension Coordinate: LittleEndianByteParseable {
+extension Coordinate2D: LittleEndianByteParseable {
   init?(littleEndianData data: NSData, start: Int) {
-    self = Coordinate(x: Double(littleEndianData: data, start: start)!,
+    self = Coordinate2D(x: Double(littleEndianData: data, start: start)!,
                       y: Double(littleEndianData: data, start: start + Double.sizeBytes)!)
   }
 }
 
-extension CoordinateBounds: ByteParseable {
+extension Coordinate2DBounds: ByteParseable {
   static let sizeBytes = Double.sizeBytes * 2
 }
 
-extension CoordinateBounds: LittleEndianByteParseable {
+extension Coordinate2DBounds: LittleEndianByteParseable {
   init?(littleEndianData data: NSData, start: Int) {
-    self = CoordinateBounds(min: Double(littleEndianData: data, start: start)!,
+    self = Coordinate2DBounds(min: Double(littleEndianData: data, start: start)!,
                             max: Double(littleEndianData: data, start: start + Double.sizeBytes)!)
   }
 }

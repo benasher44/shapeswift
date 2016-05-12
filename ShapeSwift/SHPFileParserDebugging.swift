@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension CoordinateBounds: CustomDebugStringConvertible {
+extension Coordinate2DBounds: CustomDebugStringConvertible {
   var debugDescription: String {
     return "{\(min), \(max)}"
   }
