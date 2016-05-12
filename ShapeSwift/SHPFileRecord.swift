@@ -86,6 +86,35 @@ struct ShapeFileMultiPointRecord: ShapeFileRecord {
   }
 }
 
+// MARK: PointZ
+
+struct ShapeFilePointZRecordParser {
+  let x: ShapeDataParser<LittleEndian<Double>>
+  let y: ShapeDataParser<LittleEndian<Double>>
+  let z: ShapeDataParser<LittleEndian<Double>>
+  let m: ShapeDataParser<LittleEndian<Double>>
+  init(start: Int) {
+    x = ShapeDataParser<LittleEndian<Double>>(start: start)
+    y = ShapeDataParser<LittleEndian<Double>>(start: x.end)
+    z = ShapeDataParser<LittleEndian<Double>>(start: y.end)
+    m = ShapeDataParser<LittleEndian<Double>>(start: z.end)
+  }
+}
+
+struct ShapeFilePointZRecord: ShapeFileRecord {
+  let x: Double
+  let y: Double
+  let z: Double
+  let m: Double
+  init(data: NSData, range: Range<Int>) throws {
+    let parser = ShapeFilePointZRecordParser(start: range.startIndex)
+    x = try parser.x.parse(data)
+    y = try parser.y.parse(data)
+    z = try parser.z.parse(data)
+    m = try parser.m.parse(data)
+  }
+}
+
 // MARK: MultiPointZ
 
 struct ShapeFileMultiPointZRecordParser {
