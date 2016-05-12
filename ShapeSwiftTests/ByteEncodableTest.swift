@@ -22,4 +22,16 @@ class ByteEncodableTest: XCTestCase {
     let parsedValue = Double(littleEndianData: data, start: 0)
     XCTAssertEqual(value, parsedValue)
   }
+
+  func testEncodingMultipoint() {
+    let box = BoundingBoxXY(x: CoordinateBounds(min: 0, max: 10), y: CoordinateBounds(min: 0, max: 10))
+    let points = [
+      Coordinate(x: 0, y: 0), Coordinate(x: 10, y: 10)
+    ]
+    let multipoint = ShapeFileMultiPointRecord(box: box, points: points)
+
+    let data = NSData(byteEncodableArray: [multipoint])
+    let parsedMultipoint = try! ShapeFileMultiPointRecord(data: data, range: 4..<68)! // todo(noah): should not be using 4 here
+    XCTAssertEqual(parsedMultipoint, multipoint)
+  }
 }

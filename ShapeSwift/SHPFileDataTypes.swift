@@ -13,6 +13,12 @@ struct BoundingBoxXY {
   let y: CoordinateBounds
 }
 
+func ==(lhs: BoundingBoxXY, rhs: BoundingBoxXY) -> Bool {
+  return lhs.x == rhs.x && lhs.y == rhs.y
+}
+
+extension BoundingBoxXY: Equatable {}
+
 struct BoundingBoxXYZM {
   let x: CoordinateBounds
   let y: CoordinateBounds
@@ -25,10 +31,22 @@ struct Coordinate {
   let y: Double
 }
 
+func ==(lhs: Coordinate, rhs: Coordinate) -> Bool {
+  return lhs.x == rhs.x && lhs.y == rhs.y
+}
+
+extension Coordinate: Equatable {}
+
 struct CoordinateBounds {
   let min: Double
   let max: Double
 }
+
+func ==(lhs: CoordinateBounds, rhs: CoordinateBounds) -> Bool {
+  return lhs.min == rhs.min && lhs.max == rhs.max
+}
+
+extension CoordinateBounds: Equatable {}
 
 enum MultiPatchPartType: Int {
   case triangleStrip = 0

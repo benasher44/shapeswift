@@ -13,7 +13,7 @@ typealias Byte = UInt8
 // MARK: Byte encodable protocols
 
 /// A type encodable to bytes without caring about endianness.
-protocol ByteEncodable: ByteParseable {
+protocol ByteEncodable {
   func encode() -> [Byte]
 }
 
@@ -94,6 +94,21 @@ extension Int32: BigEndianByteEncodable {
   }
 }
 
+extension ShapeType: LittleEndianByteEncodable {
+  func encodeLittleEndian() -> [Byte] {
+    return Int32(self.rawValue).encodeLittleEndian()
+  }
+}
+
+extension Coordinate: ByteEncodable {
+  func encode() -> [Byte] {
+    return Array([
+      LittleEndianEncoded<Double>(value: x).encode(),
+      LittleEndianEncoded<Double>(value: y).encode()
+    ].flatten())
+  }
+}
+
 extension BoundingBoxXY: ByteEncodable {
   func encode() -> [Byte] {
     return Array([
@@ -102,5 +117,16 @@ extension BoundingBoxXY: ByteEncodable {
       LittleEndianEncoded<Double>(value: x.max).encode(),
       LittleEndianEncoded<Double>(value: y.max).encode()
       ].flatten())
+  }
+}
+
+extension ShapeFileMultiPointRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    var bytes = Array([
+      LittleEndianEncoded<ShapeType>(value: .multiPoint).encode(),
+      box.encode()
+      ].flatten())
+    bytes.appendContentsOf(points.flatMap({ $0.encode() }))
+    return bytes
   }
 }
