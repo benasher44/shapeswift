@@ -27,7 +27,7 @@ func valueOrNilForOptionalValue(value: Coordinate) -> Coordinate? {
 }
 
 protocol ShapeFileRecord {
-  init?(data: NSData, range: Range<Int>) throws
+  init(data: NSData, range: Range<Int>) throws
 }
 
 extension ShapeFileRecord {
@@ -56,7 +56,7 @@ struct ShapeFilePointRecordParser {
 struct ShapeFilePointRecord: ShapeFileRecord {
   let point: Coordinate
 
-  init?(data: NSData, range: Range<Int>) throws {
+  init(data: NSData, range: Range<Int>) throws {
     let parser = ShapeFilePointRecordParser(start: range.startIndex)
     point = try parser.point.parse(data)
   }
@@ -68,7 +68,7 @@ struct ShapeFileMultiPointRecordParser {
   let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
   let points: ShapeDataArrayParser<LittleEndian<Coordinate>>
 
-  init?(data: NSData, start: Int) throws {
+  init(data: NSData, start: Int) throws {
     box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
     let numPoints = try Int(ShapeDataParser<LittleEndian<Int32>>(start: box.end).parse(data))
     points = ShapeDataArrayParser<LittleEndian<Coordinate>>(start: start + BoundingBoxXY.sizeBytes + Int32.sizeBytes, count: numPoints)
@@ -79,8 +79,8 @@ struct ShapeFileMultiPointRecord: ShapeFileRecord {
   let box: BoundingBoxXY
   let points: [Coordinate]
 
-  init?(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFileMultiPointRecordParser(data: data, start: range.startIndex)!
+  init(data: NSData, range: Range<Int>) throws {
+    let parser = try ShapeFileMultiPointRecordParser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     points = try parser.points.parse(data)
   }
@@ -114,7 +114,7 @@ struct ShapeFileMultiPointZRecord: ShapeFileRecord {
   let zPoints: [Coordinate]
   let mBounds: CoordinateBounds?
   let mPoints: [Coordinate]
-  init?(data: NSData, range: Range<Int>) throws {
+  init(data: NSData, range: Range<Int>) throws {
     let parser = try ShapeFileMultiPointZRecordParser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     points = try parser.points.parse(data)
@@ -163,7 +163,7 @@ struct ShapeFilePolyLineZRecord: ShapeFileRecord {
   let zPoints: [Coordinate]
   let mBounds: CoordinateBounds?
   let mPoints: [Coordinate]
-  init?(data: NSData, range: Range<Int>) throws {
+  init(data: NSData, range: Range<Int>) throws {
     let parser = try ShapeFilePolyLineZRecordParser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
@@ -213,7 +213,7 @@ struct ShapeFilePolygonZRecord: ShapeFileRecord {
   let zPoints: [Coordinate]
   let mBounds: CoordinateBounds?
   let mPoints: [Coordinate]
-  init?(data: NSData, range: Range<Int>) throws {
+  init(data: NSData, range: Range<Int>) throws {
     let parser = try ShapeFilePolygonZRecordParser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
@@ -267,7 +267,7 @@ struct ShapeFileMultiPatchRecord: ShapeFileRecord {
   let zPoints: [Coordinate]
   let mBounds: CoordinateBounds?
   let mPoints: [Coordinate]
-  init?(data: NSData, range: Range<Int>) throws {
+  init(data: NSData, range: Range<Int>) throws {
     let parser = try ShapeFileMultiPatchRecordParser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
