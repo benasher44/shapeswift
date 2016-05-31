@@ -1,11 +1,13 @@
 platform :ios, '8.0'
 use_frameworks!
 
-target 'ShapeSwift' do
+abstract_target 'ShapeSwiftShared' do
   pod 'proj4', :podspec => './podspecs/proj4.podspec'
+  target 'ShapeSwift'
   target 'ShapeSwiftTests' do
-    inherit! :search_paths
+    pod 'ShapeSwift', :path => './'
   end
 end
+
 
 
