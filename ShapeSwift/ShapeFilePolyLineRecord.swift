@@ -47,15 +47,13 @@ extension ShapeFilePolyLineRecord {
 
 extension ShapeFilePolyLineRecord: ByteEncodable {
   func encode() -> [Byte] {
-    let bytes = Array([
-      LittleEndianEncoded<ShapeType>(value: .polyLine).encode(),
-      box.encode(),
-      LittleEndianEncoded<Int32>(value: Int32(parts.count)).encode(),
-      LittleEndianEncoded<Int32>(value: Int32(points.count)).encode(),
-      parts.flatMap({ LittleEndianEncoded<Int32>(value: $0).encode() }),
-      points.flatMap({ $0.encode() }),
-      ].flatten())
-    return bytes
+    let byteEncodables = [[
+      LittleEndianEncoded<ShapeType>(value: .polyLine),
+      box,
+      LittleEndianEncoded<Int32>(value: Int32(parts.count)),
+      LittleEndianEncoded<Int32>(value: Int32(points.count))
+      ], parts.map({ LittleEndianEncoded<Int32>(value: $0) as ByteEncodable }), points.map({$0 as ByteEncodable})]
+    return makeByteArray(from: byteEncodables.flatten())
   }
 }
 

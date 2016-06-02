@@ -39,13 +39,12 @@ extension ShapeFileMultiPointRecord: ShapeFileRecord {
 
 extension ShapeFileMultiPointRecord: ByteEncodable {
   func encode() -> [Byte] {
-    var bytes = Array([
-      LittleEndianEncoded<ShapeType>(value: .multiPoint).encode(),
-      box.encode(),
-      LittleEndianEncoded<Int32>(value: Int32(points.count)).encode()
-      ].flatten())
-    bytes.appendContentsOf(points.flatMap({ $0.encode() }))
-    return bytes
+    let byteEncodables: [[ByteEncodable]] = [[
+      LittleEndianEncoded<ShapeType>(value: .multiPoint),
+      box,
+      LittleEndianEncoded<Int32>(value: Int32(points.count)),
+    ], points.map({$0 as ByteEncodable})]
+    return makeByteArray(from: byteEncodables.flatten())
   }
 }
 
