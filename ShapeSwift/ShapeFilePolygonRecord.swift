@@ -1,5 +1,5 @@
 //
-//  ShapeFilePolyLineRecord.swift
+//  ShapeFilePolygonRecord.swift
 //  ShapeSwift
 //
 //  Created by Noah Gilmore on 6/2/16.
@@ -10,16 +10,16 @@ import Foundation
 
 // MARK: Parser
 
-struct ShapeFilePolyLineRecordParser {
+struct ShapeFilePolygonRecordParser {
   let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
   let parts: ShapeDataArrayParser<LittleEndian<Int32>>
+  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
   init(data: NSData, start: Int) throws {
     box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
     let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
+    let numParts = try Int(numPartsParser.parse(data))
     let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
     let numPoints = try Int(numPointsParser.parse(data))
-    let numParts = try Int(numPartsParser.parse(data))
     parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
     points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
   }
@@ -27,25 +27,22 @@ struct ShapeFilePolyLineRecordParser {
 
 // MARK: Record
 
-/// todo: Because this specification does not forbid consecutive points with identical coordinates,
-/// shapefile readers must handle such cases. On the other hand, the degenerate, zero length
-/// parts that might result are not allowed.
-struct ShapeFilePolyLineRecord: ShapeFileRecord {
+struct ShapeFilePolygonRecord: ShapeFileRecord {
   let box: BoundingBoxXY
-  let points: [Coordinate2D]
   let parts: [Int32]
+  let points: [Coordinate2D]
 }
 
-extension ShapeFilePolyLineRecord {
+extension ShapeFilePolygonRecord {
   init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFilePolyLineRecordParser(data: data, start: range.startIndex)
+    let parser = try ShapeFilePolygonRecordParser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
-    points = try parser.points.parse(data)
     parts = try parser.parts.parse(data)
+    points = try parser.points.parse(data)
   }
 }
 
-extension ShapeFilePolyLineRecord: ByteEncodable {
+extension ShapeFilePolygonRecord: ByteEncodable {
   func encode() -> [Byte] {
     let byteEncodables = [[
       LittleEndianEncoded<ShapeType>(value: .polyLine),
@@ -59,8 +56,8 @@ extension ShapeFilePolyLineRecord: ByteEncodable {
 
 // MARK: Equatable
 
-extension ShapeFilePolyLineRecord: Equatable {}
+extension ShapeFilePolygonRecord: Equatable {}
 
-func ==(lhs: ShapeFilePolyLineRecord, rhs: ShapeFilePolyLineRecord) -> Bool {
+func ==(lhs: ShapeFilePolygonRecord, rhs: ShapeFilePolygonRecord) -> Bool {
   return lhs.box == rhs.box && lhs.points == rhs.points && lhs.parts == rhs.parts
 }
