@@ -10,6 +10,7 @@
 		13010F711CD64D5E00440342 /* SHPFileDataParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13010F701CD64D5E00440342 /* SHPFileDataParsers.swift */; };
 		132015AB1D008CE700991F3A /* ShapeFilePointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132015AA1D008CE700991F3A /* ShapeFilePointRecord.swift */; };
 		132015AD1D0091E900991F3A /* PointTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132015AC1D0091E900991F3A /* PointTest.swift */; };
+		132015AF1D00962700991F3A /* RecordParsingTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132015AE1D00962700991F3A /* RecordParsingTestUtil.swift */; };
 		13234D771CD5861900B037BE /* SHPFileDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13234D761CD5861900B037BE /* SHPFileDataTypes.swift */; };
 		136869C51CC929CE00D2DD81 /* Projection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136869C41CC929CE00D2DD81 /* Projection.swift */; };
 		13EC2A6E1CACC93C000063A1 /* ShapeSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,6 +50,7 @@
 		13010F701CD64D5E00440342 /* SHPFileDataParsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileDataParsers.swift; sourceTree = "<group>"; };
 		132015AA1D008CE700991F3A /* ShapeFilePointRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFilePointRecord.swift; sourceTree = "<group>"; };
 		132015AC1D0091E900991F3A /* PointTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointTest.swift; sourceTree = "<group>"; };
+		132015AE1D00962700991F3A /* RecordParsingTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordParsingTestUtil.swift; sourceTree = "<group>"; };
 		13234D761CD5861900B037BE /* SHPFileDataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileDataTypes.swift; sourceTree = "<group>"; };
 		136869C41CC929CE00D2DD81 /* Projection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Projection.swift; sourceTree = "<group>"; };
 		13EC2A6A1CACC93C000063A1 /* ShapeSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShapeSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +151,7 @@
 				132015AC1D0091E900991F3A /* PointTest.swift */,
 				13EC2B0F1CACCD93000063A1 /* sfsweeproutes */,
 				13EC2A791CACC93C000063A1 /* ShapeSwiftTests.swift */,
+				132015AE1D00962700991F3A /* RecordParsingTestUtil.swift */,
 				13EC2A7B1CACC93C000063A1 /* Info.plist */,
 			);
 			path = ShapeSwiftTests;
@@ -491,6 +494,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F70FD5A1D008C09007D6012 /* MultiPointTest.swift in Sources */,
+				132015AF1D00962700991F3A /* RecordParsingTestUtil.swift in Sources */,
 				132015AD1D0091E900991F3A /* PointTest.swift in Sources */,
 				4F70FD5E1D0091D6007D6012 /* PolyLineTest.swift in Sources */,
 				13EC2A7A1CACC93C000063A1 /* ShapeSwiftTests.swift in Sources */,

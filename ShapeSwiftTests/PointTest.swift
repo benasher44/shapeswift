@@ -14,8 +14,6 @@ class PointTest: XCTestCase {
 
   func testDecodingPoint() {
     let point = ShapeFilePointRecord(point: Coordinate2D(x: 10.0, y: 10.0))
-    let data = NSData(byteEncodableArray: [point])
-    let parsedPoint = try! ShapeFilePointRecord(data: data, range: 4..<16)
-    XCTAssertEqual(point, parsedPoint)
+    testParsingRecord(point, range: 4..<16)
   }
 }
