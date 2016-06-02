@@ -62,33 +62,6 @@ struct ShapeFilePointRecord: ShapeFileRecord {
   }
 }
 
-// MARK: MultiPoint
-
-struct ShapeFileMultiPointRecordParser {
-  let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-
-  init(data: NSData, start: Int) throws {
-    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-    let numPoints = try Int(numPointsParser.parse(data))
-    points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: numPointsParser.end, count: numPoints)
-  }
-}
-
-struct ShapeFileMultiPointRecord {
-  let box: BoundingBoxXY
-  let points: [Coordinate2D]
-}
-
-extension ShapeFileMultiPointRecord: ShapeFileRecord {
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFileMultiPointRecordParser(data: data, start: range.startIndex)
-    box = try parser.box.parse(data)
-    points = try parser.points.parse(data)
-  }
-}
-
 // MARK: PolyLine
 
 struct ShapeFilePolyLineRecordParser {
@@ -432,12 +405,6 @@ struct ShapeFilePolygonZRecord: ShapeFileRecord {
       mPoints = []
     }
   }
-}
-
-extension ShapeFileMultiPointRecord: Equatable {}
-
-func ==(lhs: ShapeFileMultiPointRecord, rhs: ShapeFileMultiPointRecord) -> Bool {
-  return lhs.box == rhs.box && lhs.points == rhs.points
 }
 
 // MARK: Multipatch

@@ -22,6 +22,7 @@
 		13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */; };
 		1D77F0930008E674B4760A2C /* Pods_ShapeSwiftShared_ShapeSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DDB803F649514FA4270F7F /* Pods_ShapeSwiftShared_ShapeSwiftTests.framework */; };
 		26FB291EF3720F5E52D3009F /* Pods_ShapeSwiftShared_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F2C47BAFC665469CBADAD34 /* Pods_ShapeSwiftShared_ShapeSwift.framework */; };
+		4F70FD581D008B3A007D6012 /* ShapeFileMultiPointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */; };
 		4FE0CF3D1CDE8AB800DD5F78 /* ByteEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */; };
 		4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */; };
 		4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */; };
@@ -56,6 +57,7 @@
 		13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shx; sourceTree = "<group>"; };
 		13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteParseable.swift; sourceTree = "<group>"; };
 		4851BC5E8983FB33F50A8D46 /* Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwift/Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig"; sourceTree = "<group>"; };
+		4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapeFileMultiPointRecord.swift; path = Records/ShapeFileMultiPointRecord.swift; sourceTree = "<group>"; };
 		4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodable.swift; sourceTree = "<group>"; };
 		4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodableTest.swift; sourceTree = "<group>"; };
 		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		13EC2A6C1CACC93C000063A1 /* ShapeSwift */ = {
 			isa = PBXGroup;
 			children = (
+				4F70FD561D008B19007D6012 /* Records */,
 				13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */,
 				13010F701CD64D5E00440342 /* SHPFileDataParsers.swift */,
 				13234D761CD5861900B037BE /* SHPFileDataTypes.swift */,
@@ -147,6 +150,14 @@
 				13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */,
 			);
 			path = sfsweeproutes;
+			sourceTree = "<group>";
+		};
+		4F70FD561D008B19007D6012 /* Records */ = {
+			isa = PBXGroup;
+			children = (
+				4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */,
+			);
+			name = Records;
 			sourceTree = "<group>";
 		};
 		D6F497FE21527559DF7830FB /* Pods */ = {
@@ -366,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				136869C51CC929CE00D2DD81 /* Projection.swift in Sources */,
+				4F70FD581D008B3A007D6012 /* ShapeFileMultiPointRecord.swift in Sources */,
 				A8E2D3E31CD3BEE200561BB3 /* SHPFileRecord.swift in Sources */,
 				13EC2B0E1CACCC84000063A1 /* SHPFileParser.swift in Sources */,
 				4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */,
