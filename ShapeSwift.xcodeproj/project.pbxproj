@@ -23,6 +23,7 @@
 		1D77F0930008E674B4760A2C /* Pods_ShapeSwiftShared_ShapeSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DDB803F649514FA4270F7F /* Pods_ShapeSwiftShared_ShapeSwiftTests.framework */; };
 		26FB291EF3720F5E52D3009F /* Pods_ShapeSwiftShared_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F2C47BAFC665469CBADAD34 /* Pods_ShapeSwiftShared_ShapeSwift.framework */; };
 		4F70FD581D008B3A007D6012 /* ShapeFileMultiPointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */; };
+		4F70FD5A1D008C09007D6012 /* MultiPointTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD591D008C09007D6012 /* MultiPointTest.swift */; };
 		4FE0CF3D1CDE8AB800DD5F78 /* ByteEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */; };
 		4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */; };
 		4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */; };
@@ -58,6 +59,7 @@
 		13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteParseable.swift; sourceTree = "<group>"; };
 		4851BC5E8983FB33F50A8D46 /* Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwift/Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig"; sourceTree = "<group>"; };
 		4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapeFileMultiPointRecord.swift; path = Records/ShapeFileMultiPointRecord.swift; sourceTree = "<group>"; };
+		4F70FD591D008C09007D6012 /* MultiPointTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPointTest.swift; sourceTree = "<group>"; };
 		4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodable.swift; sourceTree = "<group>"; };
 		4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodableTest.swift; sourceTree = "<group>"; };
 		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		13EC2A781CACC93C000063A1 /* ShapeSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				4F70FD591D008C09007D6012 /* MultiPointTest.swift */,
 				4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */,
 				13EC2B0F1CACCD93000063A1 /* sfsweeproutes */,
 				13EC2A791CACC93C000063A1 /* ShapeSwiftTests.swift */,
@@ -198,12 +201,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13EC2A7E1CACC93C000063A1 /* Build configuration list for PBXNativeTarget "ShapeSwift" */;
 			buildPhases = (
+				07C2F3C479A3C49C3BDE4647 /* [CP] Check Pods Manifest.lock */,
 				96F7A1BE21B10837004638C9 /* [CP] Check Pods Manifest.lock */,
 				13EC2A651CACC93C000063A1 /* Sources */,
 				13EC2A661CACC93C000063A1 /* Frameworks */,
 				13EC2A671CACC93C000063A1 /* Headers */,
 				13EC2A681CACC93C000063A1 /* Resources */,
 				7A6838FE12389E4BD2A2FCFE /* [CP] Copy Pods Resources */,
+				695C8E928FB7C6D5F2BCB5B6 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -218,12 +223,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13EC2A811CACC93C000063A1 /* Build configuration list for PBXNativeTarget "ShapeSwiftTests" */;
 			buildPhases = (
+				D12FF51765E323572786DC7E /* [CP] Check Pods Manifest.lock */,
 				AF1C7CEBECCEBD762182C721 /* [CP] Check Pods Manifest.lock */,
 				13EC2A701CACC93C000063A1 /* Sources */,
 				13EC2A711CACC93C000063A1 /* Frameworks */,
 				13EC2A721CACC93C000063A1 /* Resources */,
 				E31746EE8E4DFC72AC909300 /* [CP] Embed Pods Frameworks */,
 				7765F7FD50D6EB6D8CDBE393 /* [CP] Copy Pods Resources */,
+				B4C6801BB84328217EBCA5AE /* 📦 Embed Pods Frameworks */,
+				5FE473D693BF6901E06E89E4 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -294,6 +302,51 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		07C2F3C479A3C49C3BDE4647 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5FE473D693BF6901E06E89E4 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwiftTests/Pods-ShapeSwiftShared-ShapeSwiftTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		695C8E928FB7C6D5F2BCB5B6 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwift/Pods-ShapeSwiftShared-ShapeSwift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7765F7FD50D6EB6D8CDBE393 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -354,6 +407,36 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		B4C6801BB84328217EBCA5AE /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwiftTests/Pods-ShapeSwiftShared-ShapeSwiftTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D12FF51765E323572786DC7E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		E31746EE8E4DFC72AC909300 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -393,6 +476,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F70FD5A1D008C09007D6012 /* MultiPointTest.swift in Sources */,
 				13EC2A7A1CACC93C000063A1 /* ShapeSwiftTests.swift in Sources */,
 				4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */,
 			);
