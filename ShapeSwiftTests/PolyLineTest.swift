@@ -20,10 +20,7 @@ class PolyLineTest: XCTestCase {
       points: points,
       parts: [0]
     )
-
-    let data = NSData(byteEncodableArray: [polyline])
-    let parsedPolyLine = try! ShapeFilePolyLineRecord(data: data, range: 4..<76)
-    XCTAssertEqual(parsedPolyLine, polyline)
+    testParsingRecord(polyline, range: 4..<76)
   }
 
   func testMultipleParts() {
@@ -36,9 +33,6 @@ class PolyLineTest: XCTestCase {
       points: points,
       parts: [0, 2]
     )
-
-    let data = NSData(byteEncodableArray: [polyline])
-    let parsedPolyLine = try! ShapeFilePolyLineRecord(data: data, range: 4..<96)
-    XCTAssertEqual(parsedPolyLine, polyline)
+    testParsingRecord(polyline, range: 4..<96)
   }
 }
