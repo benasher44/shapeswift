@@ -17,6 +17,10 @@ protocol ByteEncodable {
   func encode() -> [Byte]
 }
 
+func makeByteArray(from byteEncodables: [ByteEncodable]) -> [Byte] {
+  return byteEncodables.flatMap { $0.encode() }
+}
+
 /// A type encodable to bytes in big endian
 protocol BigEndianByteEncodable: ByteParseable {
   func encodeBigEndian() -> [Byte]

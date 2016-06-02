@@ -9,13 +9,13 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   proj4:
-    :podspec: ./podspecs/proj4.podspec
+    :podspec: "./podspecs/proj4.podspec"
   ShapeSwift:
-    :path: ./
+    :path: "./"
 
 SPEC CHECKSUMS:
   proj4: edb2a6e8ade02488f0bb3f8f52ba8802e83928ba
-  ShapeSwift: 12d34f126af43d2946f3fc83ee04cd987380e78e
+  ShapeSwift: 1ca879492c4f91e15b1c1a2dcad6c9f7b58c0754
 
 PODFILE CHECKSUM: 8c40ab3c17c820aa8235eea0bc3547604b80294b
 

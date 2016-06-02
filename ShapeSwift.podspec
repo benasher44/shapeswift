@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/benasher44/ShapeSwift", :tag => "#{s.version}" }
 
 
-  s.source_files  = "ShapeSwift/*.swift"
+  s.source_files  = "ShapeSwift/**/*.swift"
   s.dependency "proj4"
 
 end
