@@ -33,10 +33,11 @@ extension ShapeFilePointRecord: ShapeFileRecord {
 
 extension ShapeFilePointRecord: ByteEncodable {
   func encode() -> [Byte] {
-    return makeByteArray(from: [
+    let byteEncodables: [ByteEncodable] = [
       LittleEndianEncoded<ShapeType>(value: .point),
       point,
-      ])
+      ]
+    return makeByteArray(from: byteEncodables)
   }
 }
 

@@ -17,7 +17,7 @@ protocol ByteEncodable {
   func encode() -> [Byte]
 }
 
-func makeByteArray(from byteEncodables: [ByteEncodable]) -> [Byte] {
+func makeByteArray<T: SequenceType where T.Generator.Element == ByteEncodable>(from byteEncodables: T) -> [Byte] {
   return byteEncodables.flatMap { $0.encode() }
 }
 
