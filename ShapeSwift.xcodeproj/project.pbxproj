@@ -26,6 +26,8 @@
 		26FB291EF3720F5E52D3009F /* Pods_ShapeSwiftShared_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F2C47BAFC665469CBADAD34 /* Pods_ShapeSwiftShared_ShapeSwift.framework */; };
 		4F70FD581D008B3A007D6012 /* ShapeFileMultiPointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */; };
 		4F70FD5A1D008C09007D6012 /* MultiPointTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD591D008C09007D6012 /* MultiPointTest.swift */; };
+		4F70FD5C1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD5B1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift */; };
+		4F70FD5E1D0091D6007D6012 /* PolyLineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD5D1D0091D6007D6012 /* PolyLineTest.swift */; };
 		4FE0CF3D1CDE8AB800DD5F78 /* ByteEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */; };
 		4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */; };
 		4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */; };
@@ -64,6 +66,8 @@
 		4851BC5E8983FB33F50A8D46 /* Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwift/Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig"; sourceTree = "<group>"; };
 		4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapeFileMultiPointRecord.swift; path = Records/ShapeFileMultiPointRecord.swift; sourceTree = "<group>"; };
 		4F70FD591D008C09007D6012 /* MultiPointTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPointTest.swift; sourceTree = "<group>"; };
+		4F70FD5B1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFilePolyLineRecord.swift; sourceTree = "<group>"; };
+		4F70FD5D1D0091D6007D6012 /* PolyLineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyLineTest.swift; sourceTree = "<group>"; };
 		4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodable.swift; sourceTree = "<group>"; };
 		4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodableTest.swift; sourceTree = "<group>"; };
 		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 		13EC2A781CACC93C000063A1 /* ShapeSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				4F70FD5D1D0091D6007D6012 /* PolyLineTest.swift */,
 				4F70FD591D008C09007D6012 /* MultiPointTest.swift */,
 				4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */,
 				132015AC1D0091E900991F3A /* PointTest.swift */,
@@ -165,6 +170,7 @@
 			children = (
 				4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */,
 				132015AA1D008CE700991F3A /* ShapeFilePointRecord.swift */,
+				4F70FD5B1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift */,
 			);
 			name = Records;
 			sourceTree = "<group>";
@@ -476,6 +482,7 @@
 				4FE0CF3D1CDE8AB800DD5F78 /* ByteEncodable.swift in Sources */,
 				13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */,
 				A89C6DCF1CD3B060002A60BD /* SHPFileParserDebugging.swift in Sources */,
+				4F70FD5C1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +492,7 @@
 			files = (
 				4F70FD5A1D008C09007D6012 /* MultiPointTest.swift in Sources */,
 				132015AD1D0091E900991F3A /* PointTest.swift in Sources */,
+				4F70FD5E1D0091D6007D6012 /* PolyLineTest.swift in Sources */,
 				13EC2A7A1CACC93C000063A1 /* ShapeSwiftTests.swift in Sources */,
 				4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */,
 			);

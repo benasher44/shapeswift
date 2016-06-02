@@ -43,29 +43,6 @@ extension ShapeFileRecord {
   }
 }
 
-// MARK: PolyLine
-
-struct ShapeFilePolyLineRecordParser {
-  let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  init(data: NSData, start: Int) throws {
-    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-    let numPoints = try Int(numPointsParser.parse(data))
-    points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: numPointsParser.end, count: numPoints)
-  }
-}
-
-struct ShapeFilePolyLineRecord: ShapeFileRecord {
-  let box: BoundingBoxXY
-  let points: [Coordinate2D]
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFilePolyLineRecordParser(data: data, start: range.startIndex)
-    box = try parser.box.parse(data)
-    points = try parser.points.parse(data)
-  }
-}
-
 // MARK: Polygon
 
 struct ShapeFilePolygonRecordParser {
