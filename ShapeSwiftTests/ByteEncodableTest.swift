@@ -31,7 +31,7 @@ class ByteEncodableTest: XCTestCase {
     let multipoint = ShapeFileMultiPointRecord(box: box, points: points)
 
     let data = NSData(byteEncodableArray: [multipoint])
-    let parsedMultipoint = try! ShapeFileMultiPointRecord(data: data, range: 4..<68) // todo(noah): should not be using 4 here
+    let parsedMultipoint = try! ShapeFileMultiPointRecord(data: data, range: 4..<68)
     XCTAssertEqual(parsedMultipoint, multipoint)
   }
 }

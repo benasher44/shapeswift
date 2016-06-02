@@ -124,7 +124,8 @@ extension ShapeFileMultiPointRecord: ByteEncodable {
   func encode() -> [Byte] {
     var bytes = Array([
       LittleEndianEncoded<ShapeType>(value: .multiPoint).encode(),
-      box.encode()
+      box.encode(),
+      LittleEndianEncoded<Int32>(value: Int32(points.count)).encode()
       ].flatten())
     bytes.appendContentsOf(points.flatMap({ $0.encode() }))
     return bytes
