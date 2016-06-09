@@ -11,7 +11,7 @@ import Foundation
 private let noDataValue: Double = -pow(10, 38)
 
 func valueOrNilForOptionalValue(value: Coordinate2DBounds) -> Coordinate2DBounds? {
-  if value.min < noDataValue || value.max < noDataValue{
+  if value.min < noDataValue || value.max < noDataValue {
     return nil
   } else {
     return value
@@ -19,7 +19,15 @@ func valueOrNilForOptionalValue(value: Coordinate2DBounds) -> Coordinate2DBounds
 }
 
 func valueOrNilForOptionalValue(value: Coordinate2D) -> Coordinate2D? {
-  if value.x < noDataValue || value.x < noDataValue{
+  if value.x < noDataValue || value.x < noDataValue {
+    return nil
+  } else {
+    return value
+  }
+}
+
+func valueOrNilForOptionalValue(value: Double) -> Double? {
+  if value < noDataValue || value < noDataValue {
     return nil
   } else {
     return value

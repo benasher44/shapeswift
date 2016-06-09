@@ -6,22 +6,20 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
-
 // MARK: Parser
 
 struct ShapeFileMultiPointMRecordParser {
   let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
   let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
   let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+  let measures: ShapeDataArrayParser<LittleEndian<Double>>
   init(data: NSData, start: Int) throws {
     box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
     let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
     let numPoints = try Int(numPointsParser.parse(data))
     points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: numPointsParser.end, count: numPoints)
     mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
-    mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
+    measures = ShapeDataArrayParser<LittleEndian<Double>>(start: mBounds.end, count: numPoints)
   }
 }
 
@@ -31,17 +29,52 @@ struct ShapeFileMultiPointMRecord: ShapeFileRecord {
   let box: BoundingBoxXY
   let points: [Coordinate2D]
   let mBounds: Coordinate2DBounds?
-  let mPoints: [Coordinate2D]
+  let measures: [Double]
+}
+
+extension ShapeFileMultiPointMRecord {
   init(data: NSData, range: Range<Int>) throws {
     let parser = try ShapeFileMultiPointMRecordParser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     points = try parser.points.parse(data)
     if range.endIndex > parser.mBounds.start {
       mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
-      mPoints = try parser.mPoints.parse(data).flatMap(valueOrNilForOptionalValue)
+      measures = try parser.measures.parse(data).flatMap(valueOrNilForOptionalValue)
     } else {
       mBounds = nil
-      mPoints = []
+      measures = []
     }
   }
+}
+
+extension ShapeFileMultiPointMRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    var byteEncodables = [[
+      LittleEndianEncoded<ShapeType>(value: .multiPointM),
+      box,
+      LittleEndianEncoded<Int32>(value: Int32(points.count))
+    ],
+      points.map({$0 as ByteEncodable})
+    ]
+
+    if let mBounds = mBounds {
+      byteEncodables.append([
+        LittleEndianEncoded<Double>(value: mBounds.min),
+        LittleEndianEncoded<Double>(value: mBounds.max),
+      ])
+      byteEncodables.append(
+        measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
+      )
+    }
+
+    return makeByteArray(from: byteEncodables.flatten())
+  }
+}
+
+// MARK: Equatable
+
+extension ShapeFileMultiPointMRecord: Equatable {}
+
+func ==(lhs: ShapeFileMultiPointMRecord, rhs: ShapeFileMultiPointMRecord) -> Bool {
+  return lhs.box == rhs.box && lhs.points == rhs.points && lhs.mBounds == rhs.mBounds && lhs.measures == rhs.measures
 }
