@@ -32,6 +32,8 @@
 		4F70FD601D009F1E007D6012 /* ShapeFilePolygonRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD5F1D009F1E007D6012 /* ShapeFilePolygonRecord.swift */; };
 		4F70FD621D00A01E007D6012 /* PolygonTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD611D00A01E007D6012 /* PolygonTest.swift */; };
 		4FDC36711D09C947003ED2BF /* MultiPointMTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC36701D09C947003ED2BF /* MultiPointMTest.swift */; };
+		4FDC36731D09CD8E003ED2BF /* ShapeFilePolygonMRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC36721D09CD8E003ED2BF /* ShapeFilePolygonMRecord.swift */; };
+		4FDC36751D09D0D9003ED2BF /* PolygonMTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC36741D09D0D9003ED2BF /* PolygonMTest.swift */; };
 		4FE0CF3D1CDE8AB800DD5F78 /* ByteEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */; };
 		4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */; };
 		4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */; };
@@ -77,6 +79,8 @@
 		4F70FD5F1D009F1E007D6012 /* ShapeFilePolygonRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFilePolygonRecord.swift; sourceTree = "<group>"; };
 		4F70FD611D00A01E007D6012 /* PolygonTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolygonTest.swift; sourceTree = "<group>"; };
 		4FDC36701D09C947003ED2BF /* MultiPointMTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPointMTest.swift; sourceTree = "<group>"; };
+		4FDC36721D09CD8E003ED2BF /* ShapeFilePolygonMRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFilePolygonMRecord.swift; sourceTree = "<group>"; };
+		4FDC36741D09D0D9003ED2BF /* PolygonMTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolygonMTest.swift; sourceTree = "<group>"; };
 		4FE0CF3C1CDE8AB800DD5F78 /* ByteEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodable.swift; sourceTree = "<group>"; };
 		4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodableTest.swift; sourceTree = "<group>"; };
 		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 		13EC2A781CACC93C000063A1 /* ShapeSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				4FDC36741D09D0D9003ED2BF /* PolygonMTest.swift */,
 				4FDC36701D09C947003ED2BF /* MultiPointMTest.swift */,
 				4F70FD611D00A01E007D6012 /* PolygonTest.swift */,
 				4F70FD5D1D0091D6007D6012 /* PolyLineTest.swift */,
@@ -186,6 +191,7 @@
 				4F70FD5B1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift */,
 				4F70FD5F1D009F1E007D6012 /* ShapeFilePolygonRecord.swift */,
 				4FFD5F161D038BBC00F286A1 /* ShapeFileMultiPointMRecord.swift */,
+				4FDC36721D09CD8E003ED2BF /* ShapeFilePolygonMRecord.swift */,
 			);
 			name = Records;
 			sourceTree = "<group>";
@@ -489,6 +495,7 @@
 				136869C51CC929CE00D2DD81 /* Projection.swift in Sources */,
 				4F70FD581D008B3A007D6012 /* ShapeFileMultiPointRecord.swift in Sources */,
 				4F70FD601D009F1E007D6012 /* ShapeFilePolygonRecord.swift in Sources */,
+				4FDC36731D09CD8E003ED2BF /* ShapeFilePolygonMRecord.swift in Sources */,
 				A8E2D3E31CD3BEE200561BB3 /* SHPFileRecord.swift in Sources */,
 				4FFD5F171D038BBC00F286A1 /* ShapeFileMultiPointMRecord.swift in Sources */,
 				13EC2B0E1CACCC84000063A1 /* SHPFileParser.swift in Sources */,
@@ -510,6 +517,7 @@
 				4F70FD5A1D008C09007D6012 /* MultiPointTest.swift in Sources */,
 				132015AF1D00962700991F3A /* RecordParsingTestUtil.swift in Sources */,
 				4FDC36711D09C947003ED2BF /* MultiPointMTest.swift in Sources */,
+				4FDC36751D09D0D9003ED2BF /* PolygonMTest.swift in Sources */,
 				132015AD1D0091E900991F3A /* PointTest.swift in Sources */,
 				4F70FD5E1D0091D6007D6012 /* PolyLineTest.swift in Sources */,
 				13EC2A7A1CACC93C000063A1 /* ShapeSwiftTests.swift in Sources */,
