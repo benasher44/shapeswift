@@ -56,12 +56,12 @@ extension ShapeFilePolygonMRecord {
 extension ShapeFilePolygonMRecord: ByteEncodable {
   func encode() -> [Byte] {
     var byteEncodables: [[ByteEncodable]] = [
-    [
-      LittleEndianEncoded<ShapeType>(value: .polygonM),
-      box,
-      LittleEndianEncoded<Int32>(value: Int32(parts.count)),
-      LittleEndianEncoded<Int32>(value: Int32(points.count))
-    ],
+      [
+        LittleEndianEncoded<ShapeType>(value: .polygonM),
+        box,
+        LittleEndianEncoded<Int32>(value: Int32(parts.count)),
+        LittleEndianEncoded<Int32>(value: Int32(points.count))
+      ],
       parts.map({ LittleEndianEncoded<Int32>(value: Int32($0)) as ByteEncodable }),
       points.map({$0 as ByteEncodable})
     ]
