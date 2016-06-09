@@ -8,7 +8,7 @@
 
 import Foundation
 
-//MARK: Parser
+// MARK: Parser
 
 struct ShapeFilePointRecordParser {
   let point: ShapeDataParser<LittleEndian<Coordinate2D>>
@@ -18,7 +18,7 @@ struct ShapeFilePointRecordParser {
   }
 }
 
-//MARK: Record
+// MARK: Record
 
 struct ShapeFilePointRecord {
   let point: Coordinate2D
@@ -41,7 +41,7 @@ extension ShapeFilePointRecord: ByteEncodable {
   }
 }
 
-//MARK: Equatable
+// MARK: Equatable
 
 func ==(lhs: ShapeFilePointRecord, rhs: ShapeFilePointRecord) -> Bool {
   return lhs.point == rhs.point
