@@ -52,48 +52,6 @@ extension ShapeFileRecord {
   }
 }
 
-// MARK: PolygonM
-
-struct ShapeFilePolygonMRecordParser {
-  let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let parts: ShapeDataArrayParser<LittleEndian<Int32>>
-  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  init(data: NSData, start: Int) throws {
-    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-    let numParts = try Int(numPartsParser.parse(data))
-    let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
-    let numPoints = try Int(numPointsParser.parse(data))
-    parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
-    points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
-    mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
-    mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
-  }
-}
-
-struct ShapeFilePolygonMRecord: ShapeFileRecord {
-  let box: BoundingBoxXY
-  let parts: [Int]
-  let points: [Coordinate2D]
-  let mBounds: Coordinate2DBounds?
-  let mPoints: [Coordinate2D]
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFilePolygonMRecordParser(data: data, start: range.startIndex)
-    box = try parser.box.parse(data)
-    parts = try parser.parts.parse(data).map(Int.init)
-    points = try parser.points.parse(data)
-    if range.endIndex > parser.mBounds.start {
-      mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
-      mPoints = try parser.mPoints.parse(data).flatMap(valueOrNilForOptionalValue)
-    } else {
-      mBounds = nil
-      mPoints = []
-    }
-  }
-}
-
 // MARK: PointZ
 
 struct ShapeFilePointZRecordParser {
