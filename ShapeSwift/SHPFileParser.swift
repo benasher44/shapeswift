@@ -10,12 +10,14 @@ import Foundation
 
 private let headerRange = 0..<100
 
-struct ShapeFileHeaderParser {
-  let fileCode = ShapeDataParser<BigEndian<Int32>>(start: 0)
-  let fileLength = ShapeDataParser<BigEndian<Int32>>(start: 24)
-  let version = ShapeDataParser<LittleEndian<Int32>>(start: 28)
-  let shapeType = ShapeDataParser<LittleEndian<ShapeType>>(start: 32)
-  let boundingBox = ShapeDataParser<LittleEndian<BoundingBoxXYZM>>(start: 36)
+extension ShapeFileHeader {
+  struct Parser {
+    let fileCode = ShapeDataParser<BigEndian<Int32>>(start: 0)
+    let fileLength = ShapeDataParser<BigEndian<Int32>>(start: 24)
+    let version = ShapeDataParser<LittleEndian<Int32>>(start: 28)
+    let shapeType = ShapeDataParser<LittleEndian<ShapeType>>(start: 32)
+    let boundingBox = ShapeDataParser<LittleEndian<BoundingBoxXYZM>>(start: 36)
+  }
 }
 
 struct ShapeFileHeader {
@@ -25,7 +27,7 @@ struct ShapeFileHeader {
   let shapeType: ShapeType
   let boundingBox: BoundingBoxXYZM
   init?(data: NSData) throws {
-    let parser = ShapeFileHeaderParser()
+    let parser = Parser()
     fileCode = try Int(parser.fileCode.parse(data))
     fileLength = try Int(parser.fileLength.parse(data))
     version = try Int(parser.version.parse(data))
@@ -34,12 +36,14 @@ struct ShapeFileHeader {
   }
 }
 
-struct ShapeFileRecordHeaderParser {
-  let recordNumber: ShapeDataParser<BigEndian<Int32>>
-  let contentLength: ShapeDataParser<BigEndian<Int32>>
-  init(start: Int) {
-    recordNumber = ShapeDataParser<BigEndian<Int32>>(start: start)
-    contentLength = ShapeDataParser<BigEndian<Int32>>(start: start + Int32.sizeBytes)
+extension ShapeFileRecordHeader {
+  struct Parser {
+    let recordNumber: ShapeDataParser<BigEndian<Int32>>
+    let contentLength: ShapeDataParser<BigEndian<Int32>>
+    init(start: Int) {
+      recordNumber = ShapeDataParser<BigEndian<Int32>>(start: start)
+      contentLength = ShapeDataParser<BigEndian<Int32>>(start: start + Int32.sizeBytes)
+    }
   }
 }
 
@@ -47,7 +51,7 @@ struct ShapeFileRecordHeader {
   let recordNumber: Int
   let contentLength: Int
   init?(data: NSData, start: Int) throws {
-    let parser = ShapeFileRecordHeaderParser(start: start)
+    let parser = Parser(start: start)
     recordNumber = try Int(parser.recordNumber.parse(data))
     contentLength = try Int(parser.contentLength.parse(data))
   }

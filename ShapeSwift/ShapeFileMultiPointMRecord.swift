@@ -8,18 +8,20 @@
 
 // MARK: Parser
 
-struct ShapeFileMultiPointMRecordParser {
-  let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let measures: ShapeDataArrayParser<LittleEndian<Double>>
-  init(data: NSData, start: Int) throws {
-    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-    let numPoints = try Int(numPointsParser.parse(data))
-    points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: numPointsParser.end, count: numPoints)
-    mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
-    measures = ShapeDataArrayParser<LittleEndian<Double>>(start: mBounds.end, count: numPoints)
+extension ShapeFileMultiPointMRecord {
+  struct Parser {
+    let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
+    let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
+    let measures: ShapeDataArrayParser<LittleEndian<Double>>
+    init(data: NSData, start: Int) throws {
+      box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
+      let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
+      let numPoints = try Int(numPointsParser.parse(data))
+      points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: numPointsParser.end, count: numPoints)
+      mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
+      measures = ShapeDataArrayParser<LittleEndian<Double>>(start: mBounds.end, count: numPoints)
+    }
   }
 }
 
@@ -34,7 +36,7 @@ struct ShapeFileMultiPointMRecord: ShapeFileRecord {
 
 extension ShapeFileMultiPointMRecord {
   init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFileMultiPointMRecordParser(data: data, start: range.startIndex)
+    let parser = try Parser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     points = try parser.points.parse(data)
     if range.endIndex > parser.mBounds.start {

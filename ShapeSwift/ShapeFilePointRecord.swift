@@ -10,11 +10,13 @@ import Foundation
 
 // MARK: Parser
 
-struct ShapeFilePointRecordParser {
-  let point: ShapeDataParser<LittleEndian<Coordinate2D>>
+extension ShapeFilePointRecord {
+  struct Parser {
+    let point: ShapeDataParser<LittleEndian<Coordinate2D>>
 
-  init(start: Int) {
-    point = ShapeDataParser<LittleEndian<Coordinate2D>>(start: start)
+    init(start: Int) {
+      point = ShapeDataParser<LittleEndian<Coordinate2D>>(start: start)
+    }
   }
 }
 
@@ -26,7 +28,7 @@ struct ShapeFilePointRecord {
 
 extension ShapeFilePointRecord: ShapeFileRecord {
   init(data: NSData, range: Range<Int>) throws {
-    let parser = ShapeFilePointRecordParser(start: range.startIndex)
+    let parser = Parser(start: range.startIndex)
     point = try parser.point.parse(data)
   }
 }

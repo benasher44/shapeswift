@@ -54,16 +54,18 @@ extension ShapeFileRecord {
 
 // MARK: PointZ
 
-struct ShapeFilePointZRecordParser {
-  let x: ShapeDataParser<LittleEndian<Double>>
-  let y: ShapeDataParser<LittleEndian<Double>>
-  let z: ShapeDataParser<LittleEndian<Double>>
-  let m: ShapeDataParser<LittleEndian<Double>>
-  init(start: Int) {
-    x = ShapeDataParser<LittleEndian<Double>>(start: start)
-    y = ShapeDataParser<LittleEndian<Double>>(start: x.end)
-    z = ShapeDataParser<LittleEndian<Double>>(start: y.end)
-    m = ShapeDataParser<LittleEndian<Double>>(start: z.end)
+extension ShapeFilePointZRecord {
+  struct Parser {
+    let x: ShapeDataParser<LittleEndian<Double>>
+    let y: ShapeDataParser<LittleEndian<Double>>
+    let z: ShapeDataParser<LittleEndian<Double>>
+    let m: ShapeDataParser<LittleEndian<Double>>
+    init(start: Int) {
+      x = ShapeDataParser<LittleEndian<Double>>(start: start)
+      y = ShapeDataParser<LittleEndian<Double>>(start: x.end)
+      z = ShapeDataParser<LittleEndian<Double>>(start: y.end)
+      m = ShapeDataParser<LittleEndian<Double>>(start: z.end)
+    }
   }
 }
 
@@ -73,7 +75,7 @@ struct ShapeFilePointZRecord: ShapeFileRecord {
   let z: Double
   let m: Double
   init(data: NSData, range: Range<Int>) throws {
-    let parser = ShapeFilePointZRecordParser(start: range.startIndex)
+    let parser = Parser(start: range.startIndex)
     x = try parser.x.parse(data)
     y = try parser.y.parse(data)
     z = try parser.z.parse(data)
@@ -83,22 +85,24 @@ struct ShapeFilePointZRecord: ShapeFileRecord {
 
 // MARK: MultiPointZ
 
-struct ShapeFileMultiPointZRecordParser {
-  let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let zBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  init(data: NSData, start: Int) throws {
-    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-    let numPoints = try Int(numPointsParser.parse(data))
-    points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: numPointsParser.end, count: numPoints)
-    zBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
-    zPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: zBounds.end, count: numPoints)
-    mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: zPoints.end)
-    mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
+extension ShapeFileMultiPointZRecord {
+  struct Parser {
+    let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
+    let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    let zBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
+    let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
+    let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    init(data: NSData, start: Int) throws {
+      box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
+      let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
+      let numPoints = try Int(numPointsParser.parse(data))
+      points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: numPointsParser.end, count: numPoints)
+      zBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
+      zPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: zBounds.end, count: numPoints)
+      mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: zPoints.end)
+      mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
+    }
   }
 }
 
@@ -110,7 +114,7 @@ struct ShapeFileMultiPointZRecord: ShapeFileRecord {
   let mBounds: Coordinate2DBounds?
   let mPoints: [Coordinate2D]
   init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFileMultiPointZRecordParser(data: data, start: range.startIndex)
+    let parser = try Parser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     points = try parser.points.parse(data)
     zBounds = try parser.zBounds.parse(data)
@@ -127,26 +131,28 @@ struct ShapeFileMultiPointZRecord: ShapeFileRecord {
 
 // MARK: PolyLineZ
 
-struct ShapeFilePolyLineZRecordParser {
-  let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let parts: ShapeDataArrayParser<LittleEndian<Int32>>
-  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let zBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  init(data: NSData, start: Int) throws {
-    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-    let numParts = try Int(numPartsParser.parse(data))
-    let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
-    let numPoints = try Int(numPointsParser.parse(data))
-    parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
-    points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
-    zBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
-    zPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: zBounds.end, count: numPoints)
-    mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: zPoints.end)
-    mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
+extension ShapeFilePolyLineZRecord {
+  struct Parser {
+    let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
+    let parts: ShapeDataArrayParser<LittleEndian<Int32>>
+    let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    let zBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
+    let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
+    let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    init(data: NSData, start: Int) throws {
+      box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
+      let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
+      let numParts = try Int(numPartsParser.parse(data))
+      let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
+      let numPoints = try Int(numPointsParser.parse(data))
+      parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
+      points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
+      zBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
+      zPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: zBounds.end, count: numPoints)
+      mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: zPoints.end)
+      mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
+    }
   }
 }
 
@@ -159,7 +165,7 @@ struct ShapeFilePolyLineZRecord: ShapeFileRecord {
   let mBounds: Coordinate2DBounds?
   let mPoints: [Coordinate2D]
   init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFilePolyLineZRecordParser(data: data, start: range.startIndex)
+    let parser = try Parser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
     points = try parser.points.parse(data)
@@ -177,26 +183,28 @@ struct ShapeFilePolyLineZRecord: ShapeFileRecord {
 
 // MARK: PolygonZ
 
-struct ShapeFilePolygonZRecordParser {
-  let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let parts: ShapeDataArrayParser<LittleEndian<Int32>>
-  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let zBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  init(data: NSData, start: Int) throws {
-    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-    let numParts = try Int(numPartsParser.parse(data))
-    let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
-    let numPoints = try Int(numPointsParser.parse(data))
-    parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
-    points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
-    zBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
-    zPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: zBounds.end, count: numPoints)
-    mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: zPoints.end)
-    mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
+extension ShapeFilePolygonZRecord {
+  struct Parser {
+    let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
+    let parts: ShapeDataArrayParser<LittleEndian<Int32>>
+    let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    let zBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
+    let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
+    let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    init(data: NSData, start: Int) throws {
+      box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
+      let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
+      let numParts = try Int(numPartsParser.parse(data))
+      let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
+      let numPoints = try Int(numPointsParser.parse(data))
+      parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
+      points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
+      zBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
+      zPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: zBounds.end, count: numPoints)
+      mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: zPoints.end)
+      mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
+    }
   }
 }
 
@@ -209,7 +217,7 @@ struct ShapeFilePolygonZRecord: ShapeFileRecord {
   let mBounds: Coordinate2DBounds?
   let mPoints: [Coordinate2D]
   init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFilePolygonZRecordParser(data: data, start: range.startIndex)
+    let parser = try Parser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
     points = try parser.points.parse(data)
@@ -227,29 +235,31 @@ struct ShapeFilePolygonZRecord: ShapeFileRecord {
 
 // MARK: Multipatch
 
-struct ShapeFileMultiPatchRecordParser {
-  let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-  let parts: ShapeDataArrayParser<LittleEndian<Int32>>
-  let partTypes: ShapeDataArrayParser<LittleEndian<MultiPatchPartType>>
-  let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let zBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-  let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-  let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+extension ShapeFileMultiPatchRecord {
+  struct Parser {
+    let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
+    let parts: ShapeDataArrayParser<LittleEndian<Int32>>
+    let partTypes: ShapeDataArrayParser<LittleEndian<MultiPatchPartType>>
+    let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    let zBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
+    let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
+    let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
+    let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
 
-  init(data: NSData, start: Int) throws {
-    box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-    let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-    let numParts = try Int(numPartsParser.parse(data))
-    let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
-    let numPoints = try Int(numPointsParser.parse(data))
-    parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
-    partTypes = ShapeDataArrayParser<LittleEndian<MultiPatchPartType>>(start: parts.end, count: numParts)
-    points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: partTypes.end, count: numPoints)
-    zBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
-    zPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: zBounds.end, count: numPoints)
-    mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: zPoints.end)
-    mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
+    init(data: NSData, start: Int) throws {
+      box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
+      let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
+      let numParts = try Int(numPartsParser.parse(data))
+      let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
+      let numPoints = try Int(numPointsParser.parse(data))
+      parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
+      partTypes = ShapeDataArrayParser<LittleEndian<MultiPatchPartType>>(start: parts.end, count: numParts)
+      points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: partTypes.end, count: numPoints)
+      zBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
+      zPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: zBounds.end, count: numPoints)
+      mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: zPoints.end)
+      mPoints = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: mBounds.end, count: numPoints)
+    }
   }
 }
 
@@ -263,7 +273,7 @@ struct ShapeFileMultiPatchRecord: ShapeFileRecord {
   let mBounds: Coordinate2DBounds?
   let mPoints: [Coordinate2D]
   init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFileMultiPatchRecordParser(data: data, start: range.startIndex)
+    let parser = try Parser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
     partTypes = try parser.partTypes.parse(data)
