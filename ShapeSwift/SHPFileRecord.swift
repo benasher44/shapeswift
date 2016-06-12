@@ -18,6 +18,7 @@ func valueOrNilForOptionalValue(value: Coordinate2DBounds) -> Coordinate2DBounds
   }
 }
 
+//TODO: remove
 func valueOrNilForOptionalValue(value: Coordinate2D) -> Coordinate2D? {
   if value.x < noDataValue || value.x < noDataValue {
     return nil
@@ -51,9 +52,9 @@ extension ShapeFileRecord {
   }
 }
 
-// MARK: PolyLineM
+// MARK: PolygonM
 
-struct ShapeFilePolyLineMRecordParser {
+struct ShapeFilePolygonMRecordParser {
   let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
   let parts: ShapeDataArrayParser<LittleEndian<Int32>>
   let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
@@ -72,14 +73,14 @@ struct ShapeFilePolyLineMRecordParser {
   }
 }
 
-struct ShapeFilePolyLineMRecord: ShapeFileRecord {
+struct ShapeFilePolygonMRecord: ShapeFileRecord {
   let box: BoundingBoxXY
   let parts: [Int]
   let points: [Coordinate2D]
   let mBounds: Coordinate2DBounds?
   let mPoints: [Coordinate2D]
   init(data: NSData, range: Range<Int>) throws {
-    let parser = try ShapeFilePolyLineMRecordParser(data: data, start: range.startIndex)
+    let parser = try ShapeFilePolygonMRecordParser(data: data, start: range.startIndex)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
     points = try parser.points.parse(data)

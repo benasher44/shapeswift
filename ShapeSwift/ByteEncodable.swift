@@ -113,6 +113,15 @@ extension Coordinate2D: ByteEncodable {
   }
 }
 
+extension Coordinate2DBounds: ByteEncodable {
+  func encode() -> [Byte] {
+    return Array([
+      LittleEndianEncoded<Double>(value: min).encode(),
+      LittleEndianEncoded<Double>(value: max).encode()
+      ].flatten())
+  }
+}
+
 extension BoundingBoxXY: ByteEncodable {
   func encode() -> [Byte] {
     return Array([
