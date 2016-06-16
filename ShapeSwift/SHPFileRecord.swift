@@ -35,6 +35,13 @@ func valueOrNilForOptionalValue(value: Double) -> Double? {
   }
 }
 
+func valueOrNoDataValueForOptionalValue(value: Double?) -> Double {
+  if let value = value {
+    return value
+  }
+  return noDataValue
+}
+
 protocol ShapeFileRecord {
   init(data: NSData, range: Range<Int>) throws
 }
@@ -49,37 +56,6 @@ extension ShapeFileRecord {
       return nil
     }
     return try type.init(data: data, range: range)
-  }
-}
-
-// MARK: PointZ
-
-extension ShapeFilePointZRecord {
-  struct Parser {
-    let x: ShapeDataParser<LittleEndian<Double>>
-    let y: ShapeDataParser<LittleEndian<Double>>
-    let z: ShapeDataParser<LittleEndian<Double>>
-    let m: ShapeDataParser<LittleEndian<Double>>
-    init(start: Int) {
-      x = ShapeDataParser<LittleEndian<Double>>(start: start)
-      y = ShapeDataParser<LittleEndian<Double>>(start: x.end)
-      z = ShapeDataParser<LittleEndian<Double>>(start: y.end)
-      m = ShapeDataParser<LittleEndian<Double>>(start: z.end)
-    }
-  }
-}
-
-struct ShapeFilePointZRecord: ShapeFileRecord {
-  let x: Double
-  let y: Double
-  let z: Double
-  let m: Double
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = Parser(start: range.startIndex)
-    x = try parser.x.parse(data)
-    y = try parser.y.parse(data)
-    z = try parser.z.parse(data)
-    m = try parser.m.parse(data)
   }
 }
 
