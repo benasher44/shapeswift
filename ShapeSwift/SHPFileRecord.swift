@@ -27,8 +27,9 @@ func valueOrNilForOptionalValue(value: Coordinate2D) -> Coordinate2D? {
   }
 }
 
+// TODO(noah): rename this function
 func valueOrNilForOptionalValue(value: Double) -> Double? {
-  if value < noDataValue || value < noDataValue {
+  if value == noDataValue {
     return nil
   } else {
     return value
