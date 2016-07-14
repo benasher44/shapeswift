@@ -1,14 +1,14 @@
 //
-//  ShapeFilePolyLineZRecord.swift
+//  ShapeFilePolygonZRecord.swift
 //  ShapeSwift
 //
-//  Created by Ben Asher on 6/16/16.
+//  Created by Noah Gilmore on 7/14/16.
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
 // MARK: Parser
 
-extension ShapeFilePolyLineZRecord {
+extension ShapeFilePolygonZRecord {
   struct Parser {
     let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
     let parts: ShapeDataArrayParser<LittleEndian<Int32>>
@@ -35,7 +35,7 @@ extension ShapeFilePolyLineZRecord {
 
 // MARK: Record
 
-struct ShapeFilePolyLineZRecord: ShapeFileRecord {
+struct ShapeFilePolygonZRecord: ShapeFileRecord {
   let box: BoundingBoxXY
   let parts: [Int]
   let points: [Coordinate2D]
@@ -45,31 +45,29 @@ struct ShapeFilePolyLineZRecord: ShapeFileRecord {
   let measures: [Double]
 }
 
-extension ShapeFilePolyLineZRecord {
+extension ShapeFilePolygonZRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
     points = try parser.points.parse(data)
     zBounds = try parser.zBounds.parse(data)
-    zValues = try parser.zValues.parse(data)
+    zPoints = try parser.zPoints.parse(data)
     if range.upperBound > parser.mBounds.start {
       mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
-      measures = try parser.measures.parse(data).flatMap(valueOrNilForOptionalValue)
+      mPoints = try parser.mPoints.parse(data).flatMap(valueOrNilForOptionalValue)
     } else {
       mBounds = nil
-      measures = []
+      mPoints = []
     }
   }
 }
 
-
-extension ShapeFilePolyLineZRecord: ByteEncodable {
+extension ShapeFilePolygonZRecord: ByteEncodable {
   func encode() -> [Byte] {
     var byteEncodables: [[ByteEncodable]] = [
       [
-        // todo(noah): this should be polygonZ instead of polygonM, but let's write a test that catches it
-        LittleEndianEncoded<ShapeType>(value: .polyLineM),
+        LittleEndianEncoded<ShapeType>(value: .polygonZ),
         box,
         LittleEndianEncoded<Int32>(value: Int32(parts.count)),
         LittleEndianEncoded<Int32>(value: Int32(points.count))
@@ -78,7 +76,7 @@ extension ShapeFilePolyLineZRecord: ByteEncodable {
       points.map({$0 as ByteEncodable}),
       [zBounds],
       zValues.map(LittleEndianEncoded<Double>.init),
-    ]
+      ]
 
     if let mBounds = mBounds {
       byteEncodables.append([mBounds])
@@ -93,16 +91,16 @@ extension ShapeFilePolyLineZRecord: ByteEncodable {
 
 // MARK: Equatable
 
-func ==(lhs: ShapeFilePolyLineZRecord, rhs: ShapeFilePolyLineZRecord) -> Bool {
+func ==(lhs: ShapeFilePolygonZRecord, rhs: ShapeFilePolygonZRecord) -> Bool {
   return (
     lhs.box == rhs.box &&
-    lhs.parts == rhs.parts &&
-    lhs.points == rhs.points &&
-    lhs.zBounds == rhs.zBounds &&
-    lhs.zValues == rhs.zValues &&
-    lhs.mBounds == rhs.mBounds &&
-    lhs.measures == rhs.measures
+      lhs.parts == rhs.parts &&
+      lhs.points == rhs.points &&
+      lhs.zBounds == rhs.zBounds &&
+      lhs.zValues == rhs.zValues &&
+      lhs.mBounds == rhs.mBounds &&
+      lhs.measures == rhs.measures
   )
 }
 
-extension ShapeFilePolyLineZRecord: Equatable {}
+extension ShapeFilePolygonZRecord: Equatable {}

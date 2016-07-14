@@ -1,23 +1,22 @@
 //
-//  PolyLineZTest.swift
+//  PolygonZTest.swift
 //  ShapeSwift
 //
-//  Created by Ben Asher on 6/16/16.
+//  Created by Noah Gilmore on 7/14/16.
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
 import XCTest
-@testable import ShapeSwift
 
-class PolyLineZTest: XCTestCase {
-  func testDecodingPolyLineZ() {
+class PolygonZTest: XCTestCase {
+  func testDecodingPolygonZ() {
     let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
     let points = [
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
     ]
     let measures: [Double] = [1.0, 2.0]
     let zValues: [Double] = [0.0, 10.0]
-    let polyLineZ = ShapeFilePolyLineZRecord(
+    let polygonZ = ShapeFilePolygonZRecord(
       box: box,
       parts: [0],
       points: points,
@@ -26,7 +25,7 @@ class PolyLineZTest: XCTestCase {
       mBounds: Coordinate2DBounds(min: 1.0, max: 2.0),
       measures: measures
     )
-    testParsingRecord(polyLineZ, range: 4..<144)
+    testParsingRecord(polygonZ, range: 4..<144)
   }
 
   func testDecodingWithNoMeasures() {
@@ -35,7 +34,7 @@ class PolyLineZTest: XCTestCase {
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
     ]
     let zValues: [Double] = [0.0, 10.0]
-    let polyLineZ = ShapeFilePolyLineZRecord(
+    let polygonZ = ShapeFilePolygonZRecord(
       box: box,
       parts: [0],
       points: points,
@@ -44,6 +43,6 @@ class PolyLineZTest: XCTestCase {
       mBounds: nil,
       measures: []
     )
-    testParsingRecord(polyLineZ, range: 4..<112)
+    testParsingRecord(polygonZ, range: 4..<112)
   }
 }
