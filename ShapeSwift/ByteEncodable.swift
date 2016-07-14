@@ -17,7 +17,7 @@ protocol ByteEncodable {
   func encode() -> [Byte]
 }
 
-func makeByteArray<T: SequenceType where T.Generator.Element == ByteEncodable>(from byteEncodables: T) -> [Byte] {
+func makeByteArray<T: Sequence where T.Iterator.Element == ByteEncodable>(from byteEncodables: T) -> [Byte] {
   return byteEncodables.flatMap { $0.encode() }
 }
 
@@ -62,12 +62,12 @@ struct BigEndianEncoded<EncodedType: BigEndianByteEncodable>: ByteEncodable {
   }
 }
 
-extension NSData {
-  convenience init(byteEncodableArray array: [ByteEncodable]) {
+extension Data {
+  init(byteEncodableArray array: [ByteEncodable]) {
     let bytes = array.flatMap { byteEncodable in
       byteEncodable.encode()
     }
-    self.init(bytes: bytes, length: bytes.count)
+    self.init(bytes: bytes, count: bytes.count)
   }
 }
 
@@ -82,19 +82,19 @@ func toByteArray<T>(value: T, size: Int) -> [Byte] {
 
 extension Double: LittleEndianByteEncodable {
   func encodeLittleEndian() -> [Byte] {
-    return toByteArray(self, size: self.dynamicType.sizeBytes)
+    return toByteArray(value: self, size: self.dynamicType.sizeBytes)
   }
 }
 
 extension Int32: LittleEndianByteEncodable {
   func encodeLittleEndian() -> [Byte] {
-    return toByteArray(self, size: self.dynamicType.sizeBytes)
+    return toByteArray(value: self, size: self.dynamicType.sizeBytes)
   }
 }
 
 extension Int32: BigEndianByteEncodable {
   func encodeBigEndian() -> [Byte] {
-    return toByteArray(self, size: self.dynamicType.sizeBytes).reverse()
+    return toByteArray(value: self, size: self.dynamicType.sizeBytes).reversed()
   }
 }
 

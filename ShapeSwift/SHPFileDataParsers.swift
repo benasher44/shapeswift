@@ -19,21 +19,21 @@ extension ShapeDataParser where T.ValueT: ByteParseable {
 }
 
 extension ShapeDataParser where T: LittleEndianByteOrdered {
-  func parse(data: NSData) throws -> T.ValueT {
+  func parse(_ data: Data) throws -> T.ValueT {
     if let value = T.ValueT(littleEndianData: data, start: start) {
       return value
     } else {
-      throw ByteParseableError.NotParseable(type: T.ValueT.self)
+      throw ByteParseableError.notParseable(type: T.ValueT.self)
     }
   }
 }
 
 extension ShapeDataParser where T: BigEndianByteOrdered {
-  func parse(data: NSData) throws -> T.ValueT {
+  func parse(_ data: Data) throws -> T.ValueT {
     if let value = T.ValueT(bigEndianData: data, start: start) {
       return value
     } else {
-      throw ByteParseableError.NotParseable(type: T.ValueT.self)
+      throw ByteParseableError.notParseable(type: T.ValueT.self)
     }
   }
 }
@@ -47,20 +47,20 @@ struct ShapeDataArrayParser<T: ByteOrdered where T.ValueT: ByteParseable> {
   }
 
   private func enumerateByteOffsets(byteOffsetEnumerationBlock: (Int) throws -> Void) rethrows {
-    for byteOffset in start.stride(to: end, by: T.ValueT.sizeBytes) {
+    for byteOffset in stride(from: start, to: end, by: T.ValueT.sizeBytes) {
       try byteOffsetEnumerationBlock(byteOffset)
     }
   }
 }
 
 extension ShapeDataArrayParser where T: LittleEndianByteOrdered {
-  func parse(data: NSData) throws -> [T.ValueT] {
+  func parse(_ data: Data) throws -> [T.ValueT] {
     var values = Array<T.ValueT>()
     try enumerateByteOffsets { start in
       if let value = T.ValueT(littleEndianData: data, start: start) {
         values.append(value)
       } else {
-        throw ByteParseableError.NotParseable(type: T.ValueT.self)
+        throw ByteParseableError.notParseable(type: T.ValueT.self)
       }
     }
     return values
@@ -68,13 +68,13 @@ extension ShapeDataArrayParser where T: LittleEndianByteOrdered {
 }
 
 extension ShapeDataArrayParser where T: BigEndianByteOrdered {
-  func parse(data: NSData) throws -> [T.ValueT] {
+  func parse(_ data: Data) throws -> [T.ValueT] {
     var values = Array<T.ValueT>()
     try enumerateByteOffsets { start in
       if let value = T.ValueT(bigEndianData: data, start: start) {
         values.append(value)
       } else {
-        throw ByteParseableError.NotParseable(type: T.ValueT.self)
+        throw ByteParseableError.notParseable(type: T.ValueT.self)
       }
     }
     return values

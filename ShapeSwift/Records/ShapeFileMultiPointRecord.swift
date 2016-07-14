@@ -15,7 +15,7 @@ extension ShapeFileMultiPointRecord {
     let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
     let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
 
-    init(data: NSData, start: Int) throws {
+    init(data: Data, start: Int) throws {
       box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
       let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
       let numPoints = try Int(numPointsParser.parse(data))
@@ -32,8 +32,8 @@ struct ShapeFileMultiPointRecord {
 }
 
 extension ShapeFileMultiPointRecord: ShapeFileRecord {
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = try Parser(data: data, start: range.startIndex)
+  init(data: Data, range: Range<Int>) throws {
+    let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     points = try parser.points.parse(data)
   }

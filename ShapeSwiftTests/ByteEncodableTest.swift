@@ -13,7 +13,7 @@ import proj4
 class ByteEncodableTest: XCTestCase {
   func testByteEncodableDouble() {
     let value: Double = 32.0
-    let data = NSData(
+    let data = Data(
       byteEncodableArray: [
         LittleEndianEncoded<Double>(value: value),
         BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))

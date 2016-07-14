@@ -21,7 +21,7 @@ extension BoundingBoxXYZM: CustomDebugStringConvertible {
       "Y: \(y)",
       "Z: \(z)",
       "M: \(m)",
-      ].joinWithSeparator(" ")
+      ].joined(separator: " ")
   }
 }
 
@@ -33,6 +33,6 @@ extension ShapeFileHeader: CustomDebugStringConvertible {
       "Version: \(version)",
       "Shape Type: \(shapeType)",
       "Bounding Box: \(boundingBox.debugDescription)",
-      ].joinWithSeparator("\n")
+      ].joined(separator: "\n")
   }
 }

@@ -26,7 +26,7 @@ struct ShapeFileHeader {
   let version: Int
   let shapeType: ShapeType
   let boundingBox: BoundingBoxXYZM
-  init?(data: NSData) throws {
+  init?(data: Data) throws {
     let parser = Parser()
     fileCode = try Int(parser.fileCode.parse(data))
     fileLength = try Int(parser.fileLength.parse(data))
@@ -50,15 +50,15 @@ extension ShapeFileRecordHeader {
 struct ShapeFileRecordHeader {
   let recordNumber: Int
   let contentLength: Int
-  init?(data: NSData, start: Int) throws {
+  init?(data: Data, start: Int) throws {
     let parser = Parser(start: start)
     recordNumber = try Int(parser.recordNumber.parse(data))
     contentLength = try Int(parser.contentLength.parse(data))
   }
 }
 
-public func parseFromURL(fileURL: NSURL) throws -> Void {
-  let data = try NSData(contentsOfURL: fileURL, options: .DataReadingMappedIfSafe)
+public func parseFromURL(_ fileURL: URL) throws -> Void {
+  let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
   let header = try ShapeFileHeader(data: data)
   print("header - \(header.debugDescription)")
 }

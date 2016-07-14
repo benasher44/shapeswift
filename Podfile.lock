@@ -1,22 +1,16 @@
 PODS:
   - proj4 (4.9.2)
-  - ShapeSwift (0.0.1):
-    - proj4
 
 DEPENDENCIES:
   - proj4 (from `./podspecs/proj4.podspec`)
-  - ShapeSwift (from `./`)
 
 EXTERNAL SOURCES:
   proj4:
     :podspec: ./podspecs/proj4.podspec
-  ShapeSwift:
-    :path: ./
 
 SPEC CHECKSUMS:
   proj4: edb2a6e8ade02488f0bb3f8f52ba8802e83928ba
-  ShapeSwift: 1ca879492c4f91e15b1c1a2dcad6c9f7b58c0754
 
-PODFILE CHECKSUM: 8c40ab3c17c820aa8235eea0bc3547604b80294b
+PODFILE CHECKSUM: 8ce2e47ce4486b7eaf5500fc8335f0ad25015601
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.0.beta.1

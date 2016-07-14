@@ -40,8 +40,8 @@ extension LittleEndian: LittleEndianByteOrdered {
   typealias ValueT = T
 }
 
-enum ByteParseableError: ErrorType {
-  case NotParseable(type: ByteParseable.Type)
+enum ByteParseableError: ErrorProtocol {
+  case notParseable(type: ByteParseable.Type)
 }
 
 protocol ByteParseable {
@@ -49,11 +49,11 @@ protocol ByteParseable {
 }
 
 protocol BigEndianByteParseable: ByteParseable {
-  init?(bigEndianData data: NSData, start: Int)
+  init?(bigEndianData data: Data, start: Int)
 }
 
 protocol LittleEndianByteParseable: ByteParseable {
-  init?(littleEndianData data: NSData, start: Int)
+  init?(littleEndianData data: Data, start: Int)
 }
 
 extension Int32: ByteParseable {
@@ -61,18 +61,24 @@ extension Int32: ByteParseable {
 }
 
 extension Int32: BigEndianByteParseable {
-  init?(bigEndianData data: NSData, start: Int) {
-    var rawInt: Int32 = 0
-    data.getBytes(&rawInt, range: NSRange(location: start, length: self.dynamicType.sizeBytes))
-    self = Int32(bigEndian: rawInt)
+  init?(bigEndianData data: Data, start: Int) {
+    var intBytes = [UInt8](repeating: 0, count: self.dynamicType.sizeBytes)
+    data.copyBytes(to: &intBytes, from: start..<(start + self.dynamicType.sizeBytes))
+    let value = intBytes.withUnsafeBufferPointer({
+      UnsafePointer<Int32>($0.baseAddress!).pointee
+    })
+    self = Int32(bigEndian: value)
   }
 }
 
 extension Int32: LittleEndianByteParseable {
-  init?(littleEndianData data: NSData, start: Int) {
-    var rawInt: Int32 = 0
-    data.getBytes(&rawInt, range: NSRange(location: start, length: self.dynamicType.sizeBytes))
-    self = Int32(littleEndian: rawInt)
+  init?(littleEndianData data: Data, start: Int) {
+    var intBytes = [UInt8](repeating: 0, count: self.dynamicType.sizeBytes)
+    data.copyBytes(to: &intBytes, from: start..<(start + self.dynamicType.sizeBytes))
+    let value = intBytes.withUnsafeBufferPointer({
+      UnsafePointer<Int32>($0.baseAddress!).pointee
+    })
+    self = Int32(littleEndian: value)
   }
 }
 
@@ -81,10 +87,13 @@ extension Double: ByteParseable {
 }
 
 extension Double: LittleEndianByteParseable {
-  init?(littleEndianData data: NSData, start: Int) {
-    var rawDouble: Int64 = 0
-    data.getBytes(&rawDouble, range: NSRange(location: start, length: self.dynamicType.sizeBytes))
-    self = unsafeBitCast(Int64(littleEndian: rawDouble), Double.self)
+  init?(littleEndianData data: Data, start: Int) {
+    var doubleBytes = [UInt8](repeating: 0, count: self.dynamicType.sizeBytes)
+    data.copyBytes(to: &doubleBytes, from: start..<(start + self.dynamicType.sizeBytes))
+    let value = doubleBytes.withUnsafeBufferPointer({
+      UnsafePointer<UInt64>($0.baseAddress!).pointee
+    })
+    self = Double(bitPattern: value)
   }
 }
 

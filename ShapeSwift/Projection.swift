@@ -18,7 +18,7 @@ enum ProjectionConversionFunction: String {
   case pjTransform = "pj_transform"
 }
 
-enum ProjectionConversionError: ErrorType {
+enum ProjectionConversionError: ErrorProtocol {
   case error(errorNumber: Int32, function: ProjectionConversionFunction)
 }
 
@@ -26,7 +26,7 @@ extension ProjectionConversionError: CustomDebugStringConvertible {
   var debugDescription: String {
     switch self {
     case let .error(errorNumber, function):
-      let errStr = String.fromCString(pj_strerrno(errorNumber)) ?? ""
+      let errStr = String(cString: pj_strerrno(errorNumber)) ?? ""
       return "\(function): \(errStr)"
     }
   }
@@ -34,12 +34,12 @@ extension ProjectionConversionError: CustomDebugStringConvertible {
 
 
 extension Projection {
-  func convertForward(coordinates: [Coordinate2D], to otherProjection: Projection) throws -> [Coordinate2D] {
-    let src = pj_init_plus(projInitArgs.cStringUsingEncoding(NSUTF8StringEncoding)!)
+  func convertForward(_ coordinates: [Coordinate2D], to otherProjection: Projection) throws -> [Coordinate2D] {
+    let src = pj_init_plus(projInitArgs.cString(using: String.Encoding.utf8)!)
     if let err = pjInitError {
       throw ProjectionConversionError.error(errorNumber: err, function: .pjInit)
     }
-    let dest = pj_init_plus(otherProjection.projInitArgs.cStringUsingEncoding(NSUTF8StringEncoding)!)
+    let dest = pj_init_plus(otherProjection.projInitArgs.cString(using: String.Encoding.utf8)!)
     if let err = pjInitError {
       throw ProjectionConversionError.error(errorNumber: err, function: .pjInit)
     }
@@ -57,7 +57,7 @@ extension Projection {
 
 private extension Projection {
   var pjInitError: Int32? {
-    let err = pj_get_default_ctx().memory.last_errno
+    let err = pj_get_default_ctx().pointee.last_errno
     return err == 0 ? nil : err
   }
 }

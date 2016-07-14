@@ -20,13 +20,13 @@ struct ShapeFileMultiPointZRecord: ShapeFileRecord {
 }
 
 extension ShapeFileMultiPointZRecord {
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = try Parser(data: data, start: range.startIndex)
+  init(data: Data, range: Range<Int>) throws {
+    let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     points = try parser.points.parse(data)
     zBounds = try parser.zBounds.parse(data)
     zValues = try parser.zValues.parse(data)
-    if range.endIndex > parser.mBounds.start {
+    if range.upperBound > parser.mBounds.start {
       mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
       measures = try parser.measures.parse(data).flatMap(valueOrNilForOptionalValue)
     } else {
@@ -76,7 +76,7 @@ extension ShapeFileMultiPointZRecord {
     let zValues: ShapeDataArrayParser<LittleEndian<Double>>
     let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
     let measures: ShapeDataArrayParser<LittleEndian<Double>>
-    init(data: NSData, start: Int) throws {
+    init(data: Data, start: Int) throws {
       box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
       let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
       let numPoints = try Int(numPointsParser.parse(data))

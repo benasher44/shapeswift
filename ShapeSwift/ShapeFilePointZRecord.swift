@@ -31,8 +31,8 @@ struct ShapeFilePointZRecord: ShapeFileRecord {
 }
 
 extension ShapeFilePointZRecord {
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = ShapeFilePointZRecordParser(start: range.startIndex)
+  init(data: Data, range: Range<Int>) throws {
+    let parser = ShapeFilePointZRecordParser(start: range.lowerBound)
     x = try parser.x.parse(data)
     y = try parser.y.parse(data)
     z = try parser.z.parse(data)

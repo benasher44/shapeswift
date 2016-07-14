@@ -79,7 +79,7 @@ extension BoundingBoxXY: ByteParseable {
 }
 
 extension BoundingBoxXY: LittleEndianByteParseable {
-  init?(littleEndianData data: NSData, start: Int) {
+  init?(littleEndianData data: Data, start: Int) {
     self = BoundingBoxXY(x: Coordinate2DBounds(min: Double(littleEndianData: data, start: start)!,
                                              max: Double(littleEndianData: data, start: start + Double.sizeBytes * 2)!),
                          y: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + Double.sizeBytes)!,
@@ -92,7 +92,7 @@ extension BoundingBoxXYZM: ByteParseable {
 }
 
 extension BoundingBoxXYZM: LittleEndianByteParseable {
-  init?(littleEndianData data: NSData, start: Int) {
+  init?(littleEndianData data: Data, start: Int) {
     self = BoundingBoxXYZM(x: Coordinate2DBounds(min: Double(littleEndianData: data, start: start)!,
                                                max: Double(littleEndianData: data, start: start + 2 * Double.sizeBytes)!),
                            y: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + Double.sizeBytes)!,
@@ -109,7 +109,7 @@ extension Coordinate2D: ByteParseable {
 }
 
 extension Coordinate2D: LittleEndianByteParseable {
-  init?(littleEndianData data: NSData, start: Int) {
+  init?(littleEndianData data: Data, start: Int) {
     self = Coordinate2D(x: Double(littleEndianData: data, start: start)!,
                       y: Double(littleEndianData: data, start: start + Double.sizeBytes)!)
   }
@@ -120,7 +120,7 @@ extension Coordinate2DBounds: ByteParseable {
 }
 
 extension Coordinate2DBounds: LittleEndianByteParseable {
-  init?(littleEndianData data: NSData, start: Int) {
+  init?(littleEndianData data: Data, start: Int) {
     self = Coordinate2DBounds(min: Double(littleEndianData: data, start: start)!,
                             max: Double(littleEndianData: data, start: start + Double.sizeBytes)!)
   }
@@ -131,7 +131,7 @@ extension MultiPatchPartType: ByteParseable {
 }
 
 extension MultiPatchPartType: LittleEndianByteParseable {
-  init?(littleEndianData data: NSData, start: Int) {
+  init?(littleEndianData data: Data, start: Int) {
     if let type = MultiPatchPartType(rawValue: Int(Int32(littleEndianData: data, start: start)!)) {
       self = type
     } else {
@@ -145,7 +145,7 @@ extension ShapeType: ByteParseable {
 }
 
 extension ShapeType: LittleEndianByteParseable {
-  init?(littleEndianData data: NSData, start: Int) {
+  init?(littleEndianData data: Data, start: Int) {
     if let type = ShapeType(rawValue: Int(Int32(littleEndianData: data, start: start)!)) {
       self = type
     } else {

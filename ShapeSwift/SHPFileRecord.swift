@@ -10,7 +10,7 @@ import Foundation
 
 private let noDataValue: Double = -pow(10, 38)
 
-func valueOrNilForOptionalValue(value: Coordinate2DBounds) -> Coordinate2DBounds? {
+func valueOrNilForOptionalValue(_ value: Coordinate2DBounds) -> Coordinate2DBounds? {
   if value.min < noDataValue || value.max < noDataValue {
     return nil
   } else {
@@ -19,7 +19,7 @@ func valueOrNilForOptionalValue(value: Coordinate2DBounds) -> Coordinate2DBounds
 }
 
 //TODO: remove
-func valueOrNilForOptionalValue(value: Coordinate2D) -> Coordinate2D? {
+func valueOrNilForOptionalValue(_ value: Coordinate2D) -> Coordinate2D? {
   if value.x < noDataValue || value.x < noDataValue {
     return nil
   } else {
@@ -28,7 +28,7 @@ func valueOrNilForOptionalValue(value: Coordinate2D) -> Coordinate2D? {
 }
 
 // TODO(noah): rename this function
-func valueOrNilForOptionalValue(value: Double) -> Double? {
+func valueOrNilForOptionalValue(_ value: Double) -> Double? {
   if value == noDataValue {
     return nil
   } else {
@@ -36,7 +36,7 @@ func valueOrNilForOptionalValue(value: Double) -> Double? {
   }
 }
 
-func valueOrNoDataValueForOptionalValue(value: Double?) -> Double {
+func valueOrNoDataValueForOptionalValue(_ value: Double?) -> Double {
   if let value = value {
     return value
   }
@@ -44,11 +44,11 @@ func valueOrNoDataValueForOptionalValue(value: Double?) -> Double {
 }
 
 protocol ShapeFileRecord {
-  init(data: NSData, range: Range<Int>) throws
+  init(data: Data, range: Range<Int>) throws
 }
 
 extension ShapeFileRecord {
-  static func recordForShapeType(shapeType: ShapeType, data: NSData, range: Range<Int>) throws -> ShapeFileRecord? {
+  static func recordForShapeType(_ shapeType: ShapeType, data: Data, range: Range<Int>) throws -> ShapeFileRecord? {
     var type: ShapeFileRecord.Type
     switch shapeType {
     case .point:
@@ -71,7 +71,7 @@ extension ShapeFilePolygonZRecord {
     let zPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
     let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
     let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-    init(data: NSData, start: Int) throws {
+    init(data: Data, start: Int) throws {
       box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
       let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
       let numParts = try Int(numPartsParser.parse(data))
@@ -95,14 +95,14 @@ struct ShapeFilePolygonZRecord: ShapeFileRecord {
   let zPoints: [Coordinate2D]
   let mBounds: Coordinate2DBounds?
   let mPoints: [Coordinate2D]
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = try Parser(data: data, start: range.startIndex)
+  init(data: Data, range: Range<Int>) throws {
+    let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
     points = try parser.points.parse(data)
     zBounds = try parser.zBounds.parse(data)
     zPoints = try parser.zPoints.parse(data)
-    if range.endIndex > parser.mBounds.start {
+    if range.upperBound > parser.mBounds.start {
       mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
       mPoints = try parser.mPoints.parse(data).flatMap(valueOrNilForOptionalValue)
     } else {
@@ -125,7 +125,7 @@ extension ShapeFileMultiPatchRecord {
     let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
     let mPoints: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
 
-    init(data: NSData, start: Int) throws {
+    init(data: Data, start: Int) throws {
       box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
       let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
       let numParts = try Int(numPartsParser.parse(data))
@@ -151,15 +151,15 @@ struct ShapeFileMultiPatchRecord: ShapeFileRecord {
   let zPoints: [Coordinate2D]
   let mBounds: Coordinate2DBounds?
   let mPoints: [Coordinate2D]
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = try Parser(data: data, start: range.startIndex)
+  init(data: Data, range: Range<Int>) throws {
+    let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
     partTypes = try parser.partTypes.parse(data)
     points = try parser.points.parse(data)
     zBounds = try parser.zBounds.parse(data)
     zPoints = try parser.zPoints.parse(data)
-    if range.endIndex > parser.mBounds.start {
+    if range.upperBound > parser.mBounds.start {
       mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
       mPoints = try parser.mPoints.parse(data).flatMap(valueOrNilForOptionalValue)
     } else {

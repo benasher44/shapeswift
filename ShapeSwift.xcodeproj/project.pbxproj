@@ -16,7 +16,6 @@
 		135286C11D09D10C007FC288 /* PolyLineMTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135286C01D09D10C007FC288 /* PolyLineMTest.swift */; };
 		136869C51CC929CE00D2DD81 /* Projection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136869C41CC929CE00D2DD81 /* Projection.swift */; };
 		13EC2A6E1CACC93C000063A1 /* ShapeSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		13EC2A751CACC93C000063A1 /* ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13EC2A6A1CACC93C000063A1 /* ShapeSwift.framework */; };
 		13EC2A7A1CACC93C000063A1 /* ShapeSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2A791CACC93C000063A1 /* ShapeSwiftTests.swift */; };
 		13EC2B0E1CACCC84000063A1 /* SHPFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2B0D1CACCC84000063A1 /* SHPFileParser.swift */; };
 		13EC2B141CACCD93000063A1 /* sfsweeproutes.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B101CACCD93000063A1 /* sfsweeproutes.dbf */; };
@@ -25,8 +24,7 @@
 		13EC2B171CACCD93000063A1 /* sfsweeproutes.shx in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */; };
 		13EC2B181CACCF3F000063A1 /* sfsweeproutes.shp in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */; };
 		13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */; };
-		1D77F0930008E674B4760A2C /* Pods_ShapeSwiftShared_ShapeSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DDB803F649514FA4270F7F /* Pods_ShapeSwiftShared_ShapeSwiftTests.framework */; };
-		26FB291EF3720F5E52D3009F /* Pods_ShapeSwiftShared_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F2C47BAFC665469CBADAD34 /* Pods_ShapeSwiftShared_ShapeSwift.framework */; };
+		317974567E3A8E5C723D613A /* Pods_ShapeSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B99813E258A70F0B0CC16B /* Pods_ShapeSwiftTests.framework */; };
 		4F70FD581D008B3A007D6012 /* ShapeFileMultiPointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */; };
 		4F70FD5A1D008C09007D6012 /* MultiPointTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD591D008C09007D6012 /* MultiPointTest.swift */; };
 		4F70FD5C1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F70FD5B1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift */; };
@@ -48,6 +46,7 @@
 		A8E2D3E31CD3BEE200561BB3 /* SHPFileRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E2D3E21CD3BEE200561BB3 /* SHPFileRecord.swift */; };
 		A8F39FD51D1301D7001C8603 /* ShapeFilePolyLineZRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F39FD41D1301D7001C8603 /* ShapeFilePolyLineZRecord.swift */; };
 		A8F39FD71D13098E001C8603 /* PolyLineZTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F39FD61D13098E001C8603 /* PolyLineZTest.swift */; };
+		C187CADA2482743812C5EAD0 /* Pods_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B8E726549B49F7A988F81E /* Pods_ShapeSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,7 +80,7 @@
 		13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shp; sourceTree = "<group>"; };
 		13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shx; sourceTree = "<group>"; };
 		13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteParseable.swift; sourceTree = "<group>"; };
-		4851BC5E8983FB33F50A8D46 /* Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwift/Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig"; sourceTree = "<group>"; };
+		30D4E7846DAA2CCFDE2DE008 /* Pods-ShapeSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShapeFileMultiPointRecord.swift; path = Records/ShapeFileMultiPointRecord.swift; sourceTree = "<group>"; };
 		4F70FD591D008C09007D6012 /* MultiPointTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPointTest.swift; sourceTree = "<group>"; };
 		4F70FD5B1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFilePolyLineRecord.swift; sourceTree = "<group>"; };
@@ -99,15 +98,15 @@
 		4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodableTest.swift; sourceTree = "<group>"; };
 		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
 		4FFD5F161D038BBC00F286A1 /* ShapeFileMultiPointMRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFileMultiPointMRecord.swift; sourceTree = "<group>"; };
-		5F2C47BAFC665469CBADAD34 /* Pods_ShapeSwiftShared_ShapeSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwiftShared_ShapeSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A5CD714607BCAC8CFF988F1D /* Pods-ShapeSwiftShared-ShapeSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftShared-ShapeSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwiftTests/Pods-ShapeSwiftShared-ShapeSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		732F0C2EB9D3DBFF32F7C910 /* Pods-ShapeSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
+		88B99813E258A70F0B0CC16B /* Pods_ShapeSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		947E94386B5516AECDEFE8F1 /* Pods-ShapeSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwift/Pods-ShapeSwift.release.xcconfig"; sourceTree = "<group>"; };
+		9BBCF246012B69DBB9870B69 /* Pods-ShapeSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwift/Pods-ShapeSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		A89C6DCE1CD3B060002A60BD /* SHPFileParserDebugging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileParserDebugging.swift; sourceTree = "<group>"; };
-		A8DDB803F649514FA4270F7F /* Pods_ShapeSwiftShared_ShapeSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwiftShared_ShapeSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8E2D3E21CD3BEE200561BB3 /* SHPFileRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileRecord.swift; sourceTree = "<group>"; };
 		A8F39FD41D1301D7001C8603 /* ShapeFilePolyLineZRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFilePolyLineZRecord.swift; sourceTree = "<group>"; };
 		A8F39FD61D13098E001C8603 /* PolyLineZTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyLineZTest.swift; sourceTree = "<group>"; };
-		D8DC9DF485F2E2E5B64274BB /* Pods-ShapeSwiftShared-ShapeSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftShared-ShapeSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwift/Pods-ShapeSwiftShared-ShapeSwift.debug.xcconfig"; sourceTree = "<group>"; };
-		EB73B03D876E3902A1999473 /* Pods-ShapeSwiftShared-ShapeSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftShared-ShapeSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwiftTests/Pods-ShapeSwiftShared-ShapeSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
+		E6B8E726549B49F7A988F81E /* Pods_ShapeSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26FB291EF3720F5E52D3009F /* Pods_ShapeSwiftShared_ShapeSwift.framework in Frameworks */,
+				C187CADA2482743812C5EAD0 /* Pods_ShapeSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,22 +122,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13EC2A751CACC93C000063A1 /* ShapeSwift.framework in Frameworks */,
-				1D77F0930008E674B4760A2C /* Pods_ShapeSwiftShared_ShapeSwiftTests.framework in Frameworks */,
+				317974567E3A8E5C723D613A /* Pods_ShapeSwiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041A5BD4D2A2EEC2419EF483 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E6B8E726549B49F7A988F81E /* Pods_ShapeSwift.framework */,
+				88B99813E258A70F0B0CC16B /* Pods_ShapeSwiftTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		13EC2A601CACC93C000063A1 = {
 			isa = PBXGroup;
 			children = (
 				13EC2A6C1CACC93C000063A1 /* ShapeSwift */,
 				13EC2A781CACC93C000063A1 /* ShapeSwiftTests */,
 				13EC2A6B1CACC93C000063A1 /* Products */,
-				D6F497FE21527559DF7830FB /* Pods */,
-				E42D8400EF89CBA35469C2C6 /* Frameworks */,
+				2BD844AAA1345C11F5D61226 /* Pods */,
+				041A5BD4D2A2EEC2419EF483 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -203,6 +210,17 @@
 			path = sfsweeproutes;
 			sourceTree = "<group>";
 		};
+		2BD844AAA1345C11F5D61226 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9BBCF246012B69DBB9870B69 /* Pods-ShapeSwift.debug.xcconfig */,
+				947E94386B5516AECDEFE8F1 /* Pods-ShapeSwift.release.xcconfig */,
+				30D4E7846DAA2CCFDE2DE008 /* Pods-ShapeSwiftTests.debug.xcconfig */,
+				732F0C2EB9D3DBFF32F7C910 /* Pods-ShapeSwiftTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		4F70FD561D008B19007D6012 /* Records */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,26 +236,6 @@
 				A8F39FD41D1301D7001C8603 /* ShapeFilePolyLineZRecord.swift */,
 			);
 			name = Records;
-			sourceTree = "<group>";
-		};
-		D6F497FE21527559DF7830FB /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D8DC9DF485F2E2E5B64274BB /* Pods-ShapeSwiftShared-ShapeSwift.debug.xcconfig */,
-				4851BC5E8983FB33F50A8D46 /* Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig */,
-				A5CD714607BCAC8CFF988F1D /* Pods-ShapeSwiftShared-ShapeSwiftTests.debug.xcconfig */,
-				EB73B03D876E3902A1999473 /* Pods-ShapeSwiftShared-ShapeSwiftTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		E42D8400EF89CBA35469C2C6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5F2C47BAFC665469CBADAD34 /* Pods_ShapeSwiftShared_ShapeSwift.framework */,
-				A8DDB803F649514FA4270F7F /* Pods_ShapeSwiftShared_ShapeSwiftTests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,7 +263,6 @@
 				13EC2A671CACC93C000063A1 /* Headers */,
 				13EC2A681CACC93C000063A1 /* Resources */,
 				7A6838FE12389E4BD2A2FCFE /* [CP] Copy Pods Resources */,
-				695C8E928FB7C6D5F2BCB5B6 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -287,8 +284,6 @@
 				13EC2A721CACC93C000063A1 /* Resources */,
 				E31746EE8E4DFC72AC909300 /* [CP] Embed Pods Frameworks */,
 				7765F7FD50D6EB6D8CDBE393 /* [CP] Copy Pods Resources */,
-				B4C6801BB84328217EBCA5AE /* 📦 Embed Pods Frameworks */,
-				5FE473D693BF6901E06E89E4 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -312,9 +307,11 @@
 				TargetAttributes = {
 					13EC2A691CACC93C000063A1 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 					13EC2A731CACC93C000063A1 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -371,37 +368,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		5FE473D693BF6901E06E89E4 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwiftTests/Pods-ShapeSwiftShared-ShapeSwiftTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		695C8E928FB7C6D5F2BCB5B6 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwift/Pods-ShapeSwiftShared-ShapeSwift-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		7765F7FD50D6EB6D8CDBE393 /* [CP] Copy Pods Resources */ = {
@@ -416,7 +383,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwiftTests/Pods-ShapeSwiftShared-ShapeSwiftTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7A6838FE12389E4BD2A2FCFE /* [CP] Copy Pods Resources */ = {
@@ -431,7 +398,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwift/Pods-ShapeSwiftShared-ShapeSwift-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwift/Pods-ShapeSwift-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		96F7A1BE21B10837004638C9 /* [CP] Check Pods Manifest.lock */ = {
@@ -464,21 +431,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B4C6801BB84328217EBCA5AE /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwiftTests/Pods-ShapeSwiftShared-ShapeSwiftTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D12FF51765E323572786DC7E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -491,7 +443,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E31746EE8E4DFC72AC909300 /* [CP] Embed Pods Frameworks */ = {
@@ -506,7 +458,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftShared-ShapeSwiftTests/Pods-ShapeSwiftShared-ShapeSwiftTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -662,7 +614,7 @@
 		};
 		13EC2A7F1CACC93C000063A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D8DC9DF485F2E2E5B64274BB /* Pods-ShapeSwiftShared-ShapeSwift.debug.xcconfig */;
+			baseConfigurationReference = 9BBCF246012B69DBB9870B69 /* Pods-ShapeSwift.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -676,12 +628,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		13EC2A801CACC93C000063A1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4851BC5E8983FB33F50A8D46 /* Pods-ShapeSwiftShared-ShapeSwift.release.xcconfig */;
+			baseConfigurationReference = 947E94386B5516AECDEFE8F1 /* Pods-ShapeSwift.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -694,30 +647,33 @@
 				PRODUCT_BUNDLE_IDENTIFIER = benasher44.ShapeSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		13EC2A821CACC93C000063A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A5CD714607BCAC8CFF988F1D /* Pods-ShapeSwiftShared-ShapeSwiftTests.debug.xcconfig */;
+			baseConfigurationReference = 30D4E7846DAA2CCFDE2DE008 /* Pods-ShapeSwiftTests.debug.xcconfig */;
 			buildSettings = {
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ShapeSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = benasher44.ShapeSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		13EC2A831CACC93C000063A1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB73B03D876E3902A1999473 /* Pods-ShapeSwiftShared-ShapeSwiftTests.release.xcconfig */;
+			baseConfigurationReference = 732F0C2EB9D3DBFF32F7C910 /* Pods-ShapeSwiftTests.release.xcconfig */;
 			buildSettings = {
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ShapeSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = benasher44.ShapeSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

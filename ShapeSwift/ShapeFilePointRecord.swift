@@ -27,8 +27,8 @@ struct ShapeFilePointRecord {
 }
 
 extension ShapeFilePointRecord: ShapeFileRecord {
-  init(data: NSData, range: Range<Int>) throws {
-    let parser = Parser(start: range.startIndex)
+  init(data: Data, range: Range<Int>) throws {
+    let parser = Parser(start: range.lowerBound)
     point = try parser.point.parse(data)
   }
 }
