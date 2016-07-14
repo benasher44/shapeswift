@@ -6,8 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
-
 extension Coordinate2DBounds: CustomDebugStringConvertible {
   var debugDescription: String {
     return "{\(min), \(max)}"

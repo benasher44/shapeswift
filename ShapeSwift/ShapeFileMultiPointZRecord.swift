@@ -6,8 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
-
 // MARK: Record
 
 struct ShapeFileMultiPointZRecord: ShapeFileRecord {

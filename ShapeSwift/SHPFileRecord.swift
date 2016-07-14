@@ -6,8 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
-
 private let noDataValue: Double = -pow(10, 38)
 
 func valueOrNilForOptionalValue(_ value: Coordinate2DBounds) -> Coordinate2DBounds? {

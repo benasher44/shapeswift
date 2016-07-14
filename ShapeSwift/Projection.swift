@@ -6,7 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
 import proj4
 
 protocol Projection {

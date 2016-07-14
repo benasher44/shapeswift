@@ -6,8 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
-
 // http://www.dbf2002.com/dbf-file-format.html
 // Note that all values are stored in little endian byte order (least significant byte first)
 

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
-
 struct BoundingBoxXY {
   let x: Coordinate2DBounds
   let y: Coordinate2DBounds

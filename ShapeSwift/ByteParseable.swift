@@ -6,8 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
-
 /// Container for a type that should be parsed from big endian bytes
 struct BigEndian<T: BigEndianByteParseable> {
   let value: T

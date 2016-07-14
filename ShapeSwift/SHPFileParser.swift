@@ -6,8 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
-
 private let headerRange = 0..<100
 
 extension ShapeFileHeader {

@@ -6,8 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
-
 struct ShapeDataParser<T: ByteOrdered> {
   let start: Int
 }
