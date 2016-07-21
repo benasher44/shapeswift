@@ -96,6 +96,12 @@ extension Int32: BigEndianByteEncodable {
   }
 }
 
+extension MultiPatchPartType: LittleEndianByteEncodable {
+  func encodeLittleEndian() -> [Byte] {
+    return Int32(self.rawValue).encodeLittleEndian()
+  }
+}
+
 extension ShapeType: LittleEndianByteEncodable {
   func encodeLittleEndian() -> [Byte] {
     return Int32(self.rawValue).encodeLittleEndian()

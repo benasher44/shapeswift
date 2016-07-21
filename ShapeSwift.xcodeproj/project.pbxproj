@@ -48,6 +48,8 @@
 		A8E2D3E31CD3BEE200561BB3 /* SHPFileRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E2D3E21CD3BEE200561BB3 /* SHPFileRecord.swift */; };
 		A8F39FD51D1301D7001C8603 /* ShapeFilePolyLineZRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F39FD41D1301D7001C8603 /* ShapeFilePolyLineZRecord.swift */; };
 		A8F39FD71D13098E001C8603 /* PolyLineZTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F39FD61D13098E001C8603 /* PolyLineZTest.swift */; };
+		A8FB102B1D37FA48005F66ED /* ShapeFileMultiPatchRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FB102A1D37FA48005F66ED /* ShapeFileMultiPatchRecord.swift */; };
+		A8FB102D1D37FC62005F66ED /* MultiPatchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FB102C1D37FC62005F66ED /* MultiPatchTest.swift */; };
 		C187CADA2482743812C5EAD0 /* Pods_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B8E726549B49F7A988F81E /* Pods_ShapeSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +112,8 @@
 		A8E2D3E21CD3BEE200561BB3 /* SHPFileRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileRecord.swift; sourceTree = "<group>"; };
 		A8F39FD41D1301D7001C8603 /* ShapeFilePolyLineZRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFilePolyLineZRecord.swift; sourceTree = "<group>"; };
 		A8F39FD61D13098E001C8603 /* PolyLineZTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyLineZTest.swift; sourceTree = "<group>"; };
+		A8FB102A1D37FA48005F66ED /* ShapeFileMultiPatchRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeFileMultiPatchRecord.swift; sourceTree = "<group>"; };
+		A8FB102C1D37FC62005F66ED /* MultiPatchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPatchTest.swift; sourceTree = "<group>"; };
 		E6B8E726549B49F7A988F81E /* Pods_ShapeSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -184,18 +188,19 @@
 		13EC2A781CACC93C000063A1 /* ShapeSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
-				4F6DB42E1D37FD3B005437B2 /* PolygonZTest.swift */,
+				4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */,
+				4F70FD591D008C09007D6012 /* MultiPointTest.swift */,
+				4FDC36701D09C947003ED2BF /* MultiPointMTest.swift */,
 				4F7C859E1D1300E4001182A9 /* MultiPointZTest.swift */,
+				A8FB102C1D37FC62005F66ED /* MultiPatchTest.swift */,
+				132015AC1D0091E900991F3A /* PointTest.swift */,
 				4FDC36781D09D7A3003ED2BF /* PointZTest.swift */,
 				4FDC36741D09D0D9003ED2BF /* PolygonMTest.swift */,
-				4FDC36701D09C947003ED2BF /* MultiPointMTest.swift */,
 				4F70FD611D00A01E007D6012 /* PolygonTest.swift */,
+				4F6DB42E1D37FD3B005437B2 /* PolygonZTest.swift */,
 				4F70FD5D1D0091D6007D6012 /* PolyLineTest.swift */,
 				135286C01D09D10C007FC288 /* PolyLineMTest.swift */,
 				A8F39FD61D13098E001C8603 /* PolyLineZTest.swift */,
-				4F70FD591D008C09007D6012 /* MultiPointTest.swift */,
-				4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */,
-				132015AC1D0091E900991F3A /* PointTest.swift */,
 				13EC2B0F1CACCD93000063A1 /* sfsweeproutes */,
 				13EC2A791CACC93C000063A1 /* ShapeSwiftTests.swift */,
 				132015AE1D00962700991F3A /* RecordParsingTestUtil.swift */,
@@ -229,17 +234,18 @@
 		4F70FD561D008B19007D6012 /* Records */ = {
 			isa = PBXGroup;
 			children = (
-				4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */,
-				132015AA1D008CE700991F3A /* ShapeFilePointRecord.swift */,
-				4F70FD5B1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift */,
-				4F70FD5F1D009F1E007D6012 /* ShapeFilePolygonRecord.swift */,
+				A8FB102A1D37FA48005F66ED /* ShapeFileMultiPatchRecord.swift */,
 				4FFD5F161D038BBC00F286A1 /* ShapeFileMultiPointMRecord.swift */,
-				4FDC36721D09CD8E003ED2BF /* ShapeFilePolygonMRecord.swift */,
-				135286BE1D09CD7B007FC288 /* ShapeFilePolyLineMRecord.swift */,
-				4FDC36761D09D4F8003ED2BF /* ShapeFilePointZRecord.swift */,
+				4F70FD571D008B3A007D6012 /* ShapeFileMultiPointRecord.swift */,
 				4F7C859C1D12FD06001182A9 /* ShapeFileMultiPointZRecord.swift */,
-				A8F39FD41D1301D7001C8603 /* ShapeFilePolyLineZRecord.swift */,
+				132015AA1D008CE700991F3A /* ShapeFilePointRecord.swift */,
+				4FDC36761D09D4F8003ED2BF /* ShapeFilePointZRecord.swift */,
+				4FDC36721D09CD8E003ED2BF /* ShapeFilePolygonMRecord.swift */,
+				4F70FD5F1D009F1E007D6012 /* ShapeFilePolygonRecord.swift */,
 				4F6DB42C1D37FA40005437B2 /* ShapeFilePolygonZRecord.swift */,
+				135286BE1D09CD7B007FC288 /* ShapeFilePolyLineMRecord.swift */,
+				4F70FD5B1D008CD5007D6012 /* ShapeFilePolyLineRecord.swift */,
+				A8F39FD41D1301D7001C8603 /* ShapeFilePolyLineZRecord.swift */,
 			);
 			name = Records;
 			sourceTree = "<group>";
@@ -483,6 +489,7 @@
 				4FFD5F171D038BBC00F286A1 /* ShapeFileMultiPointMRecord.swift in Sources */,
 				13EC2B0E1CACCC84000063A1 /* SHPFileParser.swift in Sources */,
 				4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */,
+				A8FB102B1D37FA48005F66ED /* ShapeFileMultiPatchRecord.swift in Sources */,
 				13010F711CD64D5E00440342 /* SHPFileDataParsers.swift in Sources */,
 				4F6DB42D1D37FA40005437B2 /* ShapeFilePolygonZRecord.swift in Sources */,
 				4F7C859D1D12FD06001182A9 /* ShapeFileMultiPointZRecord.swift in Sources */,
@@ -508,6 +515,7 @@
 				135286C11D09D10C007FC288 /* PolyLineMTest.swift in Sources */,
 				4FDC36711D09C947003ED2BF /* MultiPointMTest.swift in Sources */,
 				4FDC36751D09D0D9003ED2BF /* PolygonMTest.swift in Sources */,
+				A8FB102D1D37FC62005F66ED /* MultiPatchTest.swift in Sources */,
 				132015AD1D0091E900991F3A /* PointTest.swift in Sources */,
 				4F70FD5E1D0091D6007D6012 /* PolyLineTest.swift in Sources */,
 				13EC2A7A1CACC93C000063A1 /* ShapeSwiftTests.swift in Sources */,
