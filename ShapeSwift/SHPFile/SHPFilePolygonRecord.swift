@@ -1,5 +1,5 @@
 //
-//  ShapeFilePolygonRecord.swift
+//  SHPFilePolygonRecord.swift
 //  ShapeSwift
 //
 //  Created by Noah Gilmore on 6/2/16.
@@ -8,7 +8,7 @@
 
 // MARK: Parser
 
-extension ShapeFilePolygonRecord {
+extension SHPFilePolygonRecord {
   struct Parser {
     let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
     let parts: ShapeDataArrayParser<LittleEndian<Int32>>
@@ -27,13 +27,13 @@ extension ShapeFilePolygonRecord {
 
 // MARK: Record
 
-struct ShapeFilePolygonRecord: ShapeFileRecord {
+struct SHPFilePolygonRecord: SHPFileRecord {
   let box: BoundingBoxXY
   let parts: [Int32]
   let points: [Coordinate2D]
 }
 
-extension ShapeFilePolygonRecord {
+extension SHPFilePolygonRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
@@ -42,7 +42,7 @@ extension ShapeFilePolygonRecord {
   }
 }
 
-extension ShapeFilePolygonRecord: ByteEncodable {
+extension SHPFilePolygonRecord: ByteEncodable {
   func encode() -> [Byte] {
     let byteEncodables = [[
       LittleEndianEncoded<ShapeType>(value: .polyLine),
@@ -56,8 +56,8 @@ extension ShapeFilePolygonRecord: ByteEncodable {
 
 // MARK: Equatable
 
-extension ShapeFilePolygonRecord: Equatable {}
+extension SHPFilePolygonRecord: Equatable {}
 
-func ==(lhs: ShapeFilePolygonRecord, rhs: ShapeFilePolygonRecord) -> Bool {
+func ==(lhs: SHPFilePolygonRecord, rhs: SHPFilePolygonRecord) -> Bool {
   return lhs.box == rhs.box && lhs.points == rhs.points && lhs.parts == rhs.parts
 }

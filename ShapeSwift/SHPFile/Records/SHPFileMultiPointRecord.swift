@@ -1,5 +1,5 @@
 //
-//  ShapeFileMultiPointRecord.swift
+//  SHPFileMultiPointRecord.swift
 //  ShapeSwift
 //
 //  Created by Noah Gilmore on 6/2/16.
@@ -8,7 +8,7 @@
 
 // MARK: Parser
 
-extension ShapeFileMultiPointRecord {
+extension SHPFileMultiPointRecord {
   struct Parser {
     let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
     let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
@@ -24,12 +24,12 @@ extension ShapeFileMultiPointRecord {
 
 // MARK: Record
 
-struct ShapeFileMultiPointRecord {
+struct SHPFileMultiPointRecord {
   let box: BoundingBoxXY
   let points: [Coordinate2D]
 }
 
-extension ShapeFileMultiPointRecord: ShapeFileRecord {
+extension SHPFileMultiPointRecord: SHPFileRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
@@ -37,7 +37,7 @@ extension ShapeFileMultiPointRecord: ShapeFileRecord {
   }
 }
 
-extension ShapeFileMultiPointRecord: ByteEncodable {
+extension SHPFileMultiPointRecord: ByteEncodable {
   func encode() -> [Byte] {
     let byteEncodables: [[ByteEncodable]] = [[
       LittleEndianEncoded<ShapeType>(value: .multiPoint),
@@ -50,8 +50,8 @@ extension ShapeFileMultiPointRecord: ByteEncodable {
 
 // MARK: Equatable
 
-extension ShapeFileMultiPointRecord: Equatable {}
+extension SHPFileMultiPointRecord: Equatable {}
 
-func ==(lhs: ShapeFileMultiPointRecord, rhs: ShapeFileMultiPointRecord) -> Bool {
+func ==(lhs: SHPFileMultiPointRecord, rhs: SHPFileMultiPointRecord) -> Bool {
   return lhs.box == rhs.box && lhs.points == rhs.points
 }

@@ -23,7 +23,7 @@ extension BoundingBoxXYZM: CustomDebugStringConvertible {
   }
 }
 
-extension ShapeFileHeader: CustomDebugStringConvertible {
+extension SHPFileHeader: CustomDebugStringConvertible {
   var debugDescription: String {
     return [
       "File Code: \(fileCode)",

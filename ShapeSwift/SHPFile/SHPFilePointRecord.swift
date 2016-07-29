@@ -1,5 +1,5 @@
 //
-//  ShapeFilePointRecord.swift
+//  SHPFilePointRecord.swift
 //  ShapeSwift
 //
 //  Created by Benjamin Asher on 6/2/16.
@@ -8,7 +8,7 @@
 
 // MARK: Parser
 
-extension ShapeFilePointRecord {
+extension SHPFilePointRecord {
   struct Parser {
     let point: ShapeDataParser<LittleEndian<Coordinate2D>>
 
@@ -20,18 +20,18 @@ extension ShapeFilePointRecord {
 
 // MARK: Record
 
-struct ShapeFilePointRecord {
+struct SHPFilePointRecord {
   let point: Coordinate2D
 }
 
-extension ShapeFilePointRecord: ShapeFileRecord {
+extension SHPFilePointRecord: SHPFileRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = Parser(start: range.lowerBound)
     point = try parser.point.parse(data)
   }
 }
 
-extension ShapeFilePointRecord: ByteEncodable {
+extension SHPFilePointRecord: ByteEncodable {
   func encode() -> [Byte] {
     let byteEncodables: [ByteEncodable] = [
       LittleEndianEncoded<ShapeType>(value: .point),
@@ -43,8 +43,8 @@ extension ShapeFilePointRecord: ByteEncodable {
 
 // MARK: Equatable
 
-func ==(lhs: ShapeFilePointRecord, rhs: ShapeFilePointRecord) -> Bool {
+func ==(lhs: SHPFilePointRecord, rhs: SHPFilePointRecord) -> Bool {
   return lhs.point == rhs.point
 }
 
-extension ShapeFilePointRecord: Equatable {}
+extension SHPFilePointRecord: Equatable {}

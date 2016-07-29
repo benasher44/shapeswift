@@ -12,7 +12,7 @@ import XCTest
 class PointTest: XCTestCase {
 
   func testDecoding() {
-    let point = ShapeFilePointRecord(point: Coordinate2D(x: 10.0, y: 10.0))
+    let point = SHPFilePointRecord(point: Coordinate2D(x: 10.0, y: 10.0))
     testParsingRecord(point, range: 4..<16)
   }
 }

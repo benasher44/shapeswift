@@ -15,7 +15,7 @@ class PolyLineTest: XCTestCase {
     let points = [
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
     ]
-    let polyline = ShapeFilePolyLineRecord(
+    let polyline = SHPFilePolyLineRecord(
       box: box,
       points: points,
       parts: [0]
@@ -28,7 +28,7 @@ class PolyLineTest: XCTestCase {
     let points = [
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10), Coordinate2D(x: 15, y: 9), Coordinate2D(x: 5, y: -5)
     ]
-    let polyline = ShapeFilePolyLineRecord(
+    let polyline = SHPFilePolyLineRecord(
       box: box,
       points: points,
       parts: [0, 2]

@@ -15,7 +15,7 @@ class MultiPointTest: XCTestCase {
     let points = [
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
     ]
-    let multipoint = ShapeFileMultiPointRecord(box: box, points: points)
+    let multipoint = SHPFileMultiPointRecord(box: box, points: points)
     testParsingRecord(multipoint, range: 4..<68)
   }
 }

@@ -17,7 +17,7 @@ class MultiPointZTest: XCTestCase {
     ]
     let measures: [Double] = [1.0, 2.0]
     let zValues: [Double] = [0.0, 10.0]
-    let multipointZ = ShapeFileMultiPointZRecord(
+    let multipointZ = SHPFileMultiPointZRecord(
       box: box,
       points: points,
       zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),
@@ -34,7 +34,7 @@ class MultiPointZTest: XCTestCase {
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
     ]
     let zValues: [Double] = [0.0, 10.0]
-    let multipointZ = ShapeFileMultiPointZRecord(
+    let multipointZ = SHPFileMultiPointZRecord(
       box: box,
       points: points,
       zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),

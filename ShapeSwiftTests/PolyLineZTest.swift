@@ -17,7 +17,7 @@ class PolyLineZTest: XCTestCase {
     ]
     let measures: [Double] = [1.0, 2.0]
     let zValues: [Double] = [0.0, 10.0]
-    let polyLineZ = ShapeFilePolyLineZRecord(
+    let polyLineZ = SHPFilePolyLineZRecord(
       box: box,
       parts: [0],
       points: points,
@@ -35,7 +35,7 @@ class PolyLineZTest: XCTestCase {
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
     ]
     let zValues: [Double] = [0.0, 10.0]
-    let polyLineZ = ShapeFilePolyLineZRecord(
+    let polyLineZ = SHPFilePolyLineZRecord(
       box: box,
       parts: [0],
       points: points,

@@ -16,7 +16,7 @@ class MultiPointMTest: XCTestCase {
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
     ]
     let measures: [Double] = [1.0, 2.0]
-    let multipointM = ShapeFileMultiPointMRecord(box: box, points: points, mBounds: Coordinate2DBounds(min: 1.0, max: 2.0), measures: measures)
+    let multipointM = SHPFileMultiPointMRecord(box: box, points: points, mBounds: Coordinate2DBounds(min: 1.0, max: 2.0), measures: measures)
     testParsingRecord(multipointM, range: 4..<(40 + 2 * 8 + 16 + 2 * 8))
   }
 
@@ -26,7 +26,7 @@ class MultiPointMTest: XCTestCase {
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
     ]
 
-    let multipointM = ShapeFileMultiPointMRecord(box: box, points: points, mBounds: nil, measures: [])
+    let multipointM = SHPFileMultiPointMRecord(box: box, points: points, mBounds: nil, measures: [])
     testParsingRecord(multipointM, range: 4..<(40 + 2 * 8))
   }
 }

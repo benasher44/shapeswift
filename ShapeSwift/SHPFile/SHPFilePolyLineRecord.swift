@@ -1,5 +1,5 @@
 //
-//  ShapeFilePolyLineRecord.swift
+//  SHPFilePolyLineRecord.swift
 //  ShapeSwift
 //
 //  Created by Noah Gilmore on 6/2/16.
@@ -8,7 +8,7 @@
 
 // MARK: Parser
 
-extension ShapeFilePolyLineRecord {
+extension SHPFilePolyLineRecord {
   struct Parser {
     let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
     let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
@@ -28,15 +28,15 @@ extension ShapeFilePolyLineRecord {
 // MARK: Record
 
 /// todo: Because this specification does not forbid consecutive points with identical coordinates,
-/// shapefile readers must handle such cases. On the other hand, the degenerate, zero length
+/// SHPFile readers must handle such cases. On the other hand, the degenerate, zero length
 /// parts that might result are not allowed.
-struct ShapeFilePolyLineRecord: ShapeFileRecord {
+struct SHPFilePolyLineRecord: SHPFileRecord {
   let box: BoundingBoxXY
   let points: [Coordinate2D]
   let parts: [Int32]
 }
 
-extension ShapeFilePolyLineRecord {
+extension SHPFilePolyLineRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
@@ -45,7 +45,7 @@ extension ShapeFilePolyLineRecord {
   }
 }
 
-extension ShapeFilePolyLineRecord: ByteEncodable {
+extension SHPFilePolyLineRecord: ByteEncodable {
   func encode() -> [Byte] {
     let byteEncodables = [[
       LittleEndianEncoded<ShapeType>(value: .polyLine),
@@ -59,8 +59,8 @@ extension ShapeFilePolyLineRecord: ByteEncodable {
 
 // MARK: Equatable
 
-extension ShapeFilePolyLineRecord: Equatable {}
+extension SHPFilePolyLineRecord: Equatable {}
 
-func ==(lhs: ShapeFilePolyLineRecord, rhs: ShapeFilePolyLineRecord) -> Bool {
+func ==(lhs: SHPFilePolyLineRecord, rhs: SHPFilePolyLineRecord) -> Bool {
   return lhs.box == rhs.box && lhs.points == rhs.points && lhs.parts == rhs.parts
 }

@@ -1,14 +1,14 @@
 //
-//  ShapeFilePolygonMRecord.swift
+//  SHPFilePolyLineMRecord.swift
 //  ShapeSwift
 //
-//  Created by Noah Gilmore on 6/9/16.
+//  Created by Benjamin Asher on 6/9/16.
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
 // MARK: Parser
 
-extension ShapeFilePolygonMRecord {
+extension SHPFilePolyLineMRecord {
   struct Parser {
     let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
     let parts: ShapeDataArrayParser<LittleEndian<Int32>>
@@ -31,7 +31,7 @@ extension ShapeFilePolygonMRecord {
 
 // MARK: Record
 
-struct ShapeFilePolygonMRecord: ShapeFileRecord {
+struct SHPFilePolyLineMRecord {
   let box: BoundingBoxXY
   let parts: [Int]
   let points: [Coordinate2D]
@@ -39,7 +39,7 @@ struct ShapeFilePolygonMRecord: ShapeFileRecord {
   let measures: [Double]
 }
 
-extension ShapeFilePolygonMRecord {
+extension SHPFilePolyLineMRecord: SHPFileRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
@@ -55,24 +55,21 @@ extension ShapeFilePolygonMRecord {
   }
 }
 
-extension ShapeFilePolygonMRecord: ByteEncodable {
+extension SHPFilePolyLineMRecord: ByteEncodable {
   func encode() -> [Byte] {
     var byteEncodables: [[ByteEncodable]] = [
       [
-        LittleEndianEncoded<ShapeType>(value: .polygonM),
+        LittleEndianEncoded<ShapeType>(value: .polyLineM),
         box,
         LittleEndianEncoded<Int32>(value: Int32(parts.count)),
         LittleEndianEncoded<Int32>(value: Int32(points.count))
       ],
-      parts.map({ LittleEndianEncoded<Int32>(value: Int32($0)) as ByteEncodable }),
+      parts.map({LittleEndianEncoded<Int32>(value: Int32($0))}),
       points.map({$0 as ByteEncodable})
     ]
 
     if let mBounds = mBounds {
-      byteEncodables.append([
-        LittleEndianEncoded<Double>(value: mBounds.min),
-        LittleEndianEncoded<Double>(value: mBounds.max),
-        ])
+      byteEncodables.append([mBounds])
       byteEncodables.append(
         measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
       )
@@ -84,8 +81,12 @@ extension ShapeFilePolygonMRecord: ByteEncodable {
 
 // MARK: Equatable
 
-extension ShapeFilePolygonMRecord: Equatable {}
-
-func ==(lhs: ShapeFilePolygonMRecord, rhs: ShapeFilePolygonMRecord) -> Bool {
-  return lhs.box == rhs.box && lhs.points == rhs.points && lhs.parts == rhs.parts && lhs.mBounds == rhs.mBounds && lhs.measures == rhs.measures
+func ==(lhs: SHPFilePolyLineMRecord, rhs: SHPFilePolyLineMRecord) -> Bool {
+  return (lhs.box == rhs.box &&
+    lhs.parts == rhs.parts &&
+    lhs.points == rhs.points &&
+    lhs.mBounds == rhs.mBounds &&
+    lhs.measures == rhs.measures)
 }
+
+extension SHPFilePolyLineMRecord: Equatable {}

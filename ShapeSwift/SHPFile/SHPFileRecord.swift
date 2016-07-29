@@ -41,16 +41,16 @@ func valueOrNoDataValueForOptionalValue(_ value: Double?) -> Double {
   return noDataValue
 }
 
-protocol ShapeFileRecord {
+protocol SHPFileRecord {
   init(data: Data, range: Range<Int>) throws
 }
 
-extension ShapeFileRecord {
-  static func recordForShapeType(_ shapeType: ShapeType, data: Data, range: Range<Int>) throws -> ShapeFileRecord? {
-    var type: ShapeFileRecord.Type
+extension SHPFileRecord {
+  static func recordForShapeType(_ shapeType: ShapeType, data: Data, range: Range<Int>) throws -> SHPFileRecord? {
+    var type: SHPFileRecord.Type
     switch shapeType {
     case .point:
-      type = ShapeFilePointRecord.self
+      type = SHPFilePointRecord.self
     default:
       return nil
     }

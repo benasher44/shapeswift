@@ -8,7 +8,7 @@
 
 private let headerRange = 0..<100
 
-extension ShapeFileHeader {
+extension SHPFileHeader {
   struct Parser {
     let fileCode = ShapeDataParser<BigEndian<Int32>>(start: 0)
     let fileLength = ShapeDataParser<BigEndian<Int32>>(start: 24)
@@ -18,7 +18,7 @@ extension ShapeFileHeader {
   }
 }
 
-struct ShapeFileHeader {
+struct SHPFileHeader {
   let fileCode: Int
   let fileLength: Int
   let version: Int
@@ -34,7 +34,7 @@ struct ShapeFileHeader {
   }
 }
 
-extension ShapeFileRecordHeader {
+extension SHPFileRecordHeader {
   struct Parser {
     let recordNumber: ShapeDataParser<BigEndian<Int32>>
     let contentLength: ShapeDataParser<BigEndian<Int32>>
@@ -45,7 +45,7 @@ extension ShapeFileRecordHeader {
   }
 }
 
-struct ShapeFileRecordHeader {
+struct SHPFileRecordHeader {
   let recordNumber: Int
   let contentLength: Int
   init(data: Data, start: Int) throws {
@@ -57,6 +57,6 @@ struct ShapeFileRecordHeader {
 
 public func parseFromURL(_ fileURL: URL) throws -> Void {
   let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
-  let header = try ShapeFileHeader(data: data)
+  let header = try SHPFileHeader(data: data)
   print("header - \(header.debugDescription)")
 }

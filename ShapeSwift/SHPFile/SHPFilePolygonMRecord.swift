@@ -1,26 +1,20 @@
 //
-//  ShapeFileMultiPatchRecord.swift
+//  SHPFilePolygonMRecord.swift
 //  ShapeSwift
 //
-//  Created by Ben Asher on 7/14/16.
+//  Created by Noah Gilmore on 6/9/16.
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-import Foundation
+// MARK: Parser
 
-// MARK: Multipatch
-
-extension ShapeFileMultiPatchRecord {
+extension SHPFilePolygonMRecord {
   struct Parser {
     let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
     let parts: ShapeDataArrayParser<LittleEndian<Int32>>
-    let partTypes: ShapeDataArrayParser<LittleEndian<MultiPatchPartType>>
     let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-    let zBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-    let zValues: ShapeDataArrayParser<LittleEndian<Double>>
     let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
     let measures: ShapeDataArrayParser<LittleEndian<Double>>
-
     init(data: Data, start: Int) throws {
       box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
       let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
@@ -28,38 +22,29 @@ extension ShapeFileMultiPatchRecord {
       let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
       let numPoints = try Int(numPointsParser.parse(data))
       parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
-      partTypes = ShapeDataArrayParser<LittleEndian<MultiPatchPartType>>(start: parts.end, count: numParts)
-      points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: partTypes.end, count: numPoints)
-      zBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
-      zValues = ShapeDataArrayParser<LittleEndian<Double>>(start: zBounds.end, count: numPoints)
-      mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: zValues.end)
+      points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
+      mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
       measures = ShapeDataArrayParser<LittleEndian<Double>>(start: mBounds.end, count: numPoints)
     }
   }
 }
 
-//MARK: Record
+// MARK: Record
 
-struct ShapeFileMultiPatchRecord {
+struct SHPFilePolygonMRecord: SHPFileRecord {
   let box: BoundingBoxXY
   let parts: [Int]
-  let partTypes: [MultiPatchPartType]
   let points: [Coordinate2D]
-  let zBounds: Coordinate2DBounds
-  let zValues: [Double]
   let mBounds: Coordinate2DBounds?
   let measures: [Double]
 }
 
-extension ShapeFileMultiPatchRecord: ShapeFileRecord {
+extension SHPFilePolygonMRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
-    partTypes = try parser.partTypes.parse(data)
     points = try parser.points.parse(data)
-    zBounds = try parser.zBounds.parse(data)
-    zValues = try parser.zValues.parse(data)
     if range.upperBound > parser.mBounds.start {
       mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
       measures = try parser.measures.parse(data).flatMap(valueOrNilForOptionalValue)
@@ -70,24 +55,24 @@ extension ShapeFileMultiPatchRecord: ShapeFileRecord {
   }
 }
 
-extension ShapeFileMultiPatchRecord: ByteEncodable {
+extension SHPFilePolygonMRecord: ByteEncodable {
   func encode() -> [Byte] {
     var byteEncodables: [[ByteEncodable]] = [
       [
-        LittleEndianEncoded<ShapeType>(value: .polyLineM),
+        LittleEndianEncoded<ShapeType>(value: .polygonM),
         box,
         LittleEndianEncoded<Int32>(value: Int32(parts.count)),
         LittleEndianEncoded<Int32>(value: Int32(points.count))
       ],
-      parts.map({LittleEndianEncoded<Int32>(value: Int32($0))}),
-      partTypes.map(LittleEndianEncoded<MultiPatchPartType>.init),
-      points.map({$0 as ByteEncodable}),
-      [zBounds],
-      zValues.map(LittleEndianEncoded<Double>.init),
-      ]
+      parts.map({ LittleEndianEncoded<Int32>(value: Int32($0)) as ByteEncodable }),
+      points.map({$0 as ByteEncodable})
+    ]
 
     if let mBounds = mBounds {
-      byteEncodables.append([mBounds])
+      byteEncodables.append([
+        LittleEndianEncoded<Double>(value: mBounds.min),
+        LittleEndianEncoded<Double>(value: mBounds.max),
+        ])
       byteEncodables.append(
         measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
       )
@@ -97,19 +82,10 @@ extension ShapeFileMultiPatchRecord: ByteEncodable {
   }
 }
 
-//MARK: Equatable
+// MARK: Equatable
 
-func == (lhs: ShapeFileMultiPatchRecord, rhs: ShapeFileMultiPatchRecord) -> Bool {
-  return (
-    lhs.box == rhs.box &&
-      lhs.parts == rhs.parts &&
-      lhs.partTypes == rhs.partTypes &&
-      lhs.points == rhs.points &&
-      lhs.zBounds == rhs.zBounds &&
-      lhs.zValues == rhs.zValues &&
-      lhs.mBounds == rhs.mBounds &&
-      lhs.measures == rhs.measures
-  )
+extension SHPFilePolygonMRecord: Equatable {}
+
+func ==(lhs: SHPFilePolygonMRecord, rhs: SHPFilePolygonMRecord) -> Bool {
+  return lhs.box == rhs.box && lhs.points == rhs.points && lhs.parts == rhs.parts && lhs.mBounds == rhs.mBounds && lhs.measures == rhs.measures
 }
-
-extension ShapeFileMultiPatchRecord: Equatable {}

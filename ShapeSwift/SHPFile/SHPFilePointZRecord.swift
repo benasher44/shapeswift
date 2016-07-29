@@ -1,5 +1,5 @@
 //
-//  ShapeFilePointZRecord.swift
+//  SHPFilePointZRecord.swift
 //  ShapeSwift
 //
 //  Created by Noah Gilmore on 6/9/16.
@@ -8,7 +8,7 @@
 
 // MARK: Parser
 
-struct ShapeFilePointZRecordParser {
+struct SHPFilePointZRecordParser {
   let x: ShapeDataParser<LittleEndian<Double>>
   let y: ShapeDataParser<LittleEndian<Double>>
   let z: ShapeDataParser<LittleEndian<Double>>
@@ -23,16 +23,16 @@ struct ShapeFilePointZRecordParser {
 
 // MARK: Record
 
-struct ShapeFilePointZRecord: ShapeFileRecord {
+struct SHPFilePointZRecord: SHPFileRecord {
   let x: Double
   let y: Double
   let z: Double
   let m: Double?
 }
 
-extension ShapeFilePointZRecord {
+extension SHPFilePointZRecord {
   init(data: Data, range: Range<Int>) throws {
-    let parser = ShapeFilePointZRecordParser(start: range.lowerBound)
+    let parser = SHPFilePointZRecordParser(start: range.lowerBound)
     x = try parser.x.parse(data)
     y = try parser.y.parse(data)
     z = try parser.z.parse(data)
@@ -40,7 +40,7 @@ extension ShapeFilePointZRecord {
   }
 }
 
-extension ShapeFilePointZRecord: ByteEncodable {
+extension SHPFilePointZRecord: ByteEncodable {
   func encode() -> [Byte] {
     let byteEncodables: [ByteEncodable] = [
       LittleEndianEncoded<ShapeType>(value: .pointZ),
@@ -55,8 +55,8 @@ extension ShapeFilePointZRecord: ByteEncodable {
 
 // MARK: Equatable
 
-func ==(lhs: ShapeFilePointZRecord, rhs: ShapeFilePointZRecord) -> Bool {
+func ==(lhs: SHPFilePointZRecord, rhs: SHPFilePointZRecord) -> Bool {
   return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.m == rhs.m
 }
 
-extension ShapeFilePointZRecord: Equatable {}
+extension SHPFilePointZRecord: Equatable {}

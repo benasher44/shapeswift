@@ -19,7 +19,7 @@ class MultiPatchTest: XCTestCase {
     ]
     let measures: [Double] = [1.0, 2.0, 3.0]
     let zValues: [Double] = [4.0, 5.0, 6.0]
-    let multipatch = ShapeFileMultiPatchRecord(
+    let multipatch = SHPFileMultiPatchRecord(
       box: box,
       parts: [0],
       partTypes: [.triangleStrip],
@@ -40,7 +40,7 @@ class MultiPatchTest: XCTestCase {
       Coordinate2D(x: 10, y: 10),
       ]
     let zValues: [Double] = [4.0, 5.0, 6.0]
-    let multipatch = ShapeFileMultiPatchRecord(
+    let multipatch = SHPFileMultiPatchRecord(
       box: box,
       parts: [0],
       partTypes: [.triangleStrip],

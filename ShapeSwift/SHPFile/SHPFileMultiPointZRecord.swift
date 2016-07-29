@@ -1,5 +1,5 @@
 //
-//  ShapeFileMultiPointZRecord.swift
+//  SHPFileMultiPointZRecord.swift
 //  ShapeSwift
 //
 //  Created by Noah Gilmore on 6/16/16.
@@ -8,7 +8,7 @@
 
 // MARK: Record
 
-struct ShapeFileMultiPointZRecord: ShapeFileRecord {
+struct SHPFileMultiPointZRecord: SHPFileRecord {
   let box: BoundingBoxXY
   let points: [Coordinate2D]
   let zBounds: Coordinate2DBounds
@@ -17,7 +17,7 @@ struct ShapeFileMultiPointZRecord: ShapeFileRecord {
   let measures: [Double]
 }
 
-extension ShapeFileMultiPointZRecord {
+extension SHPFileMultiPointZRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
@@ -34,7 +34,7 @@ extension ShapeFileMultiPointZRecord {
   }
 }
 
-extension ShapeFileMultiPointZRecord: ByteEncodable {
+extension SHPFileMultiPointZRecord: ByteEncodable {
   func encode() -> [Byte] {
     var byteEncodables = [
       [
@@ -66,7 +66,7 @@ extension ShapeFileMultiPointZRecord: ByteEncodable {
 
 // MARK: Parser
 
-extension ShapeFileMultiPointZRecord {
+extension SHPFileMultiPointZRecord {
   struct Parser {
     let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
     let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
@@ -89,9 +89,9 @@ extension ShapeFileMultiPointZRecord {
 
 // MARK: Equatable
 
-extension ShapeFileMultiPointZRecord: Equatable {}
+extension SHPFileMultiPointZRecord: Equatable {}
 
-func ==(lhs: ShapeFileMultiPointZRecord, rhs: ShapeFileMultiPointZRecord) -> Bool {
+func ==(lhs: SHPFileMultiPointZRecord, rhs: SHPFileMultiPointZRecord) -> Bool {
   return lhs.box == rhs.box &&
     lhs.points == rhs.points &&
     lhs.zBounds == rhs.zBounds &&
