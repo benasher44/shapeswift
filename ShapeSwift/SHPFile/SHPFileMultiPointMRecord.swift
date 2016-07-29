@@ -40,8 +40,8 @@ extension SHPFileMultiPointMRecord: SHPFileRecord {
     box = try parser.box.parse(data)
     points = try parser.points.parse(data)
     if range.upperBound > parser.mBounds.start {
-      mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
-      measures = try parser.measures.parse(data).flatMap(valueOrNilForOptionalValue)
+      mBounds = try valueOrNilIfNoDataValue(parser.mBounds.parse(data))
+      measures = try parser.measures.parse(data).flatMap(valueOrNilIfNoDataValue)
     } else {
       mBounds = nil
       measures = []

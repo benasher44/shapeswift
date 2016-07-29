@@ -36,7 +36,7 @@ extension SHPFilePointZRecord: SHPFileRecord {
     x = try parser.x.parse(data)
     y = try parser.y.parse(data)
     z = try parser.z.parse(data)
-    m = valueOrNilForOptionalValue(try parser.m.parse(data))
+    m = valueOrNilIfNoDataValue(try parser.m.parse(data))
   }
 }
 
@@ -47,7 +47,7 @@ extension SHPFilePointZRecord: ByteEncodable {
       LittleEndianEncoded<Double>(value: x),
       LittleEndianEncoded<Double>(value: y),
       LittleEndianEncoded<Double>(value: z),
-      LittleEndianEncoded<Double>(value: valueOrNoDataValueForOptionalValue(m)),
+      LittleEndianEncoded<Double>(value: valueOrNoDataValueForOptional(m)),
     ]
     return makeByteArray(from: byteEncodables)
   }

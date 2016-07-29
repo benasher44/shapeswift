@@ -25,8 +25,8 @@ extension SHPFileMultiPointZRecord: SHPFileRecord {
     zBounds = try parser.zBounds.parse(data)
     zValues = try parser.zValues.parse(data)
     if range.upperBound > parser.mBounds.start {
-      mBounds = try valueOrNilForOptionalValue(parser.mBounds.parse(data))
-      measures = try parser.measures.parse(data).flatMap(valueOrNilForOptionalValue)
+      mBounds = try valueOrNilIfNoDataValue(parser.mBounds.parse(data))
+      measures = try parser.measures.parse(data).flatMap(valueOrNilIfNoDataValue)
     } else {
       mBounds = nil
       measures = []
