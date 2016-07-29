@@ -10,7 +10,7 @@ import XCTest
 @testable import ShapeSwift
 
 class PolyLineMTest: XCTestCase {
-  func testDecodingPolyLineM() {
+  func testDecoding() {
     let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
     let points = [
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
@@ -23,7 +23,7 @@ class PolyLineMTest: XCTestCase {
     testParsingRecord(polylineM, range: 4..<112)
   }
 
-  func testDecodingPolyLineMNoMeasure() {
+  func testDecodingNoMeasure() {
     let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
     let points = [
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)

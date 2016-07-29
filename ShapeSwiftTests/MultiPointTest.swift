@@ -10,7 +10,7 @@ import XCTest
 @testable import ShapeSwift
 
 class MultiPointTest: XCTestCase {
-  func testDecodingMultipoint() {
+  func testDecoding() {
     let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
     let points = [
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)

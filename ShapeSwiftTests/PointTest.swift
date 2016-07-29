@@ -11,7 +11,7 @@ import XCTest
 
 class PointTest: XCTestCase {
 
-  func testDecodingPoint() {
+  func testDecoding() {
     let point = ShapeFilePointRecord(point: Coordinate2D(x: 10.0, y: 10.0))
     testParsingRecord(point, range: 4..<16)
   }
