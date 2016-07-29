@@ -6,4 +6,5 @@ ShapeSwift.xcodeproj/xcuserdata/
 ShapeSwift.xcworkspace/xcuserdata/
 *.swp
 .bundle/
+vendor/
 
