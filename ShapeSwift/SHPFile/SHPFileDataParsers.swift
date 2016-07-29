@@ -6,6 +6,9 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
+// TODO(noah): These are not unique to Shapefile, we can use them for DBF too. Let's rename them to
+// DataParser instead of ShapeDataParser, etc.
+
 struct ShapeDataParser<T: ByteOrdered> {
   let start: Int
 }
@@ -32,6 +35,24 @@ extension ShapeDataParser where T: BigEndianByteOrdered {
       return value
     } else {
       throw ByteParseableError.notParseable(type: T.ValueT.self)
+    }
+  }
+}
+
+struct ShapeDataStringParser {
+  let start: Int
+  let count: Int
+  let encoding: String.Encoding
+
+  var end: Int {
+    return start + count
+  }
+
+  func parse(_ data: Data, _ count: Int) throws -> String {
+    if let string = String(data: data.subdata(in: start..<(end)), encoding: encoding) {
+      return string
+    } else {
+      throw ByteParseableError.notParseable(type: String.self)
     }
   }
 }

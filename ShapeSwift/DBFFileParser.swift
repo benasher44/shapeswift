@@ -51,20 +51,20 @@ extension DBFFileType: ExpressibleByIntegerLiteral {
     }
 }
 
-struct DBFFileHeaderFlags: OptionSet {
-    let rawValue: Int
-    init(rawValue: Int) { self.rawValue = rawValue }
-
-    static let HasStructuralCDX = DBFFileHeaderFlags(rawValue: 1)
-    static let HasMemoField = DBFFileHeaderFlags(rawValue: 2)
-    static let IsDatabaseDBC = DBFFileHeaderFlags(rawValue: 4)
-}
-
-struct DBFFileHeader {
-    let fileType: DBFFileType
-    let lastUpdated: Date
-    let numRecords: Int
-    let firstRecordPosition: Int
-    let recordLength: Int // includes delete flag, which is the first byte in the record and ' ' if not deleted, '*' if deleted
-    // todo: add file header flags
+/**
+ * Available data types of a DBF file record, from the spec. Some of these make very little sense.
+ */
+enum DBFFileDataType: String {
+  case binary = "B" // Binary, a string - 10 digits representing a .DBT block number. The number is stored as a string, right justified and padded with blanks.
+  case character = "C" // Character - All OEM code page characters - padded with blanks to the width of the field.
+  case date = "D" // Date - 8 bytes - date stored as a string in the format YYYYMMDD.
+  case numeric = "N" // Numeric - Number stored as a string, right justified, and padded with blanks to the width of the field.
+  case logical = "L" // Logical - 1 byte - initialized to 0x20 (space) otherwise T or F.
+  case memo = "M" // Memo, a string - 10 digits (bytes) representing a .DBT block number. The number is stored as a string, right justified and padded with blanks.
+  case timestamp = "@" // Timestamp - 8 bytes - two longs: date, time.  The date is the number of days since  01/01/4713 BC. Time is hours * 3600000L + minutes * 60000L + Seconds * 1000L
+  case long = "I" // Long - 4 bytes. Leftmost bit used to indicate sign, 0 negative.
+  case autoincrement = "+" // Autoincrement - Same as a Long
+  case float = "F" // Float - Number stored as a string, right justified, and padded with blanks to the width of the field.
+  case double = "O" // Double - 8 bytes - no conversions, stored as a double.
+  case oLE = "G" // OLE - 10 digits (bytes) representing a .DBT block number. The number is stored as a string, right justified and padded with blanks.
 }
