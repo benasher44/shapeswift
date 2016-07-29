@@ -8,7 +8,7 @@
 
 // MARK: Record
 
-struct SHPFileMultiPointZRecord: SHPFileRecord {
+struct SHPFileMultiPointZRecord {
   let box: BoundingBoxXY
   let points: [Coordinate2D]
   let zBounds: Coordinate2DBounds
@@ -17,7 +17,7 @@ struct SHPFileMultiPointZRecord: SHPFileRecord {
   let measures: [Double]
 }
 
-extension SHPFileMultiPointZRecord {
+extension SHPFileMultiPointZRecord: SHPFileRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)

@@ -27,14 +27,14 @@ extension SHPFileMultiPointMRecord {
 
 // MARK: Record
 
-struct SHPFileMultiPointMRecord: SHPFileRecord {
+struct SHPFileMultiPointMRecord {
   let box: BoundingBoxXY
   let points: [Coordinate2D]
   let mBounds: Coordinate2DBounds?
   let measures: [Double]
 }
 
-extension SHPFileMultiPointMRecord {
+extension SHPFileMultiPointMRecord: SHPFileRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)

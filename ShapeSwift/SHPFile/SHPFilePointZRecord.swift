@@ -23,14 +23,14 @@ struct SHPFilePointZRecordParser {
 
 // MARK: Record
 
-struct SHPFilePointZRecord: SHPFileRecord {
+struct SHPFilePointZRecord {
   let x: Double
   let y: Double
   let z: Double
   let m: Double?
 }
 
-extension SHPFilePointZRecord {
+extension SHPFilePointZRecord: SHPFileRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = SHPFilePointZRecordParser(start: range.lowerBound)
     x = try parser.x.parse(data)

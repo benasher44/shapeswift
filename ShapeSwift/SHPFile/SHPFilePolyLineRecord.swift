@@ -27,16 +27,16 @@ extension SHPFilePolyLineRecord {
 
 // MARK: Record
 
-/// todo: Because this specification does not forbid consecutive points with identical coordinates,
+/// TODO(noah): Because this specification does not forbid consecutive points with identical coordinates,
 /// SHPFile readers must handle such cases. On the other hand, the degenerate, zero length
 /// parts that might result are not allowed.
-struct SHPFilePolyLineRecord: SHPFileRecord {
+struct SHPFilePolyLineRecord {
   let box: BoundingBoxXY
   let points: [Coordinate2D]
   let parts: [Int32]
 }
 
-extension SHPFilePolyLineRecord {
+extension SHPFilePolyLineRecord: SHPFileRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)

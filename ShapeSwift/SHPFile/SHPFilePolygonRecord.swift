@@ -27,13 +27,13 @@ extension SHPFilePolygonRecord {
 
 // MARK: Record
 
-struct SHPFilePolygonRecord: SHPFileRecord {
+struct SHPFilePolygonRecord {
   let box: BoundingBoxXY
   let parts: [Int32]
   let points: [Coordinate2D]
 }
 
-extension SHPFilePolygonRecord {
+extension SHPFilePolygonRecord: SHPFileRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)

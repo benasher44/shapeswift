@@ -35,7 +35,7 @@ extension SHPFilePolyLineZRecord {
 
 // MARK: Record
 
-struct SHPFilePolyLineZRecord: SHPFileRecord {
+struct SHPFilePolyLineZRecord {
   let box: BoundingBoxXY
   let parts: [Int]
   let points: [Coordinate2D]
@@ -45,7 +45,7 @@ struct SHPFilePolyLineZRecord: SHPFileRecord {
   let measures: [Double]
 }
 
-extension SHPFilePolyLineZRecord {
+extension SHPFilePolyLineZRecord: SHPFileRecord {
   init(data: Data, range: Range<Int>) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
