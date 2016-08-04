@@ -13,3 +13,46 @@ public func parse(dataAtURL fileURL: URL) throws -> Void {
   let header = try SHPFileHeader(data: data)
   print("header - \(header.debugDescription)")
 }
+
+func parseRecord(forShapeType shapeType: ShapeType, data: Data, range: Range<Int>) throws -> SHPFileRecord? {
+  let type: SHPFileRecord.Type
+  switch shapeType {
+  case .nullShape:
+    return nil
+  case .point:
+    type = SHPFilePointRecord.self
+  case .polyLine:
+    type = SHPFilePolyLineRecord.self
+  case .polygon:
+    type = SHPFilePolygonRecord.self
+  case .multiPoint:
+    type = SHPFileMultiPointRecord.self
+  case .pointZ:
+    type = SHPFileMultiPointZRecord.self
+  case .polyLineZ:
+    type = SHPFilePolyLineZRecord.self
+  case .polygonZ:
+    type = SHPFilePolygonZRecord.self
+  case .multiPointZ:
+    type = SHPFileMultiPointZRecord.self
+  case .pointM:
+    type = SHPFilePointZRecord.self
+  case .polyLineM:
+    type = SHPFilePolyLineMRecord.self
+  case .polygonM:
+    type = SHPFilePolygonMRecord.self
+  case .multiPointM:
+    type = SHPFileMultiPointMRecord.self
+  case .multiPatch:
+    type = SHPFileMultiPatchRecord.self
+  }
+  var endByte = 0;
+  let record = try type.init(data: data, range: range, endByte: &endByte)
+  let byteRange: Range = 4..<endByte + 1 // Skip the first 4 bytes because of the shape type
+  if endByte == 0 {
+    throw ByteParseableError.boundsUnchecked(type: type as! ByteParseable.Type)
+  } else if (byteRange != range) {
+    throw ByteParseableError.outOfBounds(expectedBounds: range, actualBounds: byteRange)
+  }
+  return record
+}
