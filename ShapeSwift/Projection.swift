@@ -17,7 +17,7 @@ enum ProjectionConversionFunction: String {
   case pjTransform = "pj_transform"
 }
 
-enum ProjectionConversionError: ErrorProtocol {
+enum ProjectionConversionError: Error {
   case error(errorNumber: Int32, function: ProjectionConversionFunction)
 }
 

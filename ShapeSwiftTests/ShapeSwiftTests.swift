@@ -19,7 +19,7 @@ struct WGS84Projection: Projection {
 
 class ShapeSwiftTests: XCTestCase {
     func testParser() {
-      let url = Bundle(for: self.dynamicType).urlForResource("sfsweeproutes", withExtension: "shp")!
+      let url = Bundle(for: self.dynamicType).url(forResource: "sfsweeproutes", withExtension: "shp")!
       try! parseFromURL(url)
     }
 }

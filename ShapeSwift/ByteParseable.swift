@@ -38,7 +38,7 @@ extension LittleEndian: LittleEndianByteOrdered {
   typealias ValueT = T
 }
 
-enum ByteParseableError: ErrorProtocol {
+enum ByteParseableError: Error {
   case notParseable(type: ByteParseable.Type)
 }
 
