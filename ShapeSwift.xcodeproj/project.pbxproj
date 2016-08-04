@@ -50,6 +50,8 @@
 		A8ACD6AC1D4BAF5C0082357C /* PolyLineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACD69F1D4BAF5C0082357C /* PolyLineTest.swift */; };
 		A8ACD6AD1D4BAF5C0082357C /* PolyLineZTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACD6A01D4BAF5C0082357C /* PolyLineZTest.swift */; };
 		A8ACD6AE1D4BAF5C0082357C /* RecordParsingTestUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACD6A11D4BAF5C0082357C /* RecordParsingTestUtil.swift */; };
+		A8DA53A81D53A3C900FCEBCD /* SHPFileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53A71D53A3C900FCEBCD /* SHPFileHeader.swift */; };
+		A8DA53AA1D53A44B00FCEBCD /* SHPFileRecordHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53A91D53A44B00FCEBCD /* SHPFileRecordHeader.swift */; };
 		C187CADA2482743812C5EAD0 /* Pods_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B8E726549B49F7A988F81E /* Pods_ShapeSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +116,8 @@
 		A8ACD69F1D4BAF5C0082357C /* PolyLineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyLineTest.swift; sourceTree = "<group>"; };
 		A8ACD6A01D4BAF5C0082357C /* PolyLineZTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyLineZTest.swift; sourceTree = "<group>"; };
 		A8ACD6A11D4BAF5C0082357C /* RecordParsingTestUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordParsingTestUtil.swift; sourceTree = "<group>"; };
+		A8DA53A71D53A3C900FCEBCD /* SHPFileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileHeader.swift; sourceTree = "<group>"; };
+		A8DA53A91D53A44B00FCEBCD /* SHPFileRecordHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileRecordHeader.swift; sourceTree = "<group>"; };
 		E6B8E726549B49F7A988F81E /* Pods_ShapeSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -230,6 +234,8 @@
 		A8ACD6711D4BADF40082357C /* Records */ = {
 			isa = PBXGroup;
 			children = (
+				A8DA53A71D53A3C900FCEBCD /* SHPFileHeader.swift */,
+				A8DA53A91D53A44B00FCEBCD /* SHPFileRecordHeader.swift */,
 				A8ACD6741D4BADF40082357C /* SHPFileMultiPatchRecord.swift */,
 				A8ACD6751D4BADF40082357C /* SHPFileMultiPointMRecord.swift */,
 				A8ACD6761D4BADF40082357C /* SHPFileMultiPointZRecord.swift */,
@@ -496,6 +502,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8DA53A81D53A3C900FCEBCD /* SHPFileHeader.swift in Sources */,
 				136869C51CC929CE00D2DD81 /* Projection.swift in Sources */,
 				A8ACD68D1D4BADF40082357C /* SHPFilePolyLineRecord.swift in Sources */,
 				A8ACD68F1D4BADF40082357C /* SHPFileDataParsers.swift in Sources */,
@@ -505,6 +512,7 @@
 				A8ACD6891D4BADF40082357C /* SHPFilePointZRecord.swift in Sources */,
 				A8ACD6911D4BADF40082357C /* SHPFileParser.swift in Sources */,
 				A8ACD6881D4BADF40082357C /* SHPFilePointRecord.swift in Sources */,
+				A8DA53AA1D53A44B00FCEBCD /* SHPFileRecordHeader.swift in Sources */,
 				A8ACD68C1D4BADF40082357C /* SHPFilePolygonZRecord.swift in Sources */,
 				A8ACD6861D4BADF40082357C /* SHPFileMultiPointMRecord.swift in Sources */,
 				A8ACD6921D4BADF40082357C /* SHPFileParserDebugging.swift in Sources */,
