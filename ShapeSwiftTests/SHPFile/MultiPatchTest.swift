@@ -29,7 +29,7 @@ class MultiPatchTest: XCTestCase {
       mBounds: Coordinate2DBounds(min: 1.0, max: 2.0),
       measures: measures
     )
-    testParsingRecord(multipatch, range: 4..<(4 + 32 + 4 + 4 + 4 + 4 + (3 * 16) + 16 + (3 * 8) + 16 + (3 * 16)))
+    testParsingRecord(multipatch, range: 4..<(4 + 32 + 4 + 4 + 4 + 4 + (3 * 16) + 16 + (3 * 8) + 16 + (3 * 8)))
   }
 
   func testDecodingWithNoMeasures() {

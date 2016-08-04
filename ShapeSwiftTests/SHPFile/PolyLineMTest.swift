@@ -20,7 +20,7 @@ class PolyLineMTest: XCTestCase {
                                              points: points,
                                              mBounds: Coordinate2DBounds(min: 1.0, max: 2.0),
                                              measures: [1.0, 2.0])
-    testParsingRecord(polylineM, range: 4..<112)
+    testParsingRecord(polylineM, range: 4..<(4 + 32 + 4 + 4 + 4 + (2 * 16) + 16 + (2 * 8)))
   }
 
   func testDecodingNoMeasure() {
@@ -33,7 +33,7 @@ class PolyLineMTest: XCTestCase {
                                              points: points,
                                              mBounds: nil,
                                              measures: [])
-    testParsingRecord(polylineM, range: 4..<80)
+    testParsingRecord(polylineM, range: 4..<(4 + 32 + 4 + 4 + 4 + (2 * 16)))
   }
 
   func testMultipleParts() {
@@ -46,7 +46,7 @@ class PolyLineMTest: XCTestCase {
                                              points: points,
                                              mBounds: Coordinate2DBounds(min: 1.0, max: 2.0),
                                              measures: [1.0, 2.0, 3.0, 4.0])
-    testParsingRecord(polylineM, range: 4..<148)
+    testParsingRecord(polylineM, range: 4..<(4 + 32 + 4 + 4 + (4 * 2) + (4 * 16) + 16 + (4 * 8)))
   }
 
 }

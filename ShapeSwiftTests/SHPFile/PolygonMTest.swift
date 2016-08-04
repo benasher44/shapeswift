@@ -23,7 +23,7 @@ class PolygonMTest: XCTestCase {
       mBounds: Coordinate2DBounds(min: 1.0, max: 2.0),
       measures: measures
     )
-    testParsingRecord(polygon, range: 4..<(116))
+    testParsingRecord(polygon, range: 4..<(4 + 32 + 4 + 4 + 4 + (3 * 16) + 16 + (3 * 8)))
   }
 
   func testMultipleParts() {
@@ -39,7 +39,7 @@ class PolygonMTest: XCTestCase {
       mBounds: Coordinate2DBounds(min: 1.0, max: 3.0),
       measures: measures
     )
-    testParsingRecord(polygon, range: 4..<(44 + 4 * 2 + 16 * 4 + 16 + 8 * 2))
+    testParsingRecord(polygon, range: 4..<(4 + 32 + 4 + 4 + (2 * 4) + (4 * 16) + 16 + (4 * 8)))
   }
 
   func testNoMeasures() {
@@ -54,6 +54,6 @@ class PolygonMTest: XCTestCase {
       mBounds: nil,
       measures: []
     )
-    testParsingRecord(polygon, range: 4..<(44 + 4 * 2))
+    testParsingRecord(polygon, range: 4..<(4 + 32 + 4 + 4 + (2 * 4) + (4 * 16)))
   }
 }

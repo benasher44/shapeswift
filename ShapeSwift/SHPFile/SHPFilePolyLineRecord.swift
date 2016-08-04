@@ -32,16 +32,17 @@ extension SHPFilePolyLineRecord {
 /// parts that might result are not allowed.
 struct SHPFilePolyLineRecord {
   let box: BoundingBoxXY
-  let points: [Coordinate2D]
   let parts: [Int32]
+  let points: [Coordinate2D]
 }
 
 extension SHPFilePolyLineRecord: SHPFileRecord {
-  init(data: Data, range: Range<Int>) throws {
+  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
-    points = try parser.points.parse(data)
     parts = try parser.parts.parse(data)
+    points = try parser.points.parse(data)
+    endByte = parser.points.end - 1
   }
 }
 

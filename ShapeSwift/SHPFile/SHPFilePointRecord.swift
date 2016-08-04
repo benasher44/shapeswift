@@ -25,9 +25,10 @@ struct SHPFilePointRecord {
 }
 
 extension SHPFilePointRecord: SHPFileRecord {
-  init(data: Data, range: Range<Int>) throws {
+  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
     let parser = Parser(start: range.lowerBound)
     point = try parser.point.parse(data)
+    endByte = parser.point.end - 1
   }
 }
 

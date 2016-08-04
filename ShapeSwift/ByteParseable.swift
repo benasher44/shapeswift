@@ -40,6 +40,8 @@ extension LittleEndian: LittleEndianByteOrdered {
 
 enum ByteParseableError: Error {
   case notParseable(type: ByteParseable.Type)
+  case boundsUnchecked(type: ByteParseable.Type)
+  case outOfBounds(expectedBounds: Range<Int>, actualBounds: Range<Int>)
 }
 
 protocol ByteParseable {

@@ -25,7 +25,7 @@ class MultiPointZTest: XCTestCase {
       mBounds: Coordinate2DBounds(min: 1.0, max: 2.0),
       measures: measures
     )
-    testParsingRecord(multipointZ, range: 4..<(40 + 2 * 8 + 2 * 8 + 16 + 2 * 8 + 16 + 2 * 8))
+    testParsingRecord(multipointZ, range: 4..<(4 + 32 + 4 + (2 * 16) + 16 + (2 * 8) + 16 + (2 * 8)))
   }
 
   func testDecodingWithNoMeasures() {
@@ -42,6 +42,6 @@ class MultiPointZTest: XCTestCase {
       mBounds: nil,
       measures: []
     )
-    testParsingRecord(multipointZ, range: 4..<(40 + 2 * 8 + 16 + 2 * 8))
+    testParsingRecord(multipointZ, range: 4..<(4 + 32 + 4 + (2 * 16) + 16 + (2 * 8)))
   }
 }

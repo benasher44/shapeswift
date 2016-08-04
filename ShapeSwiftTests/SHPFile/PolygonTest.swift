@@ -20,7 +20,7 @@ class PolygonTest: XCTestCase {
       parts: [0],
       points: points
     )
-    testParsingRecord(polygon, range: 4..<76)
+    testParsingRecord(polygon, range: 4..<(4 + 32 + 4 + 4 + (4 * 1) + (2 * 16)))
   }
 
   func testMultipleParts() {
@@ -33,6 +33,6 @@ class PolygonTest: XCTestCase {
       parts: [0, 2],
       points: points
     )
-    testParsingRecord(polygon, range: 4..<96)
+    testParsingRecord(polygon, range: 4..<(4 + 32 + 4 + 4 + (4 * 2) + (4 * 16)))
   }
 }

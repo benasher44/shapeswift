@@ -13,6 +13,6 @@ class PointTest: XCTestCase {
 
   func testDecoding() {
     let point = SHPFilePointRecord(point: Coordinate2D(x: 10.0, y: 10.0))
-    testParsingRecord(point, range: 4..<16)
+    testParsingRecord(point, range: 4..<4 + 16)
   }
 }

@@ -31,7 +31,7 @@ func valueOrNoDataValueForOptional(_ value: Double?) -> Double {
 }
 
 protocol SHPFileRecord {
-  init(data: Data, range: Range<Int>) throws
+  init(data: Data, range: Range<Int>, endByte: inout Int) throws
 }
 
 extension SHPFileRecord {
@@ -43,7 +43,15 @@ extension SHPFileRecord {
     default:
       return nil
     }
-    return try type.init(data: data, range: range)
+    var endByte = 0;
+    let record = try type.init(data: data, range: range, endByte: &endByte)
+    let byteRange: Range = 4..<endByte + 1 // Skip the first 4 bytes because of the shape type
+    if endByte == 0 {
+      throw ByteParseableError.boundsUnchecked(type: type as! ByteParseable.Type)
+    } else if (byteRange != range) {
+      throw ByteParseableError.outOfBounds(expectedBounds: range, actualBounds: byteRange)
+    }
+    return record
   }
 }
 

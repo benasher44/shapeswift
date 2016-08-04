@@ -31,24 +31,32 @@ struct SHPFilePointZRecord {
 }
 
 extension SHPFilePointZRecord: SHPFileRecord {
-  init(data: Data, range: Range<Int>) throws {
+  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
     let parser = SHPFilePointZRecordParser(start: range.lowerBound)
     x = try parser.x.parse(data)
     y = try parser.y.parse(data)
     z = try parser.z.parse(data)
-    m = valueOrNilIfNoDataValue(try parser.m.parse(data))
+    if (range.contains(parser.m.start)) {
+      m = valueOrNilIfNoDataValue(try parser.m.parse(data))
+      endByte = parser.m.end - 1
+    } else {
+      m = nil
+      endByte = parser.z.end - 1
+    }
   }
 }
 
 extension SHPFilePointZRecord: ByteEncodable {
   func encode() -> [Byte] {
-    let byteEncodables: [ByteEncodable] = [
+    var byteEncodables: [ByteEncodable] = [
       LittleEndianEncoded<ShapeType>(value: .pointZ),
       LittleEndianEncoded<Double>(value: x),
       LittleEndianEncoded<Double>(value: y),
       LittleEndianEncoded<Double>(value: z),
-      LittleEndianEncoded<Double>(value: valueOrNoDataValueForOptional(m)),
     ]
+    if let m = m {
+      byteEncodables.append(LittleEndianEncoded<Double>(value: valueOrNoDataValueForOptional(m)))
+    }
     return makeByteArray(from: byteEncodables)
   }
 }

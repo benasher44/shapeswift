@@ -17,10 +17,10 @@ class PolyLineTest: XCTestCase {
     ]
     let polyline = SHPFilePolyLineRecord(
       box: box,
-      points: points,
-      parts: [0]
+      parts: [0],
+      points: points
     )
-    testParsingRecord(polyline, range: 4..<76)
+    testParsingRecord(polyline, range: 4..<(4 + 32 + 4 + 4 + 4 + (2 * 16)))
   }
 
   func testMultipleParts() {
@@ -30,9 +30,9 @@ class PolyLineTest: XCTestCase {
     ]
     let polyline = SHPFilePolyLineRecord(
       box: box,
-      points: points,
-      parts: [0, 2]
+      parts: [0, 2],
+      points: points
     )
-    testParsingRecord(polyline, range: 4..<96)
+    testParsingRecord(polyline, range: 4..<(4 + 32 + 4 + 4 + (4 * 2) + (4 * 16)))
   }
 }

@@ -34,11 +34,12 @@ struct SHPFilePolygonRecord {
 }
 
 extension SHPFilePolygonRecord: SHPFileRecord {
-  init(data: Data, range: Range<Int>) throws {
+  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data)
     points = try parser.points.parse(data)
+    endByte = parser.points.end - 1
   }
 }
 

@@ -40,17 +40,19 @@ struct SHPFilePolyLineMRecord {
 }
 
 extension SHPFilePolyLineMRecord: SHPFileRecord {
-  init(data: Data, range: Range<Int>) throws {
+  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
     points = try parser.points.parse(data)
-    if range.upperBound > parser.mBounds.start {
+    if range.contains(parser.mBounds.start) {
       mBounds = try valueOrNilIfNoDataValue(parser.mBounds.parse(data))
       measures = try parser.measures.parse(data).flatMap(valueOrNilIfNoDataValue)
+      endByte = parser.measures.end - 1
     } else {
       mBounds = nil
       measures = []
+      endByte = parser.points.end - 1
     }
   }
 }
