@@ -87,10 +87,8 @@ extension Double: LittleEndianByteParseable {
 
 private extension ByteParseable {
   static func bitPattern<T>(fromData data: Data, start: Int) -> T {
-    var bytes = [UInt8](repeating: 0, count: sizeBytes)
-    data.copyBytes(to: &bytes, from: start..<(start + sizeBytes))
-    return bytes.withUnsafeBufferPointer({
-      UnsafePointer<T>($0.baseAddress!).pointee
+    return data.withUnsafeBytes({(pointer: UnsafePointer<UInt8>) -> T in
+      return UnsafePointer<T>(pointer.advanced(by: start)).pointee
     })
   }
 }
