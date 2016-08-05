@@ -62,14 +62,14 @@ extension Int32: ByteParseable {
 
 extension Int32: BigEndianByteParseable {
   init?(bigEndianData data: Data, start: Int) {
-    let bitPattern: Int32 = data.bitPattern(inRange: start..<(start + self.dynamicType.sizeBytes))
+    let bitPattern: Int32 = self.dynamicType.bitPattern(fromData: data, start: start)
     self = Int32(bigEndian: bitPattern)
   }
 }
 
 extension Int32: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
-    let bitPattern: Int32 = data.bitPattern(inRange: start..<(start + self.dynamicType.sizeBytes))
+    let bitPattern: Int32 = self.dynamicType.bitPattern(fromData: data, start: start)
     self = Int32(littleEndian: bitPattern)
   }
 }
@@ -80,15 +80,15 @@ extension Double: ByteParseable {
 
 extension Double: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
-    let bitPattern: UInt64 = data.bitPattern(inRange: start..<(start + self.dynamicType.sizeBytes))
+    let bitPattern: UInt64 = self.dynamicType.bitPattern(fromData: data, start: start)
     self = Double(bitPattern: bitPattern)
   }
 }
 
-private extension Data {
-  func bitPattern<T>(inRange range: Range<Int>) -> T {
-    var bytes = [UInt8](repeating: 0, count: range.upperBound - range.lowerBound)
-    copyBytes(to: &bytes, from: range)
+private extension ByteParseable {
+  static func bitPattern<T>(fromData data: Data, start: Int) -> T {
+    var bytes = [UInt8](repeating: 0, count: sizeBytes)
+    data.copyBytes(to: &bytes, from: start..<(start + sizeBytes))
     return bytes.withUnsafeBufferPointer({
       UnsafePointer<T>($0.baseAddress!).pointee
     })
