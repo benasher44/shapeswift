@@ -44,37 +44,32 @@ struct ShapeDataArrayParser<T: ByteOrdered where T.ValueT: ByteParseable> {
     return start + (count * T.ValueT.sizeBytes)
   }
 
-  private func enumerateByteOffsets(byteOffsetEnumerationBlock: (Int) throws -> Void) rethrows {
+  private func iterParse(_ data: Data, _ parser: (data: Data, start: Int) -> T.ValueT?) throws -> [T.ValueT] {
+    var values = Array<T.ValueT>()
+    values.reserveCapacity(count)
     for byteOffset in stride(from: start, to: end, by: T.ValueT.sizeBytes) {
-      try byteOffsetEnumerationBlock(byteOffset)
+      if let value = parser(data: data, start: byteOffset) {
+        values.append(value)
+      } else {
+        throw ByteParseableError.notParseable(type: T.ValueT.self)
+      }
     }
+    return values
   }
 }
 
 extension ShapeDataArrayParser where T: LittleEndianByteOrdered {
   func parse(_ data: Data) throws -> [T.ValueT] {
-    var values = Array<T.ValueT>()
-    try enumerateByteOffsets { start in
-      if let value = T.ValueT(littleEndianData: data, start: start) {
-        values.append(value)
-      } else {
-        throw ByteParseableError.notParseable(type: T.ValueT.self)
-      }
+    return try iterParse(data) { data, start in
+      return T.ValueT(littleEndianData: data, start: start)
     }
-    return values
   }
 }
 
 extension ShapeDataArrayParser where T: BigEndianByteOrdered {
   func parse(_ data: Data) throws -> [T.ValueT] {
-    var values = Array<T.ValueT>()
-    try enumerateByteOffsets { start in
-      if let value = T.ValueT(bigEndianData: data, start: start) {
-        values.append(value)
-      } else {
-        throw ByteParseableError.notParseable(type: T.ValueT.self)
-      }
+    return try iterParse(data) { data, start in
+      return T.ValueT(bigEndianData: data, start: start)
     }
-    return values
   }
 }
