@@ -30,7 +30,7 @@ enum DBFFileType {
     case unknown
 }
 
-extension DBFFileType: IntegerLiteralConvertible {
+extension DBFFileType: ExpressibleByIntegerLiteral {
     init(integerLiteral value: Int) {
         switch value {
         case 0x02: self = .foxBase
