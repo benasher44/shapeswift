@@ -21,8 +21,11 @@ class ShapeSwiftTests: XCTestCase {
     func testParser() {
       let url = Bundle(for: self.dynamicType).url(forResource: "sfsweeproutes", withExtension: "shp")!
       let parser = try! SHPFileParser(fileURL: url)
+      var numRecords = 0
+      let start = CACurrentMediaTime()
       while let record = parser.next() {
-        print("parsed record - \(record)")
+        numRecords += 1
       }
+      print("parsed \(numRecords) records in \(CACurrentMediaTime() - start)s")
     }
 }
