@@ -8,7 +8,7 @@
 
 private let headerRange = 0..<100
 
-class SHPFileParser {
+final class SHPFileParser {
   private let data: Data
   private let header: SHPFileHeader
   private var currentByteOffset = 0
