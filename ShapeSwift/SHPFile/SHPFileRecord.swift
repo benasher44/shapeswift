@@ -31,5 +31,15 @@ func valueOrNoDataValueForOptional(_ value: Double?) -> Double {
 }
 
 protocol SHPFileRecord {
+  static var shapeType: ShapeType { get }
   init(data: Data, range: Range<Int>, endByte: inout Int) throws
+}
+
+struct SHPFileNullShapeRecord {}
+extension SHPFileNullShapeRecord: SHPFileRecord {
+  static let shapeType = ShapeType.null
+
+  init(data: Data, range: Range<Int>, endByte: inout Int) {
+    endByte = 0
+  }
 }

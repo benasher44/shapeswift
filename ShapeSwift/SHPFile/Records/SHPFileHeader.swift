@@ -26,7 +26,7 @@ extension SHPFileHeader {
   init(data: Data) throws {
     let parser = Parser()
     fileCode = try Int(parser.fileCode.parse(data))
-    fileLength = try Int(parser.fileLength.parse(data))
+    fileLength = try Int(parser.fileLength.parse(data)) * 2 // This value is the length in words, so multiply * 2 to get bytes
     version = try Int(parser.version.parse(data))
     shapeType = try parser.shapeType.parse(data)
     boundingBox = try parser.boundingBox.parse(data)

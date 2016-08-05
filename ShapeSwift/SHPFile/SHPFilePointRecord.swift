@@ -25,6 +25,8 @@ struct SHPFilePointRecord {
 }
 
 extension SHPFilePointRecord: SHPFileRecord {
+  static let shapeType = ShapeType.point
+  
   init(data: Data, range: Range<Int>, endByte: inout Int) throws {
     let parser = Parser(start: range.lowerBound)
     point = try parser.point.parse(data)

@@ -56,7 +56,7 @@ enum MultiPatchPartType: Int {
 }
 
 enum ShapeType: Int {
-  case nullShape = 0
+  case null = 0
   case point = 1
   case polyLine = 3
   case polygon = 5

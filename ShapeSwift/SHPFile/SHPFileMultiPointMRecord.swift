@@ -35,6 +35,8 @@ struct SHPFileMultiPointMRecord {
 }
 
 extension SHPFileMultiPointMRecord: SHPFileRecord {
+  static let shapeType = ShapeType.pointM
+
   init(data: Data, range: Range<Int>, endByte: inout Int) throws {
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)

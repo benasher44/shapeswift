@@ -7,6 +7,7 @@
 //
 
 struct SHPFileRecordHeader {
+  static let sizeBytes = 8
   let recordNumber: Int
   let contentLength: Int
 }
@@ -24,7 +25,7 @@ extension SHPFileRecordHeader {
   init(data: Data, start: Int) throws {
     let parser = Parser(start: start)
     recordNumber = try Int(parser.recordNumber.parse(data))
-    contentLength = try Int(parser.contentLength.parse(data))
+    contentLength = try Int(parser.contentLength.parse(data)) * 2 // This value is the length in words, so multiply * 2 to get bytes
   }
 }
 

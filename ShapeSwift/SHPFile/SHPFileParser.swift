@@ -8,17 +8,39 @@
 
 private let headerRange = 0..<100
 
-public func parse(dataAtURL fileURL: URL) throws -> Void {
-  let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
-  let header = try SHPFileHeader(data: data)
-  print("header - \(header.debugDescription)")
+class SHPFileParser {
+  private let data: Data
+  private let header: SHPFileHeader
+  private var currentByteOffset = 0
+
+  init(fileURL: URL) throws {
+    data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+    header = try SHPFileHeader(data: data)
+    currentByteOffset = headerRange.upperBound
+  }
+}
+
+extension SHPFileParser: IteratorProtocol {
+  func next() -> SHPFileRecord? {
+    if currentByteOffset < header.fileLength {
+      let recordHeader = try! SHPFileRecordHeader(data: data, start: currentByteOffset)
+      currentByteOffset += SHPFileRecordHeader.sizeBytes
+      let shapeType = ShapeType(littleEndianData: data, start: currentByteOffset)!
+      let recordStart = currentByteOffset + ShapeType.sizeBytes
+      let record = try! parseRecord(forShapeType: shapeType, data: data, range: recordStart..<(currentByteOffset + recordHeader.contentLength))
+      currentByteOffset += recordHeader.contentLength
+      return record
+    } else {
+      return nil
+    }
+  }
 }
 
 func parseRecord(forShapeType shapeType: ShapeType, data: Data, range: Range<Int>) throws -> SHPFileRecord? {
   let type: SHPFileRecord.Type
   switch shapeType {
-  case .nullShape:
-    return nil
+  case .null:
+    type = SHPFileNullShapeRecord.self
   case .point:
     type = SHPFilePointRecord.self
   case .polyLine:
@@ -48,7 +70,7 @@ func parseRecord(forShapeType shapeType: ShapeType, data: Data, range: Range<Int
   }
   var endByte = 0;
   let record = try type.init(data: data, range: range, endByte: &endByte)
-  let byteRange: Range = 4..<endByte + 1 // Skip the first 4 bytes because of the shape type
+  let byteRange: Range = range.lowerBound..<endByte + 1 // Skip the first 4 bytes because of the shape type
   if endByte == 0 {
     throw ByteParseableError.boundsUnchecked(type: type as! ByteParseable.Type)
   } else if (byteRange != range) {
