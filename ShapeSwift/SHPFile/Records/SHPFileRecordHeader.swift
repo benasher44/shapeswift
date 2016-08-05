@@ -28,4 +28,3 @@ extension SHPFileRecordHeader {
     contentLength = try Int(parser.contentLength.parse(data)) * 2 // This value is the length in words, so multiply * 2 to get bytes
   }
 }
-

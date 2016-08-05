@@ -11,7 +11,7 @@ struct BoundingBoxXY {
   let y: Coordinate2DBounds
 }
 
-func ==(lhs: BoundingBoxXY, rhs: BoundingBoxXY) -> Bool {
+func == (lhs: BoundingBoxXY, rhs: BoundingBoxXY) -> Bool {
   return lhs.x == rhs.x && lhs.y == rhs.y
 }
 
@@ -29,7 +29,7 @@ struct Coordinate2D {
   let y: Double
 }
 
-func ==(lhs: Coordinate2D, rhs: Coordinate2D) -> Bool {
+func == (lhs: Coordinate2D, rhs: Coordinate2D) -> Bool {
   return lhs.x == rhs.x && lhs.y == rhs.y
 }
 
@@ -40,7 +40,7 @@ struct Coordinate2DBounds {
   let max: Double
 }
 
-func ==(lhs: Coordinate2DBounds, rhs: Coordinate2DBounds) -> Bool {
+func == (lhs: Coordinate2DBounds, rhs: Coordinate2DBounds) -> Bool {
   return lhs.min == rhs.min && lhs.max == rhs.max
 }
 

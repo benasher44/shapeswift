@@ -97,7 +97,7 @@ extension SHPFilePolyLineZRecord: ByteEncodable {
 
 // MARK: Equatable
 
-func ==(lhs: SHPFilePolyLineZRecord, rhs: SHPFilePolyLineZRecord) -> Bool {
+func == (lhs: SHPFilePolyLineZRecord, rhs: SHPFilePolyLineZRecord) -> Bool {
   return (
     lhs.box == rhs.box &&
     lhs.parts == rhs.parts &&

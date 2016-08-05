@@ -85,7 +85,7 @@ extension SHPFilePolyLineMRecord: ByteEncodable {
 
 // MARK: Equatable
 
-func ==(lhs: SHPFilePolyLineMRecord, rhs: SHPFilePolyLineMRecord) -> Bool {
+func == (lhs: SHPFilePolyLineMRecord, rhs: SHPFilePolyLineMRecord) -> Bool {
   return (lhs.box == rhs.box &&
     lhs.parts == rhs.parts &&
     lhs.points == rhs.points &&

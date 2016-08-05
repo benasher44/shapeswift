@@ -61,6 +61,6 @@ extension SHPFilePolygonRecord: ByteEncodable {
 
 extension SHPFilePolygonRecord: Equatable {}
 
-func ==(lhs: SHPFilePolygonRecord, rhs: SHPFilePolygonRecord) -> Bool {
+func == (lhs: SHPFilePolygonRecord, rhs: SHPFilePolygonRecord) -> Bool {
   return lhs.box == rhs.box && lhs.points == rhs.points && lhs.parts == rhs.parts
 }

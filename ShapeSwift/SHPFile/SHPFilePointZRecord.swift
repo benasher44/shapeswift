@@ -38,7 +38,7 @@ extension SHPFilePointZRecord: SHPFileRecord {
     x = try parser.x.parse(data)
     y = try parser.y.parse(data)
     z = try parser.z.parse(data)
-    if (range.contains(parser.m.start)) {
+    if range.contains(parser.m.start) {
       m = valueOrNilIfNoDataValue(try parser.m.parse(data))
       endByte = parser.m.end - 1
     } else {
@@ -65,7 +65,7 @@ extension SHPFilePointZRecord: ByteEncodable {
 
 // MARK: Equatable
 
-func ==(lhs: SHPFilePointZRecord, rhs: SHPFilePointZRecord) -> Bool {
+func == (lhs: SHPFilePointZRecord, rhs: SHPFilePointZRecord) -> Bool {
   return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.m == rhs.m
 }
 

@@ -73,7 +73,7 @@ func parseRecord(forShapeType shapeType: ShapeType, data: Data, range: Range<Int
   let byteRange: Range = range.lowerBound..<endByte + 1 // Skip the first 4 bytes because of the shape type
   if endByte == 0 {
     throw ByteParseableError.boundsUnchecked(type: type as! ByteParseable.Type)
-  } else if (byteRange != range) {
+  } else if byteRange != range {
     throw ByteParseableError.outOfBounds(expectedBounds: range, actualBounds: byteRange)
   }
   return record

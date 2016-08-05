@@ -26,7 +26,7 @@ struct SHPFilePointRecord {
 
 extension SHPFilePointRecord: SHPFileRecord {
   static let shapeType = ShapeType.point
-  
+
   init(data: Data, range: Range<Int>, endByte: inout Int) throws {
     let parser = Parser(start: range.lowerBound)
     point = try parser.point.parse(data)
@@ -46,7 +46,7 @@ extension SHPFilePointRecord: ByteEncodable {
 
 // MARK: Equatable
 
-func ==(lhs: SHPFilePointRecord, rhs: SHPFilePointRecord) -> Bool {
+func == (lhs: SHPFilePointRecord, rhs: SHPFilePointRecord) -> Bool {
   return lhs.point == rhs.point
 }
 

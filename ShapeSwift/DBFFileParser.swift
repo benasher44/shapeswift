@@ -51,10 +51,10 @@ extension DBFFileType: ExpressibleByIntegerLiteral {
     }
 }
 
-struct DBFFileHeaderFlags : OptionSet {
+struct DBFFileHeaderFlags: OptionSet {
     let rawValue: Int
     init(rawValue: Int) { self.rawValue = rawValue }
-    
+
     static let HasStructuralCDX = DBFFileHeaderFlags(rawValue: 1)
     static let HasMemoField = DBFFileHeaderFlags(rawValue: 2)
     static let IsDatabaseDBC = DBFFileHeaderFlags(rawValue: 4)
