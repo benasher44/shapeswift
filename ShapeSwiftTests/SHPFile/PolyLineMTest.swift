@@ -23,7 +23,7 @@ class PolyLineMTest: XCTestCase {
     testParsingRecord(polylineM, range: 4..<(4 + 32 + 4 + 4 + 4 + (2 * 16) + 16 + (2 * 8)))
   }
 
-  func testDecodingNoMeasure() {
+  func testDecodingNoMeasures() {
     let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
     let points = [
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
@@ -34,6 +34,24 @@ class PolyLineMTest: XCTestCase {
                                              mBounds: nil,
                                              measures: [])
     testParsingRecord(polylineM, range: 4..<(4 + 32 + 4 + 4 + 4 + (2 * 16)))
+  }
+
+  func testDecodingNoMeasuresNoDataValues() {
+    let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
+    let points = [
+      Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
+    ]
+    let expectedPolylineM = SHPFilePolyLineMRecord(box: box,
+                                           parts: [0],
+                                           points: points,
+                                           mBounds: nil,
+                                           measures: [])
+    let polylineMData = SHPFilePolyLineMRecord(box: box,
+                                           parts: [0],
+                                           points: points,
+                                           mBounds: Coordinate2DBounds(min: noDataValue, max: noDataValue),
+                                           measures: [noDataValue, noDataValue])
+    testParsingRecord(expectedPolylineM, range: 4..<(4 + 32 + 4 + 4 + 4 + (2 * 16) + 16 + (2 * 8)), dataRecord: polylineMData)
   }
 
   func testMultipleParts() {

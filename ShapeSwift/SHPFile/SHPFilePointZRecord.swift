@@ -57,7 +57,7 @@ extension SHPFilePointZRecord: ByteEncodable {
       LittleEndianEncoded<Double>(value: z),
     ]
     if let m = m {
-      byteEncodables.append(LittleEndianEncoded<Double>(value: valueOrNoDataValueForOptional(m)))
+      byteEncodables.append(LittleEndianEncoded<Double>(value: m))
     }
     return makeByteArray(from: byteEncodables)
   }

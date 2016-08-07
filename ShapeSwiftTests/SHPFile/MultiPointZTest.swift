@@ -44,4 +44,30 @@ class MultiPointZTest: XCTestCase {
     )
     testParsingRecord(multipointZ, range: 4..<(4 + 32 + 4 + (2 * 16) + 16 + (2 * 8)))
   }
+
+  func testDecodingWithNoMeasuresNoDataValues() {
+    let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
+    let points = [
+      Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
+    ]
+    let zValues: [Double] = [0.0, 10.0]
+    let expectedMultipointZ = SHPFileMultiPointZRecord(
+      box: box,
+      points: points,
+      zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),
+      zValues: zValues,
+      mBounds: nil,
+      measures: []
+    )
+    let multipointZData = SHPFileMultiPointZRecord(
+      box: box,
+      points: points,
+      zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),
+      zValues: zValues,
+      mBounds: Coordinate2DBounds(min: noDataValue, max: noDataValue),
+      measures: [noDataValue, noDataValue]
+    )
+
+    testParsingRecord(expectedMultipointZ, range: 4..<(4 + 32 + 4 + (2 * 16) + 16 + (2 * 8) + 16 + (2 * 8)), dataRecord: multipointZData)
+  }
 }

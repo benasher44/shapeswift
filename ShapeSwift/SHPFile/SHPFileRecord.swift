@@ -8,7 +8,7 @@
 
 /// Values less than this are consider "no data" values in shape files
 private let noDataThreshold = Double(sign: .minus, exponent: 129, significand: 1.4693679385278592963715027508442290127277) // 10^38
-private let noDataValue = Double(sign: .minus, exponent: 129, significand: 1.5) // Value smaller than 10^38
+let noDataValue = Double(sign: .minus, exponent: 129, significand: 1.5) // Value smaller than 10^38
 
 func valueOrNilIfNoDataValue(_ value: Coordinate2DBounds) -> Coordinate2DBounds? {
   if value.min < noDataThreshold || value.max < noDataThreshold {
@@ -24,10 +24,6 @@ func valueOrNilIfNoDataValue(_ value: Double) -> Double? {
   } else {
     return value
   }
-}
-
-func valueOrNoDataValueForOptional(_ value: Double?) -> Double {
-  return value ?? noDataValue
 }
 
 protocol SHPFileRecord {

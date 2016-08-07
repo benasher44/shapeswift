@@ -32,4 +32,21 @@ class MultiPointMTest: XCTestCase {
     let multipointM = SHPFileMultiPointMRecord(box: box, points: points, mBounds: nil, measures: [])
     testParsingRecord(multipointM, range: 4..<(4 + 32 + 4 + (2 * 16)))
   }
+
+  func testDecodingWithNoMeasuresNoDataValues() {
+    let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
+    let points = [
+      Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10)
+    ]
+
+    let expectedMultipointM = SHPFileMultiPointMRecord(box: box,
+                                               points: points,
+                                               mBounds: nil,
+                                               measures: [])
+    let multipointMData = SHPFileMultiPointMRecord(box: box,
+                                               points: points,
+                                               mBounds: Coordinate2DBounds(min: noDataValue, max: noDataValue),
+                                               measures: [noDataValue, noDataValue])
+    testParsingRecord(expectedMultipointM, range: 4..<(4 + 32 + 4 + (2 * 16) + 16 + (2 * 8)), dataRecord: multipointMData)
+  }
 }

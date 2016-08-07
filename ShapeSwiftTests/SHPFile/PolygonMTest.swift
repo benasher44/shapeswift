@@ -56,4 +56,26 @@ class PolygonMTest: XCTestCase {
     )
     testParsingRecord(polygon, range: 4..<(4 + 32 + 4 + 4 + (2 * 4) + (4 * 16)))
   }
+
+  func testNoMeasuresNoDataValues() {
+    let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
+    let points = [
+      Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10), Coordinate2D(x: 15, y: 9), Coordinate2D(x: 5, y: -5)
+    ]
+    let expectedPolygon = SHPFilePolygonMRecord(
+      box: box,
+      parts: [0, 2],
+      points: points,
+      mBounds: nil,
+      measures: []
+    )
+    let polygonData = SHPFilePolygonMRecord(
+      box: box,
+      parts: [0, 2],
+      points: points,
+      mBounds: Coordinate2DBounds(min: noDataValue, max: noDataValue),
+      measures: [noDataValue, noDataValue, noDataValue, noDataValue]
+    )
+    testParsingRecord(expectedPolygon, range: 4..<(4 + 32 + 4 + 4 + (2 * 4) + (4 * 16) + 16 + (4 * 8)), dataRecord: polygonData)
+  }
 }

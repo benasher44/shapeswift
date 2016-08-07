@@ -52,4 +52,35 @@ class MultiPatchTest: XCTestCase {
     )
     testParsingRecord(multipatch, range: 4..<(4 + 32 + 4 + 4 + 4 + 4 + (3 * 16) + 16 + (3 * 8)))
   }
+
+  func testDecodingWithNoMeasuresNoDataValues() {
+    let box = BoundingBoxXY(x: Coordinate2DBounds(min: 0, max: 10), y: Coordinate2DBounds(min: 0, max: 10))
+    let points = [
+      Coordinate2D(x: 0, y: 0),
+      Coordinate2D(x: 0, y: 10),
+      Coordinate2D(x: 10, y: 10),
+      ]
+    let zValues: [Double] = [4.0, 5.0, 6.0]
+    let expectedMultipatch = SHPFileMultiPatchRecord(
+      box: box,
+      parts: [0],
+      partTypes: [.triangleStrip],
+      points: points,
+      zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),
+      zValues: zValues,
+      mBounds: nil,
+      measures: []
+    )
+    let multipatchData = SHPFileMultiPatchRecord(
+      box: box,
+      parts: [0],
+      partTypes: [.triangleStrip],
+      points: points,
+      zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),
+      zValues: zValues,
+      mBounds: Coordinate2DBounds(min: noDataValue, max: noDataValue),
+      measures: [noDataValue, noDataValue, noDataValue]
+    )
+    testParsingRecord(expectedMultipatch, range: 4..<(4 + 32 + 4 + 4 + 4 + 4 + (3 * 16) + 16 + (3 * 8) + 16 + (3 * 8)), dataRecord: multipatchData)
+  }
 }

@@ -18,14 +18,14 @@ struct WGS84Projection: Projection {
 }
 
 class ShapeSwiftTests: XCTestCase {
-    func testParser() {
-      let url = Bundle(for: self.dynamicType).url(forResource: "sfsweeproutes", withExtension: "shp")!
-      let parser = try! SHPFileParser(fileURL: url)
-      var numRecords = 0
-      let start = CACurrentMediaTime()
-      while let record = parser.next() {
-        numRecords += 1
-      }
-      print("parsed \(numRecords) records in \(CACurrentMediaTime() - start)s")
+  func testParser() {
+    let url = Bundle(for: self.dynamicType).url(forResource: "sfsweeproutes", withExtension: "shp")!
+    let parser = try! SHPFileParser(fileURL: url)
+    var numRecords = 0
+    let start = CACurrentMediaTime()
+    while let record = parser.next() {
+      numRecords += 1
     }
+    print("parsed \(numRecords) records in \(CACurrentMediaTime() - start)s")
+  }
 }
