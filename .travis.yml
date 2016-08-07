@@ -1,6 +1,5 @@
 language: Objective-C
 osx_image: xcode8
-before_install: rvm use 2.0.0p648
 install:
   - bundle install --without=documentation --path ../travis_bundle_dir
   - bundle exec pod install
