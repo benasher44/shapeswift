@@ -2,7 +2,9 @@ language: Objective-C
 osx_image: xcode8
 env:
   - NSUnbufferedIO=YES
-before_install: ./scripts/travis/prep_keychain.sh
+before_install:
+  - rvm get head
+  - ./scripts/travis/prep_keychain.sh
 install:
   - bundle install --without=documentation --path ../travis_bundle_dir
   - bundle exec pod install
