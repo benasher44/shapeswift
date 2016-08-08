@@ -10,6 +10,9 @@ install:
   - bundle exec pod install
 script: xcodebuild -workspace ShapeSwift.xcworkspace -scheme ShapeSwift -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6s' test ONLY_ACTIVE_ARCH=NO
 
+after_failure:
+  - sleep 10
+
 after_success: 
   - slather
   - bash <(curl -s https://codecov.io/bash) -f tmp/cobertura.xml
