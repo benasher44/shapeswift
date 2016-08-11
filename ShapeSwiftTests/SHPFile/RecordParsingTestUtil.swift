@@ -10,10 +10,10 @@ import XCTest
 @testable import ShapeSwift
 
 extension XCTestCase {
-  func testParsingRecord<RecordT: SHPFileRecord where RecordT: ByteEncodable, RecordT: Equatable>(_ record: RecordT, range: Range<Int>, dataRecord: RecordT? = nil) {
+  func testParsingRecord<Record: SHPFileRecord where Record: ByteEncodable, Record: Equatable>(_ record: Record, range: Range<Int>, dataRecord: Record? = nil) {
     let data = Data(byteEncodableArray: [dataRecord ?? record])
     var endByte = 0
-    let parsedRecord = try! RecordT(recordNumber: record.recordNumber, data: data, range: range, endByte: &endByte)
+    let parsedRecord = try! Record(recordNumber: record.recordNumber, data: data, range: range, endByte: &endByte)
     let byteRange: Range = 4..<endByte + 1 // Start at 4 to account for the shape type
     XCTAssertEqual(byteRange, range)
     XCTAssertEqual(record, parsedRecord)

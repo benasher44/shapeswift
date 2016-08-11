@@ -8,7 +8,7 @@
 
 private let headerRange = 0..<100
 
-final class SHPFileParser {
+final class SHPFileParser<Record: SHPFileRecord> {
   private let data: Data
   private let header: SHPFileHeader
   private var currentByteOffset = 0
@@ -20,62 +20,43 @@ final class SHPFileParser {
   }
 }
 
+enum SHPFileParseResult<Record: SHPFileRecord> {
+  case nullShapeRecord(SHPFileNullShapeRecord)
+  case shapeRecord(Record)
+}
+
 extension SHPFileParser: IteratorProtocol {
-  func next() -> SHPFileRecord? {
+  func next() -> SHPFileParseResult<Record>? {
     if currentByteOffset < header.fileLength {
       let recordHeader = try! SHPFileRecordHeader(data: data, start: currentByteOffset)
       currentByteOffset += SHPFileRecordHeader.sizeBytes
       let shapeType = ShapeType(littleEndianData: data, start: currentByteOffset)!
       let recordStart = currentByteOffset + ShapeType.sizeBytes
-      let record = try! parseRecord(forShapeType: shapeType,
-                                    recordNumber: recordHeader.recordNumber,
-                                    data: data,
-                                    range: recordStart..<(currentByteOffset + recordHeader.contentLength))
+      let recordRange: Range = recordStart..<(currentByteOffset + recordHeader.contentLength)
       currentByteOffset += recordHeader.contentLength
-      return record
+      if shapeType == .null {
+        let nullShapeRecord: SHPFileNullShapeRecord = try! parseRecord(recordNumber: recordHeader.recordNumber,
+                                                                       data: data,
+                                                                       range: recordRange)!
+        return .nullShapeRecord(nullShapeRecord)
+      } else {
+        let shapeRecord: Record = try! parseRecord(recordNumber: recordHeader.recordNumber,
+                                                   data: data,
+                                                   range: recordRange)!
+        return .shapeRecord(shapeRecord)
+      }
     } else {
       return nil
     }
   }
 }
 
-func parseRecord(forShapeType shapeType: ShapeType, recordNumber: Int, data: Data, range: Range<Int>) throws -> SHPFileRecord? {
-  let type: SHPFileRecord.Type
-  switch shapeType {
-  case .null:
-    type = SHPFileNullShapeRecord.self
-  case .point:
-    type = SHPFilePointRecord.self
-  case .polyLine:
-    type = SHPFilePolyLineRecord.self
-  case .polygon:
-    type = SHPFilePolygonRecord.self
-  case .multiPoint:
-    type = SHPFileMultiPointRecord.self
-  case .pointZ:
-    type = SHPFileMultiPointZRecord.self
-  case .polyLineZ:
-    type = SHPFilePolyLineZRecord.self
-  case .polygonZ:
-    type = SHPFilePolygonZRecord.self
-  case .multiPointZ:
-    type = SHPFileMultiPointZRecord.self
-  case .pointM:
-    type = SHPFilePointZRecord.self
-  case .polyLineM:
-    type = SHPFilePolyLineMRecord.self
-  case .polygonM:
-    type = SHPFilePolygonMRecord.self
-  case .multiPointM:
-    type = SHPFileMultiPointMRecord.self
-  case .multiPatch:
-    type = SHPFileMultiPatchRecord.self
-  }
+func parseRecord<Record: SHPFileRecord>(recordNumber: Int, data: Data, range: Range<Int>) throws -> Record? {
   var endByte = 0;
-  let record = try type.init(recordNumber: recordNumber, data: data, range: range, endByte: &endByte)
+  let record = try Record(recordNumber: recordNumber, data: data, range: range, endByte: &endByte)
   let byteRange: Range = range.lowerBound..<endByte + 1 // Skip the first 4 bytes because of the shape type
   if endByte == 0 {
-    throw ByteParseableError.boundsUnchecked(type: type as! ByteParseable.Type)
+    throw ByteParseableError.boundsUnchecked(type: Record.self as! ByteParseable.Type)
   } else if byteRange != range {
     throw ByteParseableError.outOfBounds(expectedBounds: range, actualBounds: byteRange)
   }
