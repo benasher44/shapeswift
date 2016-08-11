@@ -68,7 +68,13 @@ extension SHPFilePointZRecord: ByteEncodable {
 // MARK: Equatable
 
 func == (lhs: SHPFilePointZRecord, rhs: SHPFilePointZRecord) -> Bool {
-  return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.m == rhs.m
+  return (
+    lhs.recordNumber == rhs.recordNumber &&
+      lhs.x == rhs.x &&
+      lhs.y == rhs.y &&
+      lhs.z == rhs.z &&
+      lhs.m == rhs.m
+  )
 }
 
 extension SHPFilePointZRecord: Equatable {}

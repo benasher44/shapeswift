@@ -1,5 +1,5 @@
 //
-//  SHPFilePolyLineRecord.swift
+//  SHPFilePolygonRecord.swift
 //  ShapeSwift
 //
 //  Created by Noah Gilmore on 6/2/16.
@@ -8,17 +8,17 @@
 
 // MARK: Parser
 
-extension SHPFilePolyLineRecord {
+extension SHPFilePolygonRecord {
   struct Parser {
     let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-    let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
     let parts: ShapeDataArrayParser<LittleEndian<Int32>>
+    let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
     init(data: Data, start: Int) throws {
       box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
       let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
+      let numParts = try Int(numPartsParser.parse(data))
       let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      let numParts = try Int(numPartsParser.parse(data))
       parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
       points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
     }
@@ -27,18 +27,15 @@ extension SHPFilePolyLineRecord {
 
 // MARK: Record
 
-/// TODO(noah): Because this specification does not forbid consecutive points with identical coordinates,
-/// SHPFile readers must handle such cases. On the other hand, the degenerate, zero length
-/// parts that might result are not allowed.
-struct SHPFilePolyLineRecord {
+struct SHPFilePolygonRecord {
   let recordNumber: Int
   let box: BoundingBoxXY
   let parts: [Int32]
   let points: [Coordinate2D]
 }
 
-extension SHPFilePolyLineRecord: SHPFileRecord {
-  static let shapeType = ShapeType.polyLine
+extension SHPFilePolygonRecord: SHPFileRecord {
+  static let shapeType = ShapeType.polygon
 
   init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
     self.recordNumber = recordNumber
@@ -50,7 +47,7 @@ extension SHPFilePolyLineRecord: SHPFileRecord {
   }
 }
 
-extension SHPFilePolyLineRecord: ByteEncodable {
+extension SHPFilePolygonRecord: ByteEncodable {
   func encode() -> [Byte] {
     let byteEncodables = [[
       LittleEndianEncoded<ShapeType>(value: .polyLine),
@@ -64,8 +61,13 @@ extension SHPFilePolyLineRecord: ByteEncodable {
 
 // MARK: Equatable
 
-extension SHPFilePolyLineRecord: Equatable {}
+extension SHPFilePolygonRecord: Equatable {}
 
-func == (lhs: SHPFilePolyLineRecord, rhs: SHPFilePolyLineRecord) -> Bool {
-  return lhs.box == rhs.box && lhs.points == rhs.points && lhs.parts == rhs.parts
+func == (lhs: SHPFilePolygonRecord, rhs: SHPFilePolygonRecord) -> Bool {
+  return (
+    lhs.recordNumber == rhs.recordNumber &&
+      lhs.box == rhs.box &&
+      lhs.points == rhs.points &&
+      lhs.parts == rhs.parts
+  )
 }

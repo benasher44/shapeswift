@@ -98,10 +98,13 @@ extension SHPFileMultiPointZRecord {
 extension SHPFileMultiPointZRecord: Equatable {}
 
 func == (lhs: SHPFileMultiPointZRecord, rhs: SHPFileMultiPointZRecord) -> Bool {
-  return lhs.box == rhs.box &&
-    lhs.points == rhs.points &&
-    lhs.zBounds == rhs.zBounds &&
-    lhs.zValues == rhs.zValues &&
-    lhs.mBounds == rhs.mBounds &&
-    lhs.measures == rhs.measures
+  return (
+    lhs.recordNumber == rhs.recordNumber &&
+      lhs.box == rhs.box &&
+      lhs.points == rhs.points &&
+      lhs.zBounds == rhs.zBounds &&
+      lhs.zValues == rhs.zValues &&
+      lhs.mBounds == rhs.mBounds &&
+      lhs.measures == rhs.measures
+  )
 }

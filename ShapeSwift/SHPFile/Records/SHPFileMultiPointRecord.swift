@@ -58,5 +58,9 @@ extension SHPFileMultiPointRecord: ByteEncodable {
 extension SHPFileMultiPointRecord: Equatable {}
 
 func == (lhs: SHPFileMultiPointRecord, rhs: SHPFileMultiPointRecord) -> Bool {
-  return lhs.box == rhs.box && lhs.points == rhs.points
+  return (
+    lhs.recordNumber == rhs.recordNumber &&
+      lhs.box == rhs.box &&
+      lhs.points == rhs.points
+  )
 }

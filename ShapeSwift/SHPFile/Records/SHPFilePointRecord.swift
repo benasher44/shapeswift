@@ -49,7 +49,7 @@ extension SHPFilePointRecord: ByteEncodable {
 // MARK: Equatable
 
 func == (lhs: SHPFilePointRecord, rhs: SHPFilePointRecord) -> Bool {
-  return lhs.point == rhs.point
+  return lhs.recordNumber == rhs.recordNumber && lhs.point == rhs.point
 }
 
 extension SHPFilePointRecord: Equatable {}
