@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-set -e
+set -x
 
 KEY_CHAIN=ios-build.keychain
 security create-keychain -p travis $KEY_CHAIN

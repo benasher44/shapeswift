@@ -2,11 +2,17 @@ language: Objective-C
 osx_image: xcode8
 env:
   - NSUnbufferedIO=YES
-before_install: ./scripts/travis/prep_keychain.sh
+before_install:
+  - rvm get head
+  - ./scripts/travis/prep_keychain.sh
 install:
   - bundle install --without=documentation --path ../travis_bundle_dir
   - bundle exec pod install
 script: xcodebuild -workspace ShapeSwift.xcworkspace -scheme ShapeSwift -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6s' test ONLY_ACTIVE_ARCH=NO
+
+after_failure:
+  - sleep 10
+
 after_success: 
   - slather
   - bash <(curl -s https://codecov.io/bash) -f tmp/cobertura.xml
