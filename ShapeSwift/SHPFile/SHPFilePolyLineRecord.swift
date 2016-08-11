@@ -31,6 +31,7 @@ extension SHPFilePolyLineRecord {
 /// SHPFile readers must handle such cases. On the other hand, the degenerate, zero length
 /// parts that might result are not allowed.
 struct SHPFilePolyLineRecord {
+  let recordNumber: Int
   let box: BoundingBoxXY
   let parts: [Int32]
   let points: [Coordinate2D]
@@ -39,7 +40,8 @@ struct SHPFilePolyLineRecord {
 extension SHPFilePolyLineRecord: SHPFileRecord {
   static let shapeType = ShapeType.polyLine
 
-  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
+  init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
+    self.recordNumber = recordNumber
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data)

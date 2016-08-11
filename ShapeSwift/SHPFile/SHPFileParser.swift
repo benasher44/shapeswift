@@ -27,7 +27,10 @@ extension SHPFileParser: IteratorProtocol {
       currentByteOffset += SHPFileRecordHeader.sizeBytes
       let shapeType = ShapeType(littleEndianData: data, start: currentByteOffset)!
       let recordStart = currentByteOffset + ShapeType.sizeBytes
-      let record = try! parseRecord(forShapeType: shapeType, data: data, range: recordStart..<(currentByteOffset + recordHeader.contentLength))
+      let record = try! parseRecord(forShapeType: shapeType,
+                                    recordNumber: recordHeader.recordNumber,
+                                    data: data,
+                                    range: recordStart..<(currentByteOffset + recordHeader.contentLength))
       currentByteOffset += recordHeader.contentLength
       return record
     } else {
@@ -36,7 +39,7 @@ extension SHPFileParser: IteratorProtocol {
   }
 }
 
-func parseRecord(forShapeType shapeType: ShapeType, data: Data, range: Range<Int>) throws -> SHPFileRecord? {
+func parseRecord(forShapeType shapeType: ShapeType, recordNumber: Int, data: Data, range: Range<Int>) throws -> SHPFileRecord? {
   let type: SHPFileRecord.Type
   switch shapeType {
   case .null:
@@ -69,7 +72,7 @@ func parseRecord(forShapeType shapeType: ShapeType, data: Data, range: Range<Int
     type = SHPFileMultiPatchRecord.self
   }
   var endByte = 0;
-  let record = try type.init(data: data, range: range, endByte: &endByte)
+  let record = try type.init(recordNumber: recordNumber, data: data, range: range, endByte: &endByte)
   let byteRange: Range = range.lowerBound..<endByte + 1 // Skip the first 4 bytes because of the shape type
   if endByte == 0 {
     throw ByteParseableError.boundsUnchecked(type: type as! ByteParseable.Type)

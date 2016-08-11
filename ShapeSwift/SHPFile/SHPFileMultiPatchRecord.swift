@@ -38,9 +38,10 @@ extension SHPFileMultiPatchRecord {
   }
 }
 
-//MARK: Record
+// MARK: Record
 
 struct SHPFileMultiPatchRecord {
+  let recordNumber: Int
   let box: BoundingBoxXY
   let parts: [Int]
   let partTypes: [MultiPatchPartType]
@@ -54,7 +55,8 @@ struct SHPFileMultiPatchRecord {
 extension SHPFileMultiPatchRecord: SHPFileRecord {
   static let shapeType = ShapeType.multiPatch
 
-  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
+  init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
+    self.recordNumber = recordNumber
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data).map(Int.init)
@@ -101,7 +103,7 @@ extension SHPFileMultiPatchRecord: ByteEncodable {
   }
 }
 
-//MARK: Equatable
+// MARK: Equatable
 
 func == (lhs: SHPFileMultiPatchRecord, rhs: SHPFileMultiPatchRecord) -> Bool {
   return (

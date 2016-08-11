@@ -27,15 +27,22 @@ func valueOrNilIfNoDataValue(_ value: Double) -> Double? {
 }
 
 protocol SHPFileRecord {
+  var recordNumber: Int { get }
   static var shapeType: ShapeType { get }
-  init(data: Data, range: Range<Int>, endByte: inout Int) throws
+  init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws
 }
 
-struct SHPFileNullShapeRecord {}
+// MARK: Null Shape
+
+struct SHPFileNullShapeRecord {
+  let recordNumber: Int
+
+}
 extension SHPFileNullShapeRecord: SHPFileRecord {
   static let shapeType = ShapeType.null
 
-  init(data: Data, range: Range<Int>, endByte: inout Int) {
+  init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) {
+    self.recordNumber = recordNumber
     endByte = 0
   }
 }

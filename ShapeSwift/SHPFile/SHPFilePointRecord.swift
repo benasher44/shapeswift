@@ -21,13 +21,15 @@ extension SHPFilePointRecord {
 // MARK: Record
 
 struct SHPFilePointRecord {
+  let recordNumber: Int
   let point: Coordinate2D
 }
 
 extension SHPFilePointRecord: SHPFileRecord {
   static let shapeType = ShapeType.point
 
-  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
+  init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
+    self.recordNumber = recordNumber
     let parser = Parser(start: range.lowerBound)
     point = try parser.point.parse(data)
     endByte = parser.point.end - 1

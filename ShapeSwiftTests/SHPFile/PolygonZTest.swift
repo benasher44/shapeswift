@@ -18,6 +18,7 @@ class PolygonZTest: XCTestCase {
     let measures: [Double] = [1.0, 2.0]
     let zValues: [Double] = [0.0, 10.0]
     let polygonZ = SHPFilePolygonZRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       points: points,
@@ -36,6 +37,7 @@ class PolygonZTest: XCTestCase {
     ]
     let zValues: [Double] = [0.0, 10.0]
     let polygonZ = SHPFilePolygonZRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       points: points,
@@ -54,6 +56,7 @@ class PolygonZTest: XCTestCase {
     ]
     let zValues: [Double] = [0.0, 10.0]
     let expectedPolygonZ = SHPFilePolygonZRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       points: points,
@@ -64,6 +67,7 @@ class PolygonZTest: XCTestCase {
     )
 
     let polygonZData = SHPFilePolygonZRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       points: points,

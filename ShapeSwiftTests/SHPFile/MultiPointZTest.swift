@@ -18,6 +18,7 @@ class MultiPointZTest: XCTestCase {
     let measures: [Double] = [1.0, 2.0]
     let zValues: [Double] = [0.0, 10.0]
     let multipointZ = SHPFileMultiPointZRecord(
+      recordNumber: 0,
       box: box,
       points: points,
       zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),
@@ -35,6 +36,7 @@ class MultiPointZTest: XCTestCase {
     ]
     let zValues: [Double] = [0.0, 10.0]
     let multipointZ = SHPFileMultiPointZRecord(
+      recordNumber: 0,
       box: box,
       points: points,
       zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),
@@ -52,6 +54,7 @@ class MultiPointZTest: XCTestCase {
     ]
     let zValues: [Double] = [0.0, 10.0]
     let expectedMultipointZ = SHPFileMultiPointZRecord(
+      recordNumber: 0,
       box: box,
       points: points,
       zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),
@@ -60,6 +63,7 @@ class MultiPointZTest: XCTestCase {
       measures: []
     )
     let multipointZData = SHPFileMultiPointZRecord(
+      recordNumber: 0,
       box: box,
       points: points,
       zBounds: Coordinate2DBounds(min: 0.0, max: 10.0),

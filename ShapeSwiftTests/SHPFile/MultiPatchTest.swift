@@ -20,6 +20,7 @@ class MultiPatchTest: XCTestCase {
     let measures: [Double] = [1.0, 2.0, 3.0]
     let zValues: [Double] = [4.0, 5.0, 6.0]
     let multipatch = SHPFileMultiPatchRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       partTypes: [.triangleStrip],
@@ -41,6 +42,7 @@ class MultiPatchTest: XCTestCase {
       ]
     let zValues: [Double] = [4.0, 5.0, 6.0]
     let multipatch = SHPFileMultiPatchRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       partTypes: [.triangleStrip],
@@ -62,6 +64,7 @@ class MultiPatchTest: XCTestCase {
       ]
     let zValues: [Double] = [4.0, 5.0, 6.0]
     let expectedMultipatch = SHPFileMultiPatchRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       partTypes: [.triangleStrip],
@@ -72,6 +75,7 @@ class MultiPatchTest: XCTestCase {
       measures: []
     )
     let multipatchData = SHPFileMultiPatchRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       partTypes: [.triangleStrip],

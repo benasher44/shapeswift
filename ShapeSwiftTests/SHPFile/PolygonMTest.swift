@@ -17,6 +17,7 @@ class PolygonMTest: XCTestCase {
     ]
     let measures = [1.0, 2.0, 1.0]
     let polygon = SHPFilePolygonMRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       points: points,
@@ -33,6 +34,7 @@ class PolygonMTest: XCTestCase {
     ]
     let measures = [1.0, 2.0, 1.0, 3.0]
     let polygon = SHPFilePolygonMRecord(
+      recordNumber: 0,
       box: box,
       parts: [0, 2],
       points: points,
@@ -48,6 +50,7 @@ class PolygonMTest: XCTestCase {
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10), Coordinate2D(x: 15, y: 9), Coordinate2D(x: 5, y: -5)
     ]
     let polygon = SHPFilePolygonMRecord(
+      recordNumber: 0,
       box: box,
       parts: [0, 2],
       points: points,
@@ -63,6 +66,7 @@ class PolygonMTest: XCTestCase {
       Coordinate2D(x: 0, y: 0), Coordinate2D(x: 10, y: 10), Coordinate2D(x: 15, y: 9), Coordinate2D(x: 5, y: -5)
     ]
     let expectedPolygon = SHPFilePolygonMRecord(
+      recordNumber: 0,
       box: box,
       parts: [0, 2],
       points: points,
@@ -70,6 +74,7 @@ class PolygonMTest: XCTestCase {
       measures: []
     )
     let polygonData = SHPFilePolygonMRecord(
+      recordNumber: 0,
       box: box,
       parts: [0, 2],
       points: points,

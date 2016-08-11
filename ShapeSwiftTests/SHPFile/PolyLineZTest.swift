@@ -18,6 +18,7 @@ class PolyLineZTest: XCTestCase {
     let measures: [Double] = [1.0, 2.0]
     let zValues: [Double] = [0.0, 10.0]
     let polyLineZ = SHPFilePolyLineZRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       points: points,
@@ -36,6 +37,7 @@ class PolyLineZTest: XCTestCase {
     ]
     let zValues: [Double] = [0.0, 10.0]
     let polyLineZ = SHPFilePolyLineZRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       points: points,
@@ -54,6 +56,7 @@ class PolyLineZTest: XCTestCase {
     ]
     let zValues: [Double] = [0.0, 10.0]
     let expectedPolyLineZ = SHPFilePolyLineZRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       points: points,
@@ -63,6 +66,7 @@ class PolyLineZTest: XCTestCase {
       measures: []
     )
     let polyLineZData = SHPFilePolyLineZRecord(
+      recordNumber: 0,
       box: box,
       parts: [0],
       points: points,

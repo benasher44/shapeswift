@@ -11,18 +11,18 @@ import XCTest
 
 class PointZTest: XCTestCase {
   func testDecoding() {
-    let pointZ = SHPFilePointZRecord(x: 1.0, y: 1.0, z: 3.0, m: 4.0)
+    let pointZ = SHPFilePointZRecord(recordNumber: 0, x: 1.0, y: 1.0, z: 3.0, m: 4.0)
     testParsingRecord(pointZ, range: 4..<4 + (8 * 4))
   }
 
   func testDecodingWithoutM() {
-    let pointZ = SHPFilePointZRecord(x: 1.0, y: 1.0, z: 3.0, m: nil)
+    let pointZ = SHPFilePointZRecord(recordNumber: 0, x: 1.0, y: 1.0, z: 3.0, m: nil)
     testParsingRecord(pointZ, range: 4..<4 + (8 * 3))
   }
 
   func testDecodingWithMNoDataValues() {
-    let pointZData = SHPFilePointZRecord(x: 1.0, y: 1.0, z: 3.0, m: noDataValue)
-    let expectedPointZ = SHPFilePointZRecord(x: 1.0, y: 1.0, z: 3.0, m: nil)
+    let pointZData = SHPFilePointZRecord(recordNumber: 0, x: 1.0, y: 1.0, z: 3.0, m: noDataValue)
+    let expectedPointZ = SHPFilePointZRecord(recordNumber: 0, x: 1.0, y: 1.0, z: 3.0, m: nil)
     testParsingRecord(expectedPointZ, range: 4..<4 + (8 * 3), dataRecord: pointZData)
   }
 }

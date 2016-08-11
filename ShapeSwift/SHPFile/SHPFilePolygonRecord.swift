@@ -28,6 +28,7 @@ extension SHPFilePolygonRecord {
 // MARK: Record
 
 struct SHPFilePolygonRecord {
+  let recordNumber: Int
   let box: BoundingBoxXY
   let parts: [Int32]
   let points: [Coordinate2D]
@@ -36,7 +37,8 @@ struct SHPFilePolygonRecord {
 extension SHPFilePolygonRecord: SHPFileRecord {
   static let shapeType = ShapeType.polygon
 
-  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
+  init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
+    self.recordNumber = recordNumber
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
     parts = try parser.parts.parse(data)

@@ -24,6 +24,7 @@ struct SHPFilePointZRecordParser {
 // MARK: Record
 
 struct SHPFilePointZRecord {
+  let recordNumber: Int
   let x: Double
   let y: Double
   let z: Double
@@ -33,7 +34,8 @@ struct SHPFilePointZRecord {
 extension SHPFilePointZRecord: SHPFileRecord {
   static let shapeType = ShapeType.pointZ
 
-  init(data: Data, range: Range<Int>, endByte: inout Int) throws {
+  init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
+    self.recordNumber = recordNumber
     let parser = SHPFilePointZRecordParser(start: range.lowerBound)
     x = try parser.x.parse(data)
     y = try parser.y.parse(data)
