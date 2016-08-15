@@ -38,6 +38,7 @@ struct SHPFileNullShapeRecord {
   let recordNumber: Int
 
 }
+
 extension SHPFileNullShapeRecord: SHPFileRecord {
   static let shapeType = ShapeType.null
 

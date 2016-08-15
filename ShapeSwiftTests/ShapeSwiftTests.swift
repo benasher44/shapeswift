@@ -20,10 +20,16 @@ struct WGS84Projection: Projection {
 class ShapeSwiftTests: XCTestCase {
   func testParser() {
     let url = Bundle(for: self.dynamicType).url(forResource: "sfsweeproutes", withExtension: "shp")!
-    let parser = try! SHPFileParser<SHPFilePolyLineRecord>(fileURL: url)
+    let parser = try! SHPFileParser<SHPFilePolyLineShape>(fileURL: url)
     var numRecords = 0
     let start = CACurrentMediaTime()
-    while let record = parser.next() {
+    while let parseResult = parser.next() {
+      switch parseResult {
+      case .nullShapeRecord(_):
+        break
+      case let .shapeRecord(record):
+        let _ = record.makeShape()
+      }
       numRecords += 1
     }
     print("parsed \(numRecords) records in \(CACurrentMediaTime() - start)s")

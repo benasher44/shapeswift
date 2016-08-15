@@ -8,7 +8,7 @@
 
 private let headerRange = 0..<100
 
-final class SHPFileParser<Record: SHPFileRecord> {
+final class SHPFileParser<Shape: SHPFileShape where Shape.Record: SHPFileShapeConvertible> {
   private let data: Data
   private let header: SHPFileHeader
   private var currentByteOffset = 0
@@ -26,6 +26,8 @@ enum SHPFileParseResult<Record: SHPFileRecord> {
 }
 
 extension SHPFileParser: IteratorProtocol {
+  typealias Record = Shape.Record
+
   func next() -> SHPFileParseResult<Record>? {
     if currentByteOffset < header.fileLength {
       let recordHeader = try! SHPFileRecordHeader(data: data, start: currentByteOffset)

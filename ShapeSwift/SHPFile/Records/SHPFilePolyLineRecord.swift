@@ -27,9 +27,6 @@ extension SHPFilePolyLineRecord {
 
 // MARK: Record
 
-/// TODO(noah): Because this specification does not forbid consecutive points with identical coordinates,
-/// SHPFile readers must handle such cases. On the other hand, the degenerate, zero length
-/// parts that might result are not allowed.
 struct SHPFilePolyLineRecord {
   let recordNumber: Int
   let box: BoundingBoxXY
