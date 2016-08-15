@@ -41,8 +41,7 @@ extension SHPFilePolyLineRecord: SHPFileShapeConvertible {
     points.reserveCapacity(count)
     // Build the part, but only inlude points, if the point is not a consecutive duplicate
     var lastPoint: Coordinate2D? = nil
-    for i in part..<(part + count) {
-      let point = self.points[i]
+    for point in self.points[part..<(part + count)] {
       switch lastPoint {
       case let .some(lastPoint) where point != lastPoint:
         fallthrough
