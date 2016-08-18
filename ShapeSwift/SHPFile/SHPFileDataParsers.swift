@@ -57,7 +57,7 @@ struct ShapeDataStringParser {
   }
 }
 
-struct ShapeDataArrayParser<T: ByteOrdered where T.ValueT: ByteParseable> {
+struct ShapeDataArrayParser<T: ByteOrdered> where T.ValueT: ByteParseable {
   let start: Int
   let count: Int
 
@@ -65,11 +65,11 @@ struct ShapeDataArrayParser<T: ByteOrdered where T.ValueT: ByteParseable> {
     return start + (count * T.ValueT.sizeBytes)
   }
 
-  private func iterParse(_ data: Data, _ parser: (data: Data, start: Int) -> T.ValueT?) throws -> [T.ValueT] {
+  fileprivate func iterParse(_ data: Data, _ parser: (_ data: Data, _ start: Int) -> T.ValueT?) throws -> [T.ValueT] {
     var values = Array<T.ValueT>()
     values.reserveCapacity(count)
     for byteOffset in stride(from: start, to: end, by: T.ValueT.sizeBytes) {
-      if let value = parser(data: data, start: byteOffset) {
+      if let value = parser(data, byteOffset) {
         values.append(value)
       } else {
         throw ByteParseableError.notParseable(type: T.ValueT.self)

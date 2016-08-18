@@ -19,7 +19,7 @@ struct WGS84Projection: Projection {
 
 class ShapeSwiftTests: XCTestCase {
   func testParser() {
-    let url = Bundle(for: self.dynamicType).url(forResource: "sfsweeproutes", withExtension: "shp")!
+    let url = Bundle(for: type(of: self)).url(forResource: "sfsweeproutes", withExtension: "shp")!
     let parser = try! SHPFileParser<SHPFilePolyLineShape>(fileURL: url)
     var numRecords = 0
     let start = CACurrentMediaTime()

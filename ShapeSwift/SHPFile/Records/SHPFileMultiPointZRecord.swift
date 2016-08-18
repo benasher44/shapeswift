@@ -66,7 +66,7 @@ extension SHPFileMultiPointZRecord: ByteEncodable {
       )
     }
 
-    return makeByteArray(from: byteEncodables.flatten())
+    return makeByteArray(from: byteEncodables.joined())
   }
 }
 

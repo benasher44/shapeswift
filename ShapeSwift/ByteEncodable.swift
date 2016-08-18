@@ -15,7 +15,7 @@ protocol ByteEncodable {
   func encode() -> [Byte]
 }
 
-func makeByteArray<T: Sequence where T.Iterator.Element == ByteEncodable>(from byteEncodables: T) -> [Byte] {
+func makeByteArray<T: Sequence>(from byteEncodables: T) -> [Byte] where T.Iterator.Element == ByteEncodable {
   return byteEncodables.flatMap { $0.encode() }
 }
 
@@ -73,26 +73,28 @@ extension Data {
 
 func toByteArray<T>(value: T, size: Int) -> [Byte] {
   var mutableValue = value
-  return withUnsafePointer(&mutableValue) { pointer in
-    Array(UnsafeBufferPointer(start: UnsafePointer<Byte>(pointer), count: size))
+  return withUnsafePointer(to: &mutableValue) { pointer in
+    return pointer.withMemoryRebound(to: Byte.self, capacity: size) { bytePointer in
+      Array(UnsafeBufferPointer(start: bytePointer, count: size))
+    }
   }
 }
 
 extension Double: LittleEndianByteEncodable {
   func encodeLittleEndian() -> [Byte] {
-    return toByteArray(value: self, size: self.dynamicType.sizeBytes)
+    return toByteArray(value: self, size: type(of: self).sizeBytes)
   }
 }
 
 extension Int32: LittleEndianByteEncodable {
   func encodeLittleEndian() -> [Byte] {
-    return toByteArray(value: self, size: self.dynamicType.sizeBytes)
+    return toByteArray(value: self, size: type(of: self).sizeBytes)
   }
 }
 
 extension Int32: BigEndianByteEncodable {
   func encodeBigEndian() -> [Byte] {
-    return toByteArray(value: self, size: self.dynamicType.sizeBytes).reversed()
+    return toByteArray(value: self, size: type(of: self).sizeBytes).reversed()
   }
 }
 
@@ -113,7 +115,7 @@ extension Coordinate2D: ByteEncodable {
     return Array([
       LittleEndianEncoded<Double>(value: x).encode(),
       LittleEndianEncoded<Double>(value: y).encode()
-    ].flatten())
+    ].joined())
   }
 }
 
@@ -122,7 +124,7 @@ extension Coordinate2DBounds: ByteEncodable {
     return Array([
       LittleEndianEncoded<Double>(value: min).encode(),
       LittleEndianEncoded<Double>(value: max).encode()
-      ].flatten())
+      ].joined())
   }
 }
 
@@ -133,6 +135,6 @@ extension BoundingBoxXY: ByteEncodable {
       LittleEndianEncoded<Double>(value: y.min).encode(),
       LittleEndianEncoded<Double>(value: x.max).encode(),
       LittleEndianEncoded<Double>(value: y.max).encode()
-      ].flatten())
+      ].joined())
   }
 }

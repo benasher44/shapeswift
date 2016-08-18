@@ -8,10 +8,10 @@
 
 private let headerRange = 0..<100
 
-final class SHPFileParser<Shape: SHPFileShape where Shape.Record: SHPFileShapeConvertible> {
-  private let data: Data
-  private let header: SHPFileHeader
-  private var currentByteOffset = 0
+final class SHPFileParser<Shape: SHPFileShape> where Shape.Record: SHPFileShapeConvertible {
+  fileprivate let data: Data
+  fileprivate let header: SHPFileHeader
+  fileprivate var currentByteOffset = 0
 
   init(fileURL: URL) throws {
     data = try Data(contentsOf: fileURL, options: .mappedIfSafe)

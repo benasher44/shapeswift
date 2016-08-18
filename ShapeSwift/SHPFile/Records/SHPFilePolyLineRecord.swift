@@ -55,7 +55,7 @@ extension SHPFilePolyLineRecord: ByteEncodable {
       LittleEndianEncoded<Int32>(value: Int32(parts.count)),
       LittleEndianEncoded<Int32>(value: Int32(points.count))
       ], parts.map({ LittleEndianEncoded<Int32>(value: $0) as ByteEncodable }), points.map({$0 as ByteEncodable})]
-    return makeByteArray(from: byteEncodables.flatten())
+    return makeByteArray(from: byteEncodables.joined())
   }
 }
 

@@ -25,7 +25,7 @@ extension ProjectionConversionError: CustomDebugStringConvertible {
   var debugDescription: String {
     switch self {
     case let .error(errorNumber, function):
-      let errStr = String(cString: pj_strerrno(errorNumber)) ?? ""
+      let errStr = String(cString: pj_strerrno(errorNumber))
       return "\(function): \(errStr)"
     }
   }

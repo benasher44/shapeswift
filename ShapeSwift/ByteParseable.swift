@@ -79,14 +79,14 @@ extension Int32: ByteParseable {
 
 extension Int32: BigEndianByteParseable {
   init?(bigEndianData data: Data, start: Int) {
-    let bitPattern: Int32 = self.dynamicType.bitPattern(fromData: data, start: start)
+    let bitPattern: Int32 = type(of: self).bitPattern(fromData: data, start: start)
     self = Int32(bigEndian: bitPattern)
   }
 }
 
 extension Int32: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
-    let bitPattern: Int32 = self.dynamicType.bitPattern(fromData: data, start: start)
+    let bitPattern: Int32 = type(of: self).bitPattern(fromData: data, start: start)
     self = Int32(littleEndian: bitPattern)
   }
 }
@@ -96,56 +96,38 @@ extension Int16: ByteParseable {
   static let sizeBytes = 2
 }
 
-extension Int16: BigEndianByteParseable {
-  init?(bigEndianData data: Data, start: Int) {
-    var intBytes = [UInt8](repeating: 0, count: self.dynamicType.sizeBytes)
-    data.copyBytes(to: &intBytes, from: start..<(start + self.dynamicType.sizeBytes))
-    let value = intBytes.withUnsafeBufferPointer({
-      UnsafePointer<Int16>($0.baseAddress!).pointee
-    })
-    self = Int16(bigEndian: value)
-  }
-}
-
-extension Int16: LittleEndianByteParseable {
-  init?(littleEndianData data: Data, start: Int) {
-    var intBytes = [UInt8](repeating: 0, count: self.dynamicType.sizeBytes)
-    data.copyBytes(to: &intBytes, from: start..<(start + self.dynamicType.sizeBytes))
-    let value = intBytes.withUnsafeBufferPointer({
-      UnsafePointer<Int16>($0.baseAddress!).pointee
-    })
-    self = Int16(littleEndian: value)
-  }
-}
-
-func parseInt8(data: Data, location: Int) -> Int8 {
-  var intBytes = [UInt8](repeating: 0, count: 1)
-  data.copyBytes(to: &intBytes, from: location..<(location + 1))
-  let value = intBytes.withUnsafeBufferPointer({
-    UnsafePointer<Int8>($0.baseAddress!).pointee
-  })
-  return Int8(value)
-}
-
-// todo(noah): there's a lot duplicated between Int16 and Int8, could be cleaned up
 extension Int8: SingleByteParseable {
   typealias ValueT = Int8
   init?(data: Data, location: Int) {
-    self = parseInt8(data: data, location: location)
+    self = dataBitPattern(fromData: data, start: location, sizeBytes: 1)
   }
 }
 
 extension UInt8: SingleByteParseable {
   typealias ValueT = Int8
   init?(data: Data, location: Int) {
-    self = UInt8(parseInt8(data: data, location: location))
+    self = UInt8(Int8(data: data, location: location)!)
+  }
+}
+
+extension Int16: BigEndianByteParseable {
+  init?(bigEndianData data: Data, start: Int) {
+    let bitPattern: Int16 = type(of: self).bitPattern(fromData: data, start: start)
+    self = Int16(bigEndian: bitPattern)
+  }
+}
+
+extension Int16: LittleEndianByteParseable {
+  init?(littleEndianData data: Data, start: Int) {
+    let bitPattern: Int16 = type(of: self).bitPattern(fromData: data, start: start)
+    self = Int16(littleEndian: bitPattern)
   }
 }
 
 extension Bool: SingleByteParseable {
   typealias ValueT = Int8
   init?(data: Data, location: Int) {
-    self = parseInt8(data: data, location: location) != 0
+    self = Int8(data: data, location: location) != 0
   }
 }
 
@@ -155,15 +137,21 @@ extension Double: ByteParseable {
 
 extension Double: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
-    let bitPattern: UInt64 = self.dynamicType.bitPattern(fromData: data, start: start)
+    let bitPattern: UInt64 = type(of: self).bitPattern(fromData: data, start: start)
     self = Double(bitPattern: bitPattern)
   }
 }
 
-private extension ByteParseable {
+fileprivate extension ByteParseable {
   static func bitPattern<T>(fromData data: Data, start: Int) -> T {
-    return data.withUnsafeBytes({(pointer: UnsafePointer<UInt8>) -> T in
-      return UnsafePointer<T>(pointer.advanced(by: start)).pointee
-    })
+    return dataBitPattern(fromData: data, start: start, sizeBytes: sizeBytes)
   }
+}
+
+fileprivate func dataBitPattern<T>(fromData data: Data, start: Int, sizeBytes: Int) -> T {
+  return data.withUnsafeBytes({(bytePointer: UnsafePointer<UInt8>) -> T in
+    bytePointer.advanced(by: start).withMemoryRebound(to: T.self, capacity: sizeBytes) { pointer in
+      return pointer.pointee
+    }
+  })
 }

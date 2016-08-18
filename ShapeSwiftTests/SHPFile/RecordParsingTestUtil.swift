@@ -10,7 +10,7 @@ import XCTest
 @testable import ShapeSwift
 
 extension XCTestCase {
-  func testParsingRecord<Record: SHPFileRecord where Record: ByteEncodable, Record: Equatable>(_ record: Record, range: Range<Int>, dataRecord: Record? = nil) {
+  func testParsingRecord<Record: SHPFileRecord>(_ record: Record, range: Range<Int>, dataRecord: Record? = nil) where Record: ByteEncodable, Record: Equatable {
     let data = Data(byteEncodableArray: [dataRecord ?? record])
     var endByte = 0
     let parsedRecord = try! Record(recordNumber: record.recordNumber, data: data, range: range, endByte: &endByte)
