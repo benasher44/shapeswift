@@ -6,6 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-struct Line {
-  let points: [Coordinate2D]
+struct Line<Coordinate> {
+  let points: [Coordinate]
 }

@@ -6,18 +6,22 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-struct SHPFilePolyLineShape {
-  let boundingBox: BoundingBoxXY
-  let lines: [Line]
+protocol SHPFilePolyLineShapeProtocol {
+  associatedtype Coordinate: Equatable
+  init(boundingBox: BoundingBoxXY, lines: [Line<Coordinate>])
 }
 
-extension SHPFilePolyLineShape: SHPFileShape {
-  typealias Record = SHPFilePolyLineRecord
+protocol SHPFilePolyLineShapeConvertible {
+  associatedtype PolyLineShape: SHPFilePolyLineShapeProtocol
+  var parts: [Int32] { get }
+  var pointCount: Int { get }
+  var box: BoundingBoxXY { get }
+  func coordinate(atIndex index: Int) -> PolyLineShape.Coordinate
 }
 
-extension SHPFilePolyLineRecord: SHPFileShapeConvertible {
-  func makeShape() -> SHPFilePolyLineShape {
-    var lines = [Line]()
+extension SHPFilePolyLineShapeConvertible {
+  func makeShape() -> PolyLineShape {
+    var lines = [Line<PolyLineShape.Coordinate>]()
     lines.reserveCapacity(parts.count)
     var prevPart: Int32? = nil
     for part in parts {
@@ -31,17 +35,18 @@ extension SHPFilePolyLineRecord: SHPFileShapeConvertible {
     // The above loop body won't operate on the last part, so create the last line
     if let lastPart = prevPart {
       let intLastPart = Int(lastPart)
-      line(forPart: intLastPart, count: self.points.count - intLastPart).flatMap({ lines.append($0) })
+      line(forPart: intLastPart, count: pointCount - intLastPart).flatMap({ lines.append($0) })
     }
-    return SHPFilePolyLineShape(boundingBox: box, lines: lines)
+    return PolyLineShape(boundingBox: box, lines: lines)
   }
 
-  private func line(forPart part: Int, count: Int) -> Line? {
-    var points = [Coordinate2D]()
+  private func line(forPart part: Int, count: Int) -> Line<PolyLineShape.Coordinate>? {
+    var points = Array<PolyLineShape.Coordinate>()
     points.reserveCapacity(count)
     // Build the part, but only inlude points, if the point is not a consecutive duplicate
-    var lastPoint: Coordinate2D? = nil
-    for point in self.points[part..<(part + count)] {
+    var lastPoint: PolyLineShape.Coordinate? = nil
+    for i in part..<(part + count) {
+      let point = coordinate(atIndex: i)
       switch lastPoint {
       case let .some(lastPoint) where point != lastPoint:
         fallthrough
@@ -60,3 +65,27 @@ extension SHPFilePolyLineRecord: SHPFileShapeConvertible {
     }
   }
 }
+struct SHPFilePolyLineShape {
+  let boundingBox: BoundingBoxXY
+  let lines: [Line<Coordinate2D>]
+}
+
+extension SHPFilePolyLineShape: SHPFileShape {
+  typealias Record = SHPFilePolyLineRecord
+}
+
+extension SHPFilePolyLineShape: SHPFilePolyLineShapeProtocol {}
+
+extension SHPFilePolyLineRecord: SHPFilePolyLineShapeConvertible {
+  typealias PolyLineShape = SHPFilePolyLineShape
+
+  var pointCount: Int {
+    return points.count
+  }
+
+  func coordinate(atIndex index: Int) -> Coordinate2D {
+    return points[index]
+  }
+}
+
+extension SHPFilePolyLineRecord: SHPFileShapeConvertible {}
