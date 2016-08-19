@@ -6,6 +6,8 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
+typealias Byte = UInt8
+
 /// Container for a type that should be parsed from big endian bytes
 struct BigEndian<T: BigEndianByteParseable> {
   let value: T
@@ -149,7 +151,7 @@ fileprivate extension ByteParseable {
 }
 
 fileprivate func dataBitPattern<T>(fromData data: Data, start: Int, sizeBytes: Int) -> T {
-  return data.withUnsafeBytes({(bytePointer: UnsafePointer<UInt8>) -> T in
+  return data.withUnsafeBytes({(bytePointer: UnsafePointer<Byte>) -> T in
     bytePointer.advanced(by: start).withMemoryRebound(to: T.self, capacity: sizeBytes) { pointer in
       return pointer.pointee
     }

@@ -53,3 +53,27 @@ class MultiPointMTest: XCTestCase {
     testParsingRecord(expectedMultipointM, range: 4..<(4 + 32 + 4 + (2 * 16) + 16 + (2 * 8)), dataRecord: multipointMData)
   }
 }
+
+extension SHPFileMultiPointMRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    var byteEncodables = [[
+      LittleEndianEncoded<ShapeType>(value: .multiPointM),
+      box,
+      LittleEndianEncoded<Int32>(value: Int32(points.count))
+      ],
+                          points.map({$0 as ByteEncodable})
+    ]
+
+    if let mBounds = mBounds {
+      byteEncodables.append([
+        LittleEndianEncoded<Double>(value: mBounds.min),
+        LittleEndianEncoded<Double>(value: mBounds.max),
+        ])
+      byteEncodables.append(
+        measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
+      )
+    }
+
+    return makeByteArray(from: byteEncodables.joined())
+  }
+}

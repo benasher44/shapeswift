@@ -78,3 +78,30 @@ class PolyLineZTest: XCTestCase {
     testParsingRecord(expectedPolyLineZ, range: 4..<144, dataRecord: polyLineZData)
   }
 }
+
+extension SHPFilePolyLineZRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    var byteEncodables: [[ByteEncodable]] = [
+      [
+        // todo(noah): this should be polygonZ instead of polygonM, but let's write a test that catches it
+        LittleEndianEncoded<ShapeType>(value: .polyLineM),
+        box,
+        LittleEndianEncoded<Int32>(value: Int32(parts.count)),
+        LittleEndianEncoded<Int32>(value: Int32(points.count))
+      ],
+      parts.map({LittleEndianEncoded<Int32>(value: Int32($0))}),
+      points.map({$0 as ByteEncodable}),
+      [zBounds],
+      zValues.map(LittleEndianEncoded<Double>.init),
+      ]
+
+    if let mBounds = mBounds {
+      byteEncodables.append([mBounds])
+      byteEncodables.append(
+        measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
+      )
+    }
+
+    return makeByteArray(from: byteEncodables.joined())
+  }
+}

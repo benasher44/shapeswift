@@ -79,3 +79,29 @@ class PolygonZTest: XCTestCase {
     testParsingRecord(expectedPolygonZ, range: 4..<144, dataRecord: polygonZData)
   }
 }
+
+extension SHPFilePolygonZRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    var byteEncodables: [[ByteEncodable]] = [
+      [
+        LittleEndianEncoded<ShapeType>(value: .polygonZ),
+        box,
+        LittleEndianEncoded<Int32>(value: Int32(parts.count)),
+        LittleEndianEncoded<Int32>(value: Int32(points.count))
+      ],
+      parts.map({LittleEndianEncoded<Int32>(value: Int32($0))}),
+      points.map({$0 as ByteEncodable}),
+      [zBounds],
+      zValues.map(LittleEndianEncoded<Double>.init),
+      ]
+
+    if let mBounds = mBounds {
+      byteEncodables.append([mBounds])
+      byteEncodables.append(
+        measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
+      )
+    }
+
+    return makeByteArray(from: byteEncodables.joined())
+  }
+}

@@ -16,3 +16,13 @@ class PointTest: XCTestCase {
     testParsingRecord(point, range: 4..<4 + 16)
   }
 }
+
+extension SHPFilePointRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    let byteEncodables: [ByteEncodable] = [
+      LittleEndianEncoded<ShapeType>(value: .point),
+      point,
+      ]
+    return makeByteArray(from: byteEncodables)
+  }
+}

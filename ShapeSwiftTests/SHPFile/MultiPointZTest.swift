@@ -75,3 +75,33 @@ class MultiPointZTest: XCTestCase {
     testParsingRecord(expectedMultipointZ, range: 4..<(4 + 32 + 4 + (2 * 16) + 16 + (2 * 8) + 16 + (2 * 8)), dataRecord: multipointZData)
   }
 }
+
+extension SHPFileMultiPointZRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    var byteEncodables = [
+      [
+        LittleEndianEncoded<ShapeType>(value: .multiPointZ),
+        box,
+        LittleEndianEncoded<Int32>(value: Int32(points.count))
+      ],
+      points.map({$0 as ByteEncodable}),
+      [
+        LittleEndianEncoded<Double>(value: zBounds.min),
+        LittleEndianEncoded<Double>(value: zBounds.max),
+        ],
+      zValues.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
+    ]
+
+    if let mBounds = mBounds {
+      byteEncodables.append([
+        LittleEndianEncoded<Double>(value: mBounds.min),
+        LittleEndianEncoded<Double>(value: mBounds.max),
+        ])
+      byteEncodables.append(
+        measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
+      )
+    }
+
+    return makeByteArray(from: byteEncodables.joined())
+  }
+}

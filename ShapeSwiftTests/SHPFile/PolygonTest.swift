@@ -38,3 +38,15 @@ class PolygonTest: XCTestCase {
     testParsingRecord(polygon, range: 4..<(4 + 32 + 4 + 4 + (4 * 2) + (4 * 16)))
   }
 }
+
+extension SHPFilePolygonRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    let byteEncodables = [[
+      LittleEndianEncoded<ShapeType>(value: .polyLine),
+      box,
+      LittleEndianEncoded<Int32>(value: Int32(parts.count)),
+      LittleEndianEncoded<Int32>(value: Int32(points.count))
+      ], parts.map({ LittleEndianEncoded<Int32>(value: Int32($0)) as ByteEncodable }), points.map({$0 as ByteEncodable})]
+    return makeByteArray(from: byteEncodables.joined())
+  }
+}

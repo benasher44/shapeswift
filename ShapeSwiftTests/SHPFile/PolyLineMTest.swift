@@ -71,5 +71,28 @@ class PolyLineMTest: XCTestCase {
                                            measures: [1.0, 2.0, 3.0, 4.0])
     testParsingRecord(polylineM, range: 4..<(4 + 32 + 4 + 4 + (4 * 2) + (4 * 16) + 16 + (4 * 8)))
   }
+}
 
+extension SHPFilePolyLineMRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    var byteEncodables: [[ByteEncodable]] = [
+      [
+        LittleEndianEncoded<ShapeType>(value: .polyLineM),
+        box,
+        LittleEndianEncoded<Int32>(value: Int32(parts.count)),
+        LittleEndianEncoded<Int32>(value: Int32(points.count))
+      ],
+      parts.map({LittleEndianEncoded<Int32>(value: Int32($0))}),
+      points.map({$0 as ByteEncodable})
+    ]
+
+    if let mBounds = mBounds {
+      byteEncodables.append([mBounds])
+      byteEncodables.append(
+        measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
+      )
+    }
+
+    return makeByteArray(from: byteEncodables.joined())
+  }
 }

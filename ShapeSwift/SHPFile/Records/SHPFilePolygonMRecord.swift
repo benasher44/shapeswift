@@ -61,32 +61,6 @@ extension SHPFilePolygonMRecord: SHPFileRecord {
   }
 }
 
-extension SHPFilePolygonMRecord: ByteEncodable {
-  func encode() -> [Byte] {
-    var byteEncodables: [[ByteEncodable]] = [
-      [
-        LittleEndianEncoded<ShapeType>(value: .polygonM),
-        box,
-        LittleEndianEncoded<Int32>(value: Int32(parts.count)),
-        LittleEndianEncoded<Int32>(value: Int32(points.count))
-      ],
-      parts.map({ LittleEndianEncoded<Int32>(value: Int32($0)) as ByteEncodable }),
-      points.map({$0 as ByteEncodable})
-    ]
-
-    if let mBounds = mBounds {
-      byteEncodables.append([
-        LittleEndianEncoded<Double>(value: mBounds.min),
-        LittleEndianEncoded<Double>(value: mBounds.max),
-        ])
-      byteEncodables.append(
-        measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
-      )
-    }
-
-    return makeByteArray(from: byteEncodables.joined())
-  }
-}
 
 // MARK: Equatable
 

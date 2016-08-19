@@ -19,3 +19,14 @@ class MultiPointTest: XCTestCase {
     testParsingRecord(multipoint, range: 4..<4 + 32 + 4 + (2 * 16))
   }
 }
+
+extension SHPFileMultiPointRecord: ByteEncodable {
+  func encode() -> [Byte] {
+    let byteEncodables: [[ByteEncodable]] = [[
+      LittleEndianEncoded<ShapeType>(value: .multiPoint),
+      box,
+      LittleEndianEncoded<Int32>(value: Int32(points.count)),
+      ], points.map({$0 as ByteEncodable})]
+    return makeByteArray(from: byteEncodables.joined())
+  }
+}

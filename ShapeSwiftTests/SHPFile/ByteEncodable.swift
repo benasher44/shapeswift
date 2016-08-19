@@ -6,7 +6,7 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-typealias Byte = UInt8
+@testable import ShapeSwift
 
 // MARK: Byte encodable protocols
 

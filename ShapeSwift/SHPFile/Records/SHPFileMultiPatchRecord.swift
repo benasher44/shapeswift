@@ -74,33 +74,6 @@ extension SHPFileMultiPatchRecord: SHPFileRecord {
   }
 }
 
-extension SHPFileMultiPatchRecord: ByteEncodable {
-  func encode() -> [Byte] {
-    var byteEncodables: [[ByteEncodable]] = [
-      [
-        LittleEndianEncoded<ShapeType>(value: .polyLineM),
-        box,
-        LittleEndianEncoded<Int32>(value: Int32(parts.count)),
-        LittleEndianEncoded<Int32>(value: Int32(points.count))
-      ],
-      parts.map({LittleEndianEncoded<Int32>(value: Int32($0))}),
-      partTypes.map(LittleEndianEncoded<MultiPatchPartType>.init),
-      points.map({$0 as ByteEncodable}),
-      [zBounds],
-      zValues.map(LittleEndianEncoded<Double>.init),
-      ]
-
-    if let mBounds = mBounds {
-      byteEncodables.append([mBounds])
-      byteEncodables.append(
-        measures.map({LittleEndianEncoded<Double>(value: $0) as ByteEncodable})
-      )
-    }
-
-    return makeByteArray(from: byteEncodables.joined())
-  }
-}
-
 // MARK: Equatable
 
 func == (lhs: SHPFileMultiPatchRecord, rhs: SHPFileMultiPatchRecord) -> Bool {

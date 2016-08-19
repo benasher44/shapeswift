@@ -36,16 +36,6 @@ extension SHPFilePointRecord: SHPFileRecord {
   }
 }
 
-extension SHPFilePointRecord: ByteEncodable {
-  func encode() -> [Byte] {
-    let byteEncodables: [ByteEncodable] = [
-      LittleEndianEncoded<ShapeType>(value: .point),
-      point,
-      ]
-    return makeByteArray(from: byteEncodables)
-  }
-}
-
 // MARK: Equatable
 
 func == (lhs: SHPFilePointRecord, rhs: SHPFilePointRecord) -> Bool {

@@ -47,18 +47,6 @@ extension SHPFilePolyLineRecord: SHPFileRecord {
   }
 }
 
-extension SHPFilePolyLineRecord: ByteEncodable {
-  func encode() -> [Byte] {
-    let byteEncodables = [[
-      LittleEndianEncoded<ShapeType>(value: .polyLine),
-      box,
-      LittleEndianEncoded<Int32>(value: Int32(parts.count)),
-      LittleEndianEncoded<Int32>(value: Int32(points.count))
-      ], parts.map({ LittleEndianEncoded<Int32>(value: Int32($0)) as ByteEncodable }), points.map({$0 as ByteEncodable})]
-    return makeByteArray(from: byteEncodables.joined())
-  }
-}
-
 // MARK: Equatable
 
 extension SHPFilePolyLineRecord: Equatable {}

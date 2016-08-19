@@ -50,21 +50,6 @@ extension SHPFilePointZRecord: SHPFileRecord {
   }
 }
 
-extension SHPFilePointZRecord: ByteEncodable {
-  func encode() -> [Byte] {
-    var byteEncodables: [ByteEncodable] = [
-      LittleEndianEncoded<ShapeType>(value: .pointZ),
-      LittleEndianEncoded<Double>(value: x),
-      LittleEndianEncoded<Double>(value: y),
-      LittleEndianEncoded<Double>(value: z),
-    ]
-    if let m = m {
-      byteEncodables.append(LittleEndianEncoded<Double>(value: m))
-    }
-    return makeByteArray(from: byteEncodables)
-  }
-}
-
 // MARK: Equatable
 
 func == (lhs: SHPFilePointZRecord, rhs: SHPFilePointZRecord) -> Bool {
