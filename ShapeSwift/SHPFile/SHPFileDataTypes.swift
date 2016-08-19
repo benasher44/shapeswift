@@ -29,11 +29,23 @@ struct Coordinate2D {
   let y: Double
 }
 
+struct Coordinate3D {
+  let x: Double
+  let y: Double
+  let z: Double
+}
+
 func == (lhs: Coordinate2D, rhs: Coordinate2D) -> Bool {
   return lhs.x == rhs.x && lhs.y == rhs.y
 }
 
 extension Coordinate2D: Equatable {}
+
+func == (lhs: Coordinate3D, rhs: Coordinate3D) -> Bool {
+  return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
+}
+
+extension Coordinate3D: Equatable {}
 
 struct Coordinate2DBounds {
   let min: Double

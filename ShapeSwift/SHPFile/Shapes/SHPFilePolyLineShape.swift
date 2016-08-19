@@ -13,7 +13,7 @@ protocol SHPFilePolyLineShapeProtocol {
 
 protocol SHPFilePolyLineShapeConvertible {
   associatedtype PolyLineShape: SHPFilePolyLineShapeProtocol
-  var parts: [Int32] { get }
+  var parts: [Int] { get }
   var pointCount: Int { get }
   var box: BoundingBoxXY { get }
   func coordinate(atIndex index: Int) -> PolyLineShape.Coordinate
@@ -23,12 +23,11 @@ extension SHPFilePolyLineShapeConvertible {
   func makeShape() -> PolyLineShape {
     var lines = [Line<PolyLineShape.Coordinate>]()
     lines.reserveCapacity(parts.count)
-    var prevPart: Int32? = nil
+    var prevPart: Int? = nil
     for part in parts {
       if let prevPart = prevPart {
-        let intPart = Int(prevPart)
-        let count = Int(part) - intPart
-        line(forPart: intPart, count: count).flatMap({ lines.append($0) })
+        let count = part - prevPart
+        line(forPart: prevPart, count: count).flatMap({ lines.append($0) })
       }
       prevPart = part
     }
@@ -65,6 +64,10 @@ extension SHPFilePolyLineShapeConvertible {
     }
   }
 }
+
+
+// MARK: SHPFilePolyLineShape
+
 struct SHPFilePolyLineShape {
   let boundingBox: BoundingBoxXY
   let lines: [Line<Coordinate2D>]
@@ -89,3 +92,32 @@ extension SHPFilePolyLineRecord: SHPFilePolyLineShapeConvertible {
 }
 
 extension SHPFilePolyLineRecord: SHPFileShapeConvertible {}
+
+
+// MARK: SHPFilePolyLineZShape
+
+struct SHPFilePolyLineZShape {
+  let boundingBox: BoundingBoxXY
+  let lines: [Line<Coordinate3D>]
+}
+
+extension SHPFilePolyLineZShape: SHPFileShape {
+  typealias Record = SHPFilePolyLineZRecord
+}
+
+extension SHPFilePolyLineZShape: SHPFilePolyLineShapeProtocol {}
+
+extension SHPFilePolyLineZRecord: SHPFilePolyLineShapeConvertible {
+  typealias PolyLineShape = SHPFilePolyLineZShape
+
+  var pointCount: Int {
+    return points.count
+  }
+
+  func coordinate(atIndex index: Int) -> Coordinate3D {
+    let point = points[index]
+    return Coordinate3D(x: point.x, y: point.y, z: zValues[index])
+  }
+}
+
+extension SHPFilePolyLineZRecord: SHPFileShapeConvertible {}

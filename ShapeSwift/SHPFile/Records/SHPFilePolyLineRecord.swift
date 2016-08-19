@@ -30,7 +30,7 @@ extension SHPFilePolyLineRecord {
 struct SHPFilePolyLineRecord {
   let recordNumber: Int
   let box: BoundingBoxXY
-  let parts: [Int32]
+  let parts: [Int]
   let points: [Coordinate2D]
 }
 
@@ -41,7 +41,7 @@ extension SHPFilePolyLineRecord: SHPFileRecord {
     self.recordNumber = recordNumber
     let parser = try Parser(data: data, start: range.lowerBound)
     box = try parser.box.parse(data)
-    parts = try parser.parts.parse(data)
+    parts = try parser.parts.parse(data).map(Int.init)
     points = try parser.points.parse(data)
     endByte = parser.points.end - 1
   }
@@ -54,7 +54,7 @@ extension SHPFilePolyLineRecord: ByteEncodable {
       box,
       LittleEndianEncoded<Int32>(value: Int32(parts.count)),
       LittleEndianEncoded<Int32>(value: Int32(points.count))
-      ], parts.map({ LittleEndianEncoded<Int32>(value: $0) as ByteEncodable }), points.map({$0 as ByteEncodable})]
+      ], parts.map({ LittleEndianEncoded<Int32>(value: Int32($0)) as ByteEncodable }), points.map({$0 as ByteEncodable})]
     return makeByteArray(from: byteEncodables.joined())
   }
 }
