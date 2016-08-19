@@ -7,7 +7,7 @@
 //
 
 ///
-struct DBFFileHeaderFlags : OptionSet {
+struct DBFFileHeaderFlags: OptionSet {
   let rawValue: Int
   init(rawValue: Int) { self.rawValue = rawValue }
 

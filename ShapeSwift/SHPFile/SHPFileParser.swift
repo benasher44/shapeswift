@@ -54,7 +54,7 @@ extension SHPFileParser: IteratorProtocol {
 }
 
 func parseRecord<Record: SHPFileRecord>(recordNumber: Int, data: Data, range: Range<Int>) throws -> Record? {
-  var endByte = 0;
+  var endByte = 0
   let record = try Record(recordNumber: recordNumber, data: data, range: range, endByte: &endByte)
   let byteRange: Range = range.lowerBound..<endByte + 1 // Skip the first 4 bytes because of the shape type
   if endByte == 0 {
