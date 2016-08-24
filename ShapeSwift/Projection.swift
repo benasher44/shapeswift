@@ -31,7 +31,6 @@ extension ProjectionConversionError: CustomDebugStringConvertible {
   }
 }
 
-
 extension Projection {
   func convertForward(_ coordinates: [Coordinate2D], to otherProjection: Projection) throws -> [Coordinate2D] {
     let src = pj_init_plus(projInitArgs.cString(using: String.Encoding.utf8)!)

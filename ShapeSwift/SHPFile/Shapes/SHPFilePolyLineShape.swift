@@ -65,7 +65,6 @@ extension SHPFilePolyLineShapeConvertible {
   }
 }
 
-
 // MARK: SHPFilePolyLineShape
 
 struct SHPFilePolyLineShape {
@@ -92,7 +91,6 @@ extension SHPFilePolyLineRecord: SHPFilePolyLineShapeConvertible {
 }
 
 extension SHPFilePolyLineRecord: SHPFileShapeConvertible {}
-
 
 // MARK: SHPFilePolyLineZShape
 

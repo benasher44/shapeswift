@@ -61,7 +61,6 @@ extension SHPFilePolygonMRecord: SHPFileRecord {
   }
 }
 
-
 // MARK: Equatable
 
 extension SHPFilePolygonMRecord: Equatable {}
