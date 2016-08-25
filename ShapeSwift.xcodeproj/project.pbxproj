@@ -58,6 +58,9 @@
 		A8DA53AA1D53A44B00FCEBCD /* SHPFileRecordHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53A91D53A44B00FCEBCD /* SHPFileRecordHeader.swift */; };
 		A8FEDA2C1D6F535C008AE593 /* SHPFilePointMRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FEDA2B1D6F535C008AE593 /* SHPFilePointMRecord.swift */; };
 		A8FEDA2E1D6F55A9008AE593 /* PointMTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FEDA2D1D6F55A9008AE593 /* PointMTest.swift */; };
+		A8FEDA301D6F5759008AE593 /* SHPFilePointShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FEDA2F1D6F5759008AE593 /* SHPFilePointShape.swift */; };
+		A8FEDA321D6F57F8008AE593 /* SHPFilePointZShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FEDA311D6F57F8008AE593 /* SHPFilePointZShape.swift */; };
+		A8FEDA341D6F5835008AE593 /* SHPFilePointMShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FEDA331D6F5835008AE593 /* SHPFilePointMShape.swift */; };
 		C187CADA2482743812C5EAD0 /* Pods_ShapeSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B8E726549B49F7A988F81E /* Pods_ShapeSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -130,6 +133,9 @@
 		A8DA53A91D53A44B00FCEBCD /* SHPFileRecordHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileRecordHeader.swift; sourceTree = "<group>"; };
 		A8FEDA2B1D6F535C008AE593 /* SHPFilePointMRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFilePointMRecord.swift; sourceTree = "<group>"; };
 		A8FEDA2D1D6F55A9008AE593 /* PointMTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointMTest.swift; sourceTree = "<group>"; };
+		A8FEDA2F1D6F5759008AE593 /* SHPFilePointShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFilePointShape.swift; sourceTree = "<group>"; };
+		A8FEDA311D6F57F8008AE593 /* SHPFilePointZShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFilePointZShape.swift; sourceTree = "<group>"; };
+		A8FEDA331D6F5835008AE593 /* SHPFilePointMShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFilePointMShape.swift; sourceTree = "<group>"; };
 		E6B8E726549B49F7A988F81E /* Pods_ShapeSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -167,6 +173,9 @@
 			children = (
 				130A9F981D5EBB270083E45F /* SHPFilePolyLineShape.swift */,
 				138E4D291D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift */,
+				A8FEDA2F1D6F5759008AE593 /* SHPFilePointShape.swift */,
+				A8FEDA331D6F5835008AE593 /* SHPFilePointMShape.swift */,
+				A8FEDA311D6F57F8008AE593 /* SHPFilePointZShape.swift */,
 			);
 			path = Shapes;
 			sourceTree = "<group>";
@@ -541,6 +550,7 @@
 				A8D63D581D5CE01700FA32C9 /* SHPFilePolygonRecord.swift in Sources */,
 				4FB2AAC31D66121800CEE708 /* DBFFileHeader.swift in Sources */,
 				130A9F961D5EB99D0083E45F /* SHPFileShape.swift in Sources */,
+				A8FEDA321D6F57F8008AE593 /* SHPFilePointZShape.swift in Sources */,
 				A8D63D5A1D5CE01700FA32C9 /* SHPFilePolyLineRecord.swift in Sources */,
 				A8ACD6831D4BADF40082357C /* SHPFileMultiPointRecord.swift in Sources */,
 				A8ACD6911D4BADF40082357C /* SHPFileParser.swift in Sources */,
@@ -556,12 +566,14 @@
 				A8ACD6901D4BADF40082357C /* SHPFileDataTypes.swift in Sources */,
 				138E4D2A1D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift in Sources */,
 				4FB2AAC41D66121800CEE708 /* DBFFileHeaderFlags.swift in Sources */,
+				A8FEDA301D6F5759008AE593 /* SHPFilePointShape.swift in Sources */,
 				A8D63D531D5CE01700FA32C9 /* SHPFileMultiPointMRecord.swift in Sources */,
 				A8ACD6841D4BADF40082357C /* SHPFilePolyLineMRecord.swift in Sources */,
 				A8D63D551D5CE01700FA32C9 /* SHPFilePointRecord.swift in Sources */,
 				4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */,
 				A8ACD6931D4BADF40082357C /* SHPFileRecord.swift in Sources */,
 				A8D63D521D5CE01700FA32C9 /* SHPFileMultiPatchRecord.swift in Sources */,
+				A8FEDA341D6F5835008AE593 /* SHPFilePointMShape.swift in Sources */,
 				13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
