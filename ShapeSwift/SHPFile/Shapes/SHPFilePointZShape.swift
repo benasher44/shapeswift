@@ -23,3 +23,8 @@ extension SHPFilePointZRecord: SHPFileShapeConvertible {
   }
 }
 
+func == (lhs: SHPFilePointZShape, rhs: SHPFilePointZShape) -> Bool {
+  return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.m == rhs.m
+}
+
+extension SHPFilePointZShape: Equatable {}

@@ -20,3 +20,10 @@ extension SHPFilePointRecord: SHPFileShapeConvertible {
     return SHPFilePointShape(x: point.x, y: point.y)
   }
 }
+
+func == (lhs: SHPFilePointShape, rhs: SHPFilePointShape) -> Bool {
+  return lhs.x == rhs.x && lhs.y == rhs.y
+}
+
+extension SHPFilePointShape: Equatable {}
+

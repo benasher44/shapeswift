@@ -6,6 +6,6 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-struct Line<Coordinate> {
-  let points: [Coordinate]
+struct Line<PointShape> {
+  let points: [PointShape]
 }

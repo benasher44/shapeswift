@@ -7,8 +7,8 @@
 //
 
 protocol SHPFilePolyLineShapeProtocol {
-  associatedtype Coordinate: Equatable
-  init(boundingBox: BoundingBoxXY, lines: [Line<Coordinate>])
+  associatedtype PointShape: Equatable
+  init(boundingBox: BoundingBoxXY, lines: [Line<PointShape>])
 }
 
 protocol SHPFilePolyLineShapeConvertible {
@@ -16,12 +16,12 @@ protocol SHPFilePolyLineShapeConvertible {
   var parts: [Int] { get }
   var pointCount: Int { get }
   var box: BoundingBoxXY { get }
-  func coordinate(atIndex index: Int) -> PolyLineShape.Coordinate
+  func coordinate(atIndex index: Int) -> PolyLineShape.PointShape
 }
 
 extension SHPFilePolyLineShapeConvertible {
   func makeShape() -> PolyLineShape {
-    var lines = [Line<PolyLineShape.Coordinate>]()
+    var lines = [Line<PolyLineShape.PointShape>]()
     lines.reserveCapacity(parts.count)
     var prevPart: Int? = nil
     for part in parts {
@@ -39,11 +39,11 @@ extension SHPFilePolyLineShapeConvertible {
     return PolyLineShape(boundingBox: box, lines: lines)
   }
 
-  private func line(forPart part: Int, count: Int) -> Line<PolyLineShape.Coordinate>? {
-    var points = Array<PolyLineShape.Coordinate>()
+  private func line(forPart part: Int, count: Int) -> Line<PolyLineShape.PointShape>? {
+    var points = Array<PolyLineShape.PointShape>()
     points.reserveCapacity(count)
     // Build the part, but only inlude points, if the point is not a consecutive duplicate
-    var lastPoint: PolyLineShape.Coordinate? = nil
+    var lastPoint: PolyLineShape.PointShape? = nil
     for i in part..<(part + count) {
       let point = coordinate(atIndex: i)
       switch lastPoint {
@@ -69,7 +69,7 @@ extension SHPFilePolyLineShapeConvertible {
 
 struct SHPFilePolyLineShape {
   let boundingBox: BoundingBoxXY
-  let lines: [Line<Coordinate2D>]
+  let lines: [Line<SHPFilePointShape>]
 }
 
 extension SHPFilePolyLineShape: SHPFileShape {
@@ -85,8 +85,9 @@ extension SHPFilePolyLineRecord: SHPFilePolyLineShapeConvertible {
     return points.count
   }
 
-  func coordinate(atIndex index: Int) -> Coordinate2D {
-    return points[index]
+  func coordinate(atIndex index: Int) -> SHPFilePointShape {
+    let point = points[index]
+    return SHPFilePointShape(x: point.x, y: point.y)
   }
 }
 
@@ -96,7 +97,7 @@ extension SHPFilePolyLineRecord: SHPFileShapeConvertible {}
 
 struct SHPFilePolyLineZShape {
   let boundingBox: BoundingBoxXY
-  let lines: [Line<Coordinate3D>]
+  let lines: [Line<SHPFilePointZShape>]
 }
 
 extension SHPFilePolyLineZShape: SHPFileShape {
@@ -112,9 +113,15 @@ extension SHPFilePolyLineZRecord: SHPFilePolyLineShapeConvertible {
     return points.count
   }
 
-  func coordinate(atIndex index: Int) -> Coordinate3D {
+  func coordinate(atIndex index: Int) -> SHPFilePointZShape {
     let point = points[index]
-    return Coordinate3D(x: point.x, y: point.y, z: zValues[index])
+    let m: Double?
+    if !measures.isEmpty {
+      m = measures[index]
+    } else {
+      m = nil
+    }
+    return SHPFilePointZShape(x: point.x, y: point.y, z: zValues[index], m: m)
   }
 }
 

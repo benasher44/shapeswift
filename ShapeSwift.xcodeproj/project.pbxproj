@@ -171,8 +171,8 @@
 		130A9F971D5EBAB90083E45F /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
-				130A9F981D5EBB270083E45F /* SHPFilePolyLineShape.swift */,
 				138E4D291D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift */,
+				130A9F981D5EBB270083E45F /* SHPFilePolyLineShape.swift */,
 				A8FEDA2F1D6F5759008AE593 /* SHPFilePointShape.swift */,
 				A8FEDA331D6F5835008AE593 /* SHPFilePointMShape.swift */,
 				A8FEDA311D6F57F8008AE593 /* SHPFilePointZShape.swift */,
