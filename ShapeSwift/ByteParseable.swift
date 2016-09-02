@@ -37,13 +37,17 @@ protocol LittleEndianByteOrdered: ByteOrdered {
   associatedtype ValueT: LittleEndianByteParseable
 }
 
+protocol SingleByteOrdered: ByteOrdered {
+  associatedtype ValueT: SingleByteParseable
+}
+
 extension BigEndian: BigEndianByteOrdered {
   typealias ValueT = T
 }
 extension LittleEndian: LittleEndianByteOrdered {
   typealias ValueT = T
 }
-extension EndianAgnostic: ByteOrdered {
+extension EndianAgnostic: SingleByteOrdered {
   typealias ValueT = T
 }
 

@@ -24,6 +24,9 @@
 		4FB2AAC31D66121800CEE708 /* DBFFileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2AAC11D66121800CEE708 /* DBFFileHeader.swift */; };
 		4FB2AAC41D66121800CEE708 /* DBFFileHeaderFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2AAC21D66121800CEE708 /* DBFFileHeaderFlags.swift */; };
 		4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */; };
+		4FE4E1891D6F4D2B0096D529 /* DBFFileHeaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4E1881D6F4D2B0096D529 /* DBFFileHeaderTest.swift */; };
+		4FE4E18B1D6F4EEC0096D529 /* DBFFileDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4E18A1D6F4EEC0096D529 /* DBFFileDataTypes.swift */; };
+		4FE4E18D1D6F55D40096D529 /* DBFFileParseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4E18C1D6F55D40096D529 /* DBFFileParseError.swift */; };
 		4FEB3E291CB6300A0012D170 /* DBFFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */; };
 		A8ACD6831D4BADF40082357C /* SHPFileMultiPointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACD6721D4BADF40082357C /* SHPFileMultiPointRecord.swift */; };
 		A8ACD6841D4BADF40082357C /* SHPFilePolyLineMRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ACD6731D4BADF40082357C /* SHPFilePolyLineMRecord.swift */; };
@@ -95,6 +98,9 @@
 		4FB2AAC11D66121800CEE708 /* DBFFileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileHeader.swift; sourceTree = "<group>"; };
 		4FB2AAC21D66121800CEE708 /* DBFFileHeaderFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileHeaderFlags.swift; sourceTree = "<group>"; };
 		4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodableTest.swift; sourceTree = "<group>"; };
+		4FE4E1881D6F4D2B0096D529 /* DBFFileHeaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBFFileHeaderTest.swift; path = DBFFile/DBFFileHeaderTest.swift; sourceTree = "<group>"; };
+		4FE4E18A1D6F4EEC0096D529 /* DBFFileDataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileDataTypes.swift; sourceTree = "<group>"; };
+		4FE4E18C1D6F55D40096D529 /* DBFFileParseError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParseError.swift; sourceTree = "<group>"; };
 		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
 		732F0C2EB9D3DBFF32F7C910 /* Pods-ShapeSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		88B99813E258A70F0B0CC16B /* Pods_ShapeSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShapeSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,6 +222,7 @@
 		13EC2A781CACC93C000063A1 /* ShapeSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				4FE4E1871D6F4D0C0096D529 /* DBFFile */,
 				A8ACD6941D4BAF5C0082357C /* SHPFile */,
 				13EC2B0F1CACCD93000063A1 /* sfsweeproutes */,
 				4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */,
@@ -253,8 +260,18 @@
 				4FB2AAC11D66121800CEE708 /* DBFFileHeader.swift */,
 				4FB2AAC21D66121800CEE708 /* DBFFileHeaderFlags.swift */,
 				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,
+				4FE4E18A1D6F4EEC0096D529 /* DBFFileDataTypes.swift */,
+				4FE4E18C1D6F55D40096D529 /* DBFFileParseError.swift */,
 			);
 			path = DBFFile;
+			sourceTree = "<group>";
+		};
+		4FE4E1871D6F4D0C0096D529 /* DBFFile */ = {
+			isa = PBXGroup;
+			children = (
+				4FE4E1881D6F4D2B0096D529 /* DBFFileHeaderTest.swift */,
+			);
+			name = DBFFile;
 			sourceTree = "<group>";
 		};
 		A8ACD6701D4BADF40082357C /* SHPFile */ = {
@@ -558,6 +575,8 @@
 				A8DA53AA1D53A44B00FCEBCD /* SHPFileRecordHeader.swift in Sources */,
 				A8D63D591D5CE01700FA32C9 /* SHPFilePolygonZRecord.swift in Sources */,
 				A8D63D5B1D5CE01700FA32C9 /* SHPFilePolyLineZRecord.swift in Sources */,
+				4FE4E18B1D6F4EEC0096D529 /* DBFFileDataTypes.swift in Sources */,
+				4FE4E18D1D6F55D40096D529 /* DBFFileParseError.swift in Sources */,
 				A8D63D561D5CE01700FA32C9 /* SHPFilePointZRecord.swift in Sources */,
 				A8FEDA2C1D6F535C008AE593 /* SHPFilePointMRecord.swift in Sources */,
 				A8D63D5D1D5CE08700FA32C9 /* SHPFileHeader.swift in Sources */,
@@ -589,6 +608,7 @@
 				A8ACD6AC1D4BAF5C0082357C /* PolyLineTest.swift in Sources */,
 				A8ACD6AA1D4BAF5C0082357C /* PolygonZTest.swift in Sources */,
 				A8ACD6A81D4BAF5C0082357C /* PolygonMTest.swift in Sources */,
+				4FE4E1891D6F4D2B0096D529 /* DBFFileHeaderTest.swift in Sources */,
 				A8ACD6A31D4BAF5C0082357C /* MultiPointMTest.swift in Sources */,
 				A8ACD6AD1D4BAF5C0082357C /* PolyLineZTest.swift in Sources */,
 				4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */,

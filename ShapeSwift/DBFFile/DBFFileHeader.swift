@@ -36,27 +36,66 @@ extension DBFFileHeader {
     // dBASE IV encryption flag.
     let encryptionFlag: ShapeDataParser<EndianAgnostic<Byte>>
 
-    // Production MDX flag; 0x01 if a production .MDX file exists for this table; 0x00 if no .MDX file exists. Not sure what this means.
-    let productionMDXFlag: ShapeDataParser<EndianAgnostic<Byte>>
+    let driverIdentifier: ShapeDataParser<EndianAgnostic<Byte>>
 
-    let languageDriverId: ShapeDataParser<EndianAgnostic<Byte>>
+    init(start: Int) {
+      fileInfo = ShapeDataParser<EndianAgnostic<Byte>>(start: start)
+      dateYear = ShapeDataParser<EndianAgnostic<Byte>>(start: fileInfo.end)
+      dateMonth = ShapeDataParser<EndianAgnostic<Byte>>(start: dateYear.end)
+      dateDay = ShapeDataParser<EndianAgnostic<Byte>>(start: dateMonth.end)
+
+      numRecords = ShapeDataParser<LittleEndian<Int32>>(start: dateDay.end)
+      length = ShapeDataParser<LittleEndian<Int16>>(start: numRecords.end)
+      recordLength = ShapeDataParser<LittleEndian<Int16>>(start: length.end)
+
+      firstRecordPosition = ShapeDataParser<LittleEndian<Int16>>(start: recordLength.end)
+      transactionFlag = ShapeDataParser<EndianAgnostic<Byte>>(start: firstRecordPosition.end)
+      encryptionFlag = ShapeDataParser<EndianAgnostic<Byte>>(start: transactionFlag.end)
+      driverIdentifier = ShapeDataParser<EndianAgnostic<Byte>>(start: encryptionFlag.end)
+    }
   }
 }
 
 /// Header record of a DBF file. Every DBF file regardless of version should have this.
 struct DBFFileHeader {
   let fileInfo: Byte
+  let lastUpdated: Date
   let numRecords: Int
   let length: Int // header length in bytes
   let firstRecordPosition: Int
   let recordLength: Int // includes delete flag, which is the first byte in the record and ' ' if not deleted, '*' if deleted
-  let flags: DBFFileHeaderFlags
   let transactionFlag: Byte // "Flag indicating incomplete dBASE IV transaction."
   let encryptionFlag: Byte // "dBASE IV encryption flag."
 
   // this is in the specification but it's undocumented. One format spec calls it "code page mark" while
   // another calls it "Language driver ID". We probably don't care about it, but keep it here for good measure.
   let driverIdentifier: Byte
+
+  init(data: Data, start: Int) throws {
+    let parser = Parser(start: start)
+    fileInfo = try parser.fileInfo.parse(data)
+
+    let dateComponents = DateComponents(
+      // From the spec: "YY is added to a base of 1900 decimal to determine the actual year."
+      year: 1900 + Int(try parser.dateYear.parse(data)),
+      month: Int(try parser.dateMonth.parse(data)),
+      day: Int(try parser.dateDay.parse(data))
+    )
+    let calendar = Calendar(identifier: .gregorian)
+    guard let updatedDate = calendar.date(from: dateComponents) else {
+      throw DBFFileParseError.invalidDate(dateComponents: dateComponents)
+    }
+    lastUpdated = updatedDate
+
+    numRecords = Int(try parser.numRecords.parse(data))
+    length = Int(try parser.length.parse(data))
+    recordLength = Int(try parser.recordLength.parse(data))
+
+    firstRecordPosition = Int(try parser.firstRecordPosition.parse(data))
+    transactionFlag = try parser.transactionFlag.parse(data)
+    encryptionFlag = try parser.encryptionFlag.parse(data)
+    driverIdentifier = try parser.driverIdentifier.parse(data)
+  }
 }
 
 struct DBFFileFieldDescriptor {

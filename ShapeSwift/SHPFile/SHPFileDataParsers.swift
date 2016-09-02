@@ -39,6 +39,16 @@ extension ShapeDataParser where T: BigEndianByteOrdered {
   }
 }
 
+extension ShapeDataParser where T: SingleByteOrdered {
+  func parse(_ data: Data) throws -> T.ValueT {
+    if let value = T.ValueT(data: data, location: start) {
+      return value
+    } else {
+      throw ByteParseableError.notParseable(type: T.ValueT.self)
+    }
+  }
+}
+
 struct ShapeDataStringParser {
   let start: Int
   let count: Int
