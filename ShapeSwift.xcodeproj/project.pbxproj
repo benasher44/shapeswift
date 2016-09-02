@@ -98,7 +98,7 @@
 		4FB2AAC11D66121800CEE708 /* DBFFileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileHeader.swift; sourceTree = "<group>"; };
 		4FB2AAC21D66121800CEE708 /* DBFFileHeaderFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileHeaderFlags.swift; sourceTree = "<group>"; };
 		4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodableTest.swift; sourceTree = "<group>"; };
-		4FE4E1881D6F4D2B0096D529 /* DBFFileHeaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBFFileHeaderTest.swift; path = DBFFile/DBFFileHeaderTest.swift; sourceTree = "<group>"; };
+		4FE4E1881D6F4D2B0096D529 /* DBFFileHeaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileHeaderTest.swift; sourceTree = "<group>"; };
 		4FE4E18A1D6F4EEC0096D529 /* DBFFileDataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileDataTypes.swift; sourceTree = "<group>"; };
 		4FE4E18C1D6F55D40096D529 /* DBFFileParseError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParseError.swift; sourceTree = "<group>"; };
 		4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileParser.swift; sourceTree = "<group>"; };
@@ -177,11 +177,11 @@
 		130A9F971D5EBAB90083E45F /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
-				138E4D291D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift */,
-				130A9F981D5EBB270083E45F /* SHPFilePolyLineShape.swift */,
-				A8FEDA2F1D6F5759008AE593 /* SHPFilePointShape.swift */,
 				A8FEDA331D6F5835008AE593 /* SHPFilePointMShape.swift */,
+				A8FEDA2F1D6F5759008AE593 /* SHPFilePointShape.swift */,
 				A8FEDA311D6F57F8008AE593 /* SHPFilePointZShape.swift */,
+				130A9F981D5EBB270083E45F /* SHPFilePolyLineShape.swift */,
+				138E4D291D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift */,
 			);
 			path = Shapes;
 			sourceTree = "<group>";
@@ -257,11 +257,11 @@
 		4FB2AAC01D6611FE00CEE708 /* DBFFile */ = {
 			isa = PBXGroup;
 			children = (
+				4FE4E18A1D6F4EEC0096D529 /* DBFFileDataTypes.swift */,
 				4FB2AAC11D66121800CEE708 /* DBFFileHeader.swift */,
 				4FB2AAC21D66121800CEE708 /* DBFFileHeaderFlags.swift */,
-				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,
-				4FE4E18A1D6F4EEC0096D529 /* DBFFileDataTypes.swift */,
 				4FE4E18C1D6F55D40096D529 /* DBFFileParseError.swift */,
+				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,
 			);
 			path = DBFFile;
 			sourceTree = "<group>";
@@ -271,7 +271,7 @@
 			children = (
 				4FE4E1881D6F4D2B0096D529 /* DBFFileHeaderTest.swift */,
 			);
-			name = DBFFile;
+			path = DBFFile;
 			sourceTree = "<group>";
 		};
 		A8ACD6701D4BADF40082357C /* SHPFile */ = {
@@ -296,8 +296,8 @@
 				A8D63D491D5CE01700FA32C9 /* SHPFileMultiPointMRecord.swift */,
 				A8ACD6721D4BADF40082357C /* SHPFileMultiPointRecord.swift */,
 				A8D63D4A1D5CE01700FA32C9 /* SHPFileMultiPointZRecord.swift */,
-				A8D63D4B1D5CE01700FA32C9 /* SHPFilePointRecord.swift */,
 				A8FEDA2B1D6F535C008AE593 /* SHPFilePointMRecord.swift */,
+				A8D63D4B1D5CE01700FA32C9 /* SHPFilePointRecord.swift */,
 				A8D63D4C1D5CE01700FA32C9 /* SHPFilePointZRecord.swift */,
 				A8ACD6731D4BADF40082357C /* SHPFilePolyLineMRecord.swift */,
 				A8D63D501D5CE01700FA32C9 /* SHPFilePolyLineRecord.swift */,
@@ -318,8 +318,8 @@
 				A8ACD6961D4BAF5C0082357C /* MultiPointMTest.swift */,
 				A8ACD6971D4BAF5C0082357C /* MultiPointTest.swift */,
 				A8ACD6981D4BAF5C0082357C /* MultiPointZTest.swift */,
-				A8ACD6991D4BAF5C0082357C /* PointTest.swift */,
 				A8FEDA2D1D6F55A9008AE593 /* PointMTest.swift */,
+				A8ACD6991D4BAF5C0082357C /* PointTest.swift */,
 				A8ACD69A1D4BAF5C0082357C /* PointZTest.swift */,
 				A8ACD69E1D4BAF5C0082357C /* PolyLineMTest.swift */,
 				A8ACD69F1D4BAF5C0082357C /* PolyLineTest.swift */,
