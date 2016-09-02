@@ -20,6 +20,14 @@
 		13EC2B181CACCF3F000063A1 /* sfsweeproutes.shp in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */; };
 		13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */; };
 		317974567E3A8E5C723D613A /* Pods_ShapeSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B99813E258A70F0B0CC16B /* Pods_ShapeSwiftTests.framework */; };
+		4F294B8C1D79E66E009EB16B /* cp1251.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B841D79E66E009EB16B /* cp1251.dbf */; };
+		4F294B8D1D79E66E009EB16B /* dbase_03.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B851D79E66E009EB16B /* dbase_03.dbf */; };
+		4F294B8E1D79E66E009EB16B /* dbase_8b.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B861D79E66E009EB16B /* dbase_8b.dbf */; };
+		4F294B8F1D79E66E009EB16B /* dbase_30.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B871D79E66E009EB16B /* dbase_30.dbf */; };
+		4F294B901D79E66E009EB16B /* dbase_31.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B881D79E66E009EB16B /* dbase_31.dbf */; };
+		4F294B911D79E66E009EB16B /* dbase_83_missing_memo.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B891D79E66E009EB16B /* dbase_83_missing_memo.dbf */; };
+		4F294B921D79E66E009EB16B /* dbase_83.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B8A1D79E66E009EB16B /* dbase_83.dbf */; };
+		4F294B931D79E66E009EB16B /* dbase_f5.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B8B1D79E66E009EB16B /* dbase_f5.dbf */; };
 		4FB2AAC31D66121800CEE708 /* DBFFileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2AAC11D66121800CEE708 /* DBFFileHeader.swift */; };
 		4FB2AAC41D66121800CEE708 /* DBFFileHeaderFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB2AAC21D66121800CEE708 /* DBFFileHeaderFlags.swift */; };
 		4FE0CF3F1CDE909600DD5F78 /* ByteEncodableTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */; };
@@ -96,6 +104,14 @@
 		13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shx; sourceTree = "<group>"; };
 		13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteParseable.swift; sourceTree = "<group>"; };
 		30D4E7846DAA2CCFDE2DE008 /* Pods-ShapeSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4F294B841D79E66E009EB16B /* cp1251.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = cp1251.dbf; path = dbf_fixtures/cp1251.dbf; sourceTree = "<group>"; };
+		4F294B851D79E66E009EB16B /* dbase_03.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dbase_03.dbf; path = dbf_fixtures/dbase_03.dbf; sourceTree = "<group>"; };
+		4F294B861D79E66E009EB16B /* dbase_8b.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dbase_8b.dbf; path = dbf_fixtures/dbase_8b.dbf; sourceTree = "<group>"; };
+		4F294B871D79E66E009EB16B /* dbase_30.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dbase_30.dbf; path = dbf_fixtures/dbase_30.dbf; sourceTree = "<group>"; };
+		4F294B881D79E66E009EB16B /* dbase_31.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dbase_31.dbf; path = dbf_fixtures/dbase_31.dbf; sourceTree = "<group>"; };
+		4F294B891D79E66E009EB16B /* dbase_83_missing_memo.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dbase_83_missing_memo.dbf; path = dbf_fixtures/dbase_83_missing_memo.dbf; sourceTree = "<group>"; };
+		4F294B8A1D79E66E009EB16B /* dbase_83.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dbase_83.dbf; path = dbf_fixtures/dbase_83.dbf; sourceTree = "<group>"; };
+		4F294B8B1D79E66E009EB16B /* dbase_f5.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dbase_f5.dbf; path = dbf_fixtures/dbase_f5.dbf; sourceTree = "<group>"; };
 		4FB2AAC11D66121800CEE708 /* DBFFileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileHeader.swift; sourceTree = "<group>"; };
 		4FB2AAC21D66121800CEE708 /* DBFFileHeaderFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBFFileHeaderFlags.swift; sourceTree = "<group>"; };
 		4FE0CF3E1CDE909600DD5F78 /* ByteEncodableTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodableTest.swift; sourceTree = "<group>"; };
@@ -228,6 +244,7 @@
 		13EC2A781CACC93C000063A1 /* ShapeSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				4F294B831D79E660009EB16B /* dbf_fixtures */,
 				4FE4E1871D6F4D0C0096D529 /* DBFFile */,
 				A8ACD6941D4BAF5C0082357C /* SHPFile */,
 				13EC2B0F1CACCD93000063A1 /* sfsweeproutes */,
@@ -258,6 +275,21 @@
 				732F0C2EB9D3DBFF32F7C910 /* Pods-ShapeSwiftTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		4F294B831D79E660009EB16B /* dbf_fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				4F294B841D79E66E009EB16B /* cp1251.dbf */,
+				4F294B851D79E66E009EB16B /* dbase_03.dbf */,
+				4F294B861D79E66E009EB16B /* dbase_8b.dbf */,
+				4F294B871D79E66E009EB16B /* dbase_30.dbf */,
+				4F294B881D79E66E009EB16B /* dbase_31.dbf */,
+				4F294B891D79E66E009EB16B /* dbase_83_missing_memo.dbf */,
+				4F294B8A1D79E66E009EB16B /* dbase_83.dbf */,
+				4F294B8B1D79E66E009EB16B /* dbase_f5.dbf */,
+			);
+			name = dbf_fixtures;
 			sourceTree = "<group>";
 		};
 		4FB2AAC01D6611FE00CEE708 /* DBFFile */ = {
@@ -446,10 +478,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F294B911D79E66E009EB16B /* dbase_83_missing_memo.dbf in Resources */,
+				4F294B8E1D79E66E009EB16B /* dbase_8b.dbf in Resources */,
 				13EC2B151CACCD93000063A1 /* sfsweeproutes.prj in Resources */,
 				13EC2B171CACCD93000063A1 /* sfsweeproutes.shx in Resources */,
+				4F294B921D79E66E009EB16B /* dbase_83.dbf in Resources */,
+				4F294B8C1D79E66E009EB16B /* cp1251.dbf in Resources */,
 				13EC2B141CACCD93000063A1 /* sfsweeproutes.dbf in Resources */,
 				13EC2B161CACCD93000063A1 /* sfsweeproutes.shp in Resources */,
+				4F294B8D1D79E66E009EB16B /* dbase_03.dbf in Resources */,
+				4F294B8F1D79E66E009EB16B /* dbase_30.dbf in Resources */,
+				4F294B901D79E66E009EB16B /* dbase_31.dbf in Resources */,
+				4F294B931D79E66E009EB16B /* dbase_f5.dbf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
