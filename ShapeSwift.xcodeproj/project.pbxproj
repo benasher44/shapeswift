@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		130A9F961D5EB99D0083E45F /* SHPFileShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130A9F951D5EB99D0083E45F /* SHPFileShape.swift */; };
 		134AEFF01D675930009877FC /* ByteEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134AEFEF1D675930009877FC /* ByteEncodable.swift */; };
+		1359F2AF1D7E616100A06596 /* SHPFileMultiPointShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1359F2AE1D7E616100A06596 /* SHPFileMultiPointShape.swift */; };
 		136869C51CC929CE00D2DD81 /* Projection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136869C41CC929CE00D2DD81 /* Projection.swift */; };
 		138E4D2A1D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E4D291D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift */; };
 		13EC2A6E1CACC93C000063A1 /* ShapeSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 13EC2A6D1CACC93C000063A1 /* ShapeSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -90,6 +91,7 @@
 /* Begin PBXFileReference section */
 		130A9F951D5EB99D0083E45F /* SHPFileShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileShape.swift; sourceTree = "<group>"; };
 		134AEFEF1D675930009877FC /* ByteEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodable.swift; sourceTree = "<group>"; };
+		1359F2AE1D7E616100A06596 /* SHPFileMultiPointShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileMultiPointShape.swift; sourceTree = "<group>"; };
 		136869C41CC929CE00D2DD81 /* Projection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Projection.swift; sourceTree = "<group>"; };
 		138E4D291D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileShapeDataTypes.swift; sourceTree = "<group>"; };
 		13EC2A6A1CACC93C000063A1 /* ShapeSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShapeSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,6 +199,7 @@
 		130A9F971D5EBAB90083E45F /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
+				1359F2AE1D7E616100A06596 /* SHPFileMultiPointShape.swift */,
 				A8D3E8241D79E25200E57759 /* SHPFilePolygonShape.swift */,
 				A8F9C7DE1D79E4EE00D0B886 /* SHPFilePolyLineShape.swift */,
 				A8D3E8221D79E1E800E57759 /* SHPFilePolyShape.swift */,
@@ -611,6 +614,7 @@
 				136869C51CC929CE00D2DD81 /* Projection.swift in Sources */,
 				A8ACD68F1D4BADF40082357C /* SHPFileDataParsers.swift in Sources */,
 				A8D63D581D5CE01700FA32C9 /* SHPFilePolygonRecord.swift in Sources */,
+				1359F2AF1D7E616100A06596 /* SHPFileMultiPointShape.swift in Sources */,
 				4FB2AAC31D66121800CEE708 /* DBFFileHeader.swift in Sources */,
 				130A9F961D5EB99D0083E45F /* SHPFileShape.swift in Sources */,
 				A8FEDA321D6F57F8008AE593 /* SHPFilePointZShape.swift in Sources */,
