@@ -1,3 +1,4 @@
+input_format: profdata
 coverage_service: cobertura_xml
 xcworkspace: ShapeSwift.xcworkspace
 scheme: ShapeSwift

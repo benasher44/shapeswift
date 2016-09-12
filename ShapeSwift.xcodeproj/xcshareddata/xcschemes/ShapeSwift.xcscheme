@@ -38,6 +38,20 @@
                BlueprintName = "ShapeSwiftTests"
                ReferencedContainer = "container:ShapeSwift.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "DBFFileHeaderTest/testDBASE83()">
+               </Test>
+               <Test
+                  Identifier = "DBFFileHeaderTest/testDBASE83NoMemo()">
+               </Test>
+               <Test
+                  Identifier = "DBFFileHeaderTest/testDBASE8B()">
+               </Test>
+               <Test
+                  Identifier = "DBFFileHeaderTest/testDBASEF5()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
