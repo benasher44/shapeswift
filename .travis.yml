@@ -13,6 +13,6 @@ script: xcodebuild -workspace ShapeSwift.xcworkspace -scheme ShapeSwift -sdk iph
 after_failure:
   - sleep 10
 
-after_success: 
-  - slather
+after_success:
+  - bundle exec slather
   - bash <(curl -s https://codecov.io/bash) -f tmp/cobertura.xml
