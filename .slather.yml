@@ -1,6 +1,7 @@
 input_format: profdata
 coverage_service: cobertura_xml
 xcworkspace: ShapeSwift.xcworkspace
+xcodeproj: ShapeSwift.xcodeproj
 scheme: ShapeSwift
 source_directory: ShapeSwift
 output_directory: tmp/cobertura.xml
