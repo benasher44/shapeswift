@@ -8,7 +8,7 @@ before_install:
 install:
   - bundle install --with ci --without=documentation --path ../travis_bundle_dir
   - bundle exec pod install
-script: xcodebuild -workspace ShapeSwift.xcworkspace -scheme ShapeSwift -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone SE' test ONLY_ACTIVE_ARCH=NO
+script: xcodebuild -workspace ShapeSwift.xcworkspace -scheme ShapeSwift -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone SE' -enableCodeCoverage YES test
 
 after_failure:
   - sleep 10
