@@ -110,9 +110,9 @@ extension Int8: SingleByteParseable {
 }
 
 extension UInt8: SingleByteParseable {
-  typealias ValueT = Int8
+  typealias ValueT = UInt8
   init?(data: Data, location: Int) {
-    self = UInt8(Int8(data: data, location: location)!)
+    self = dataBitPattern(fromData: data, start: location, sizeBytes: 1)
   }
 }
 
@@ -155,9 +155,9 @@ fileprivate extension ByteParseable {
 }
 
 fileprivate func dataBitPattern<T>(fromData data: Data, start: Int, sizeBytes: Int) -> T {
-  return data.withUnsafeBytes({(bytePointer: UnsafePointer<Byte>) -> T in
+  return data.withUnsafeBytes { (bytePointer: UnsafePointer<Byte>) -> T in
     bytePointer.advanced(by: start).withMemoryRebound(to: T.self, capacity: sizeBytes) { pointer in
       return pointer.pointee
     }
-  })
+  }
 }
