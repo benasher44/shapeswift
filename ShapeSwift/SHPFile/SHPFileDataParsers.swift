@@ -58,7 +58,7 @@ struct ShapeDataStringParser {
     return start + count
   }
 
-  func parse(_ data: Data, _ count: Int) throws -> String {
+  func parse(_ data: Data) throws -> String {
     if let string = String(data: data.subdata(in: start..<(end)), encoding: encoding) {
       return string
     } else {

@@ -21,6 +21,8 @@
 		13EC2B181CACCF3F000063A1 /* sfsweeproutes.shp in Resources */ = {isa = PBXBuildFile; fileRef = 13EC2B121CACCD93000063A1 /* sfsweeproutes.shp */; };
 		13EC2B681CB6C3B8000063A1 /* ByteParseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */; };
 		317974567E3A8E5C723D613A /* Pods_ShapeSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B99813E258A70F0B0CC16B /* Pods_ShapeSwiftTests.framework */; };
+		4F03A3B91DDE1BB1003323F2 /* String+DBFParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F03A3B81DDE1BB1003323F2 /* String+DBFParsing.swift */; };
+		4F03A3BB1DDE1CF2003323F2 /* StringUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F03A3BA1DDE1CF2003323F2 /* StringUtilsTest.swift */; };
 		4F294B8C1D79E66E009EB16B /* cp1251.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B841D79E66E009EB16B /* cp1251.dbf */; };
 		4F294B8D1D79E66E009EB16B /* dbase_03.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B851D79E66E009EB16B /* dbase_03.dbf */; };
 		4F294B8E1D79E66E009EB16B /* dbase_8b.dbf in Resources */ = {isa = PBXBuildFile; fileRef = 4F294B861D79E66E009EB16B /* dbase_8b.dbf */; };
@@ -106,6 +108,8 @@
 		13EC2B131CACCD93000063A1 /* sfsweeproutes.shx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfsweeproutes.shx; sourceTree = "<group>"; };
 		13EC2B671CB6C3B8000063A1 /* ByteParseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteParseable.swift; sourceTree = "<group>"; };
 		30D4E7846DAA2CCFDE2DE008 /* Pods-ShapeSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShapeSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShapeSwiftTests/Pods-ShapeSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4F03A3B81DDE1BB1003323F2 /* String+DBFParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+DBFParsing.swift"; sourceTree = "<group>"; };
+		4F03A3BA1DDE1CF2003323F2 /* StringUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilsTest.swift; sourceTree = "<group>"; };
 		4F294B841D79E66E009EB16B /* cp1251.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = cp1251.dbf; path = dbf_fixtures/cp1251.dbf; sourceTree = "<group>"; };
 		4F294B851D79E66E009EB16B /* dbase_03.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dbase_03.dbf; path = dbf_fixtures/dbase_03.dbf; sourceTree = "<group>"; };
 		4F294B861D79E66E009EB16B /* dbase_8b.dbf */ = {isa = PBXFileReference; lastKnownFileType = file; name = dbase_8b.dbf; path = dbf_fixtures/dbase_8b.dbf; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 		13EC2A781CACC93C000063A1 /* ShapeSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				4F03A3BA1DDE1CF2003323F2 /* StringUtilsTest.swift */,
 				4F294B831D79E660009EB16B /* dbf_fixtures */,
 				4FE4E1871D6F4D0C0096D529 /* DBFFile */,
 				A8ACD6941D4BAF5C0082357C /* SHPFile */,
@@ -303,6 +308,7 @@
 				4FB2AAC21D66121800CEE708 /* DBFFileHeaderFlags.swift */,
 				4FE4E18C1D6F55D40096D529 /* DBFFileParseError.swift */,
 				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,
+				4F03A3B81DDE1BB1003323F2 /* String+DBFParsing.swift */,
 			);
 			path = DBFFile;
 			sourceTree = "<group>";
@@ -623,6 +629,7 @@
 				A8ACD6911D4BADF40082357C /* SHPFileParser.swift in Sources */,
 				A8D63D541D5CE01700FA32C9 /* SHPFileMultiPointZRecord.swift in Sources */,
 				A8DA53AA1D53A44B00FCEBCD /* SHPFileRecordHeader.swift in Sources */,
+				4F03A3B91DDE1BB1003323F2 /* String+DBFParsing.swift in Sources */,
 				A8D63D591D5CE01700FA32C9 /* SHPFilePolygonZRecord.swift in Sources */,
 				A8D63D5B1D5CE01700FA32C9 /* SHPFilePolyLineZRecord.swift in Sources */,
 				4FE4E18B1D6F4EEC0096D529 /* DBFFileDataTypes.swift in Sources */,
@@ -660,6 +667,7 @@
 				A8ACD6AC1D4BAF5C0082357C /* PolyLineTest.swift in Sources */,
 				A8ACD6AA1D4BAF5C0082357C /* PolygonZTest.swift in Sources */,
 				A8ACD6A81D4BAF5C0082357C /* PolygonMTest.swift in Sources */,
+				4F03A3BB1DDE1CF2003323F2 /* StringUtilsTest.swift in Sources */,
 				4FE4E1891D6F4D2B0096D529 /* DBFFileHeaderTest.swift in Sources */,
 				A8ACD6A31D4BAF5C0082357C /* MultiPointMTest.swift in Sources */,
 				A8ACD6AD1D4BAF5C0082357C /* PolyLineZTest.swift in Sources */,

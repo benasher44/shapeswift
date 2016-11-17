@@ -9,9 +9,6 @@
 // TODO(noah): Bytes 32 and onward are different in each spec. We need to figure out how to differentiate
 // them and parse them.
 
-// TODO(noah): We should really get together a bunch of different versions of the DBF file format and
-// make sure this parsing code works with all of them.
-
 // http://www.dbf2002.com/dbf-file-format.html
 // http://www.dbase.com/KnowledgeBase/int/db7_file_fmt.htm
 
@@ -35,8 +32,10 @@ extension DBFFileHeader {
     let transactionFlag: ShapeDataParser<EndianAgnostic<Byte>>
     // dBASE IV encryption flag.
     let encryptionFlag: ShapeDataParser<EndianAgnostic<Byte>>
+    let productionMDXFlag: ShapeDataParser<EndianAgnostic<Byte>>
 
     let driverIdentifier: ShapeDataParser<EndianAgnostic<Byte>>
+    let driverName: ShapeDataStringParser
 
     init(start: Int) {
       fileInfo = ShapeDataParser<EndianAgnostic<Byte>>(start: start)
@@ -49,9 +48,14 @@ extension DBFFileHeader {
       recordLength = ShapeDataParser<LittleEndian<Int16>>(start: length.end)
 
       firstRecordPosition = ShapeDataParser<LittleEndian<Int16>>(start: recordLength.end)
-      transactionFlag = ShapeDataParser<EndianAgnostic<Byte>>(start: firstRecordPosition.end)
+      transactionFlag = ShapeDataParser<EndianAgnostic<Byte>>(start: firstRecordPosition.end + 2)
       encryptionFlag = ShapeDataParser<EndianAgnostic<Byte>>(start: transactionFlag.end)
-      driverIdentifier = ShapeDataParser<EndianAgnostic<Byte>>(start: encryptionFlag.end)
+      productionMDXFlag = ShapeDataParser<EndianAgnostic<Byte>>(start: encryptionFlag.end + 12)
+      driverIdentifier = ShapeDataParser<EndianAgnostic<Byte>>(start: productionMDXFlag.end)
+
+      // TODO(noah): do we need a different encoding? probably ascii, everything else is ascii
+      // TODO(noah): this "driver name" might not even exist, based on test data
+      driverName = ShapeDataStringParser(start: driverIdentifier.end + 2, count: 32, encoding: .ascii)
     }
   }
 }
@@ -70,6 +74,7 @@ struct DBFFileHeader {
   // this is in the specification but it's undocumented. One format spec calls it "code page mark" while
   // another calls it "Language driver ID". We probably don't care about it, but keep it here for good measure.
   let driverIdentifier: Byte
+  let driverName: String
 
   init(data: Data, start: Int) throws {
     let parser = Parser(start: start)
@@ -95,6 +100,7 @@ struct DBFFileHeader {
     transactionFlag = try parser.transactionFlag.parse(data)
     encryptionFlag = try parser.encryptionFlag.parse(data)
     driverIdentifier = try parser.driverIdentifier.parse(data)
+    driverName = try parser.driverName.parse(data).nullStripped()
   }
 }
 
@@ -114,6 +120,17 @@ extension DBFFileFieldDescriptor {
     let fieldLength: ShapeDataParser<EndianAgnostic<Int8>>
     let decimalCount: ShapeDataParser<EndianAgnostic<Int8>>
     let productionMDXFlag: ShapeDataParser<EndianAgnostic<Bool>>
-    let nextAutoIncrementValue: ShapeDataParser<LittleEndian<Int32>>
+    let nextAutoIncrementValue: ShapeDataParser<LittleEndian<UInt32>>
+
+    init(start: Int) {
+      name = ShapeDataStringParser(start: start, count: 32, encoding: .ascii)
+      type = ShapeDataStringParser(start: name.end, count: 1, encoding: .ascii)
+      fieldLength = ShapeDataParser<EndianAgnostic<Int8>>(start: type.end)
+      decimalCount = ShapeDataParser<EndianAgnostic<Int8>>(start: fieldLength.end)
+      productionMDXFlag = ShapeDataParser<EndianAgnostic<Bool>>(start: decimalCount.end)
+
+      // TODO(noah): this might need to be Int32 instead of UInt32
+      nextAutoIncrementValue = ShapeDataParser<LittleEndian<UInt32>>(start: productionMDXFlag.end)
+    }
   }
 }

@@ -83,6 +83,10 @@ extension Int32: ByteParseable {
   static let sizeBytes = 4
 }
 
+extension UInt32: ByteParseable {
+  static let sizeBytes = 4
+}
+
 extension Int32: BigEndianByteParseable {
   init?(bigEndianData data: Data, start: Int) {
     let bitPattern: Int32 = type(of: self).bitPattern(fromData: data, start: start)
@@ -94,6 +98,13 @@ extension Int32: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
     let bitPattern: Int32 = type(of: self).bitPattern(fromData: data, start: start)
     self = Int32(littleEndian: bitPattern)
+  }
+}
+
+extension UInt32: LittleEndianByteParseable {
+  init?(littleEndianData data: Data, start: Int) {
+    let bitPattern: UInt32 = type(of: self).bitPattern(fromData: data, start: start)
+    self = UInt32(littleEndian: bitPattern)
   }
 }
 
