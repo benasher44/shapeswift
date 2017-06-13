@@ -7,11 +7,8 @@
 //
 
 // http://www.dbf2002.com/dbf-file-format.html
+// http://www.dbase.com/KnowledgeBase/int/db7_file_fmt.htm
 // Note that all values are stored in little endian byte order (least significant byte first)
-
-// MARK: File header
-
-private let headerRange = NSRange(location: 0, length: 32)
 
 final class DBFFileParser {
   fileprivate let data: Data

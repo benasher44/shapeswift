@@ -37,6 +37,8 @@ extension DBFFileHeader {
     let driverIdentifier: ShapeDataParser<EndianAgnostic<Byte>>
     let driverName: ShapeDataStringParser
 
+    let fieldDescriptors: DBFFileFieldDescriptorParser
+
     init(start: Int) {
       fileInfo = ShapeDataParser<EndianAgnostic<Byte>>(start: start)
       dateYear = ShapeDataParser<EndianAgnostic<Byte>>(start: fileInfo.end)
@@ -76,6 +78,8 @@ struct DBFFileHeader {
   let driverIdentifier: Byte
   let driverName: String
 
+  let fieldDescriptors: [DBFFileFieldDescriptor]
+
   init(data: Data, start: Int) throws {
     let parser = Parser(start: start)
     fileInfo = try parser.fileInfo.parse(data)
@@ -101,5 +105,7 @@ struct DBFFileHeader {
     encryptionFlag = try parser.encryptionFlag.parse(data)
     driverIdentifier = try parser.driverIdentifier.parse(data)
     driverName = try parser.driverName.parse(data).nullStripped()
+
+
   }
 }

@@ -6,7 +6,30 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
+final class DBFFileFieldDescriptorArrayParser {
+  private let data: Data
+  private let currentByteOffset: Int
+  init(data: Data, start: Int) {
+    self.data = data
+    currentByteOffset = start
+  }
+}
+
+extension DBFFileFieldDescriptorArrayParser: IteratorProtocol {
+  func next() -> DBFFileFieldDescriptor? {
+    // from the spec: "0x0D stored as the Field Descriptor terminator" - if we see this, we're done
+    let nextByte = Byte(data: self.data, location: currentByteOffset)
+    if nextByte == 0x0D {
+      return nil
+    }
+
+    guard let descriptor = DBFFileFieldDescriptor()
+  }
+}
+
 struct DBFFileFieldDescriptor {
+  static let sizeBytes = 48
+
   let name: String
   let type: DBFFileDataType
   let fieldLength: Int8
