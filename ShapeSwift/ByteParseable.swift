@@ -28,18 +28,12 @@ protocol ByteOrdered {
 }
 
 /// Allow constraining to ghost types that contain value types that can be parsed from big endian bytes
-protocol BigEndianByteOrdered: ByteOrdered {
-  associatedtype ValueT: BigEndianByteParseable
-}
+protocol BigEndianByteOrdered: ByteOrdered where ValueT: BigEndianByteParseable {}
 
 /// Allow constraining to ghost types that contain value types that can be parsed from little endian bytes
-protocol LittleEndianByteOrdered: ByteOrdered {
-  associatedtype ValueT: LittleEndianByteParseable
-}
+protocol LittleEndianByteOrdered: ByteOrdered where ValueT: LittleEndianByteParseable {}
 
-protocol SingleByteOrdered: ByteOrdered {
-  associatedtype ValueT: SingleByteParseable
-}
+protocol SingleByteOrdered: ByteOrdered where ValueT: SingleByteParseable {}
 
 extension BigEndian: BigEndianByteOrdered {
   typealias ValueT = T

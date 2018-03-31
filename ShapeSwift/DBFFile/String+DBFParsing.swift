@@ -11,6 +11,6 @@ extension String {
     guard let nullRange = self.range(of: "\0") else {
       return self
     }
-    return self.substring(to: nullRange.lowerBound)
+    return String(self[..<nullRange.lowerBound])
   }
 }

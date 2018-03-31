@@ -59,7 +59,7 @@ extension SHPFilePolyLineZRecord: SHPFileRecord {
     zValues = try parser.zValues.parse(data)
     if range.contains(parser.mBounds.start) {
       mBounds = try valueOrNilIfNoDataValue(parser.mBounds.parse(data))
-      measures = try parser.measures.parse(data).flatMap(valueOrNilIfNoDataValue)
+      measures = try parser.measures.parse(data).compactMap(valueOrNilIfNoDataValue)
       endByte = parser.measures.end - 1
     } else {
       mBounds = nil
