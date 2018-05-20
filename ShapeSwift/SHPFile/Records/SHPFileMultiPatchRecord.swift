@@ -38,7 +38,7 @@ extension SHPFileMultiPatchRecord {
 
 // MARK: Record
 
-struct SHPFileMultiPatchRecord {
+struct SHPFileMultiPatchRecord: Equatable {
   let recordNumber: Int
   let box: BoundingBoxXY
   let parts: [Int]
@@ -73,21 +73,3 @@ extension SHPFileMultiPatchRecord: SHPFileRecord {
     }
   }
 }
-
-// MARK: Equatable
-
-func == (lhs: SHPFileMultiPatchRecord, rhs: SHPFileMultiPatchRecord) -> Bool {
-  return (
-    lhs.recordNumber == rhs.recordNumber &&
-      lhs.box == rhs.box &&
-      lhs.parts == rhs.parts &&
-      lhs.partTypes == rhs.partTypes &&
-      lhs.points == rhs.points &&
-      lhs.zBounds == rhs.zBounds &&
-      lhs.zValues == rhs.zValues &&
-      lhs.mBounds == rhs.mBounds &&
-      lhs.measures == rhs.measures
-  )
-}
-
-extension SHPFileMultiPatchRecord: Equatable {}

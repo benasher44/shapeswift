@@ -35,7 +35,7 @@ extension SHPFilePolyLineZRecord {
 
 // MARK: Record
 
-struct SHPFilePolyLineZRecord {
+struct SHPFilePolyLineZRecord: Equatable {
   let recordNumber: Int
   let box: BoundingBoxXY
   let parts: [Int]
@@ -68,20 +68,3 @@ extension SHPFilePolyLineZRecord: SHPFileRecord {
     }
   }
 }
-
-// MARK: Equatable
-
-func == (lhs: SHPFilePolyLineZRecord, rhs: SHPFilePolyLineZRecord) -> Bool {
-  return (
-    lhs.recordNumber == rhs.recordNumber &&
-      lhs.box == rhs.box &&
-      lhs.parts == rhs.parts &&
-      lhs.points == rhs.points &&
-      lhs.zBounds == rhs.zBounds &&
-      lhs.zValues == rhs.zValues &&
-      lhs.mBounds == rhs.mBounds &&
-      lhs.measures == rhs.measures
-  )
-}
-
-extension SHPFilePolyLineZRecord: Equatable {}

@@ -21,7 +21,7 @@ struct SHPFilePointMRecordParser {
 
 // MARK: Record
 
-struct SHPFilePointMRecord {
+struct SHPFilePointMRecord: Equatable {
   let recordNumber: Int
   let x: Double
   let y: Double
@@ -45,16 +45,3 @@ extension SHPFilePointMRecord: SHPFileRecord {
     }
   }
 }
-
-// MARK: Equatable
-
-func == (lhs: SHPFilePointMRecord, rhs: SHPFilePointMRecord) -> Bool {
-  return (
-    lhs.recordNumber == rhs.recordNumber &&
-      lhs.x == rhs.x &&
-      lhs.y == rhs.y &&
-      lhs.m == rhs.m
-  )
-}
-
-extension SHPFilePointMRecord: Equatable {}

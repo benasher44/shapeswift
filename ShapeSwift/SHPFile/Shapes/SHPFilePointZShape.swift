@@ -6,7 +6,7 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-struct SHPFilePointZShape {
+struct SHPFilePointZShape: Equatable {
   let x: Double
   let y: Double
   let z: Double
@@ -22,9 +22,3 @@ extension SHPFilePointZRecord: SHPFileShapeConvertible {
     return SHPFilePointZShape(x: x, y: y, z: z, m: m)
   }
 }
-
-func == (lhs: SHPFilePointZShape, rhs: SHPFilePointZShape) -> Bool {
-  return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.m == rhs.m
-}
-
-extension SHPFilePointZShape: Equatable {}

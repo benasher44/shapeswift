@@ -24,7 +24,7 @@ extension SHPFileMultiPointRecord {
 
 // MARK: Record
 
-struct SHPFileMultiPointRecord {
+struct SHPFileMultiPointRecord: Equatable {
   let recordNumber: Int
   let box: BoundingBoxXY
   let points: [Coordinate2D]
@@ -40,16 +40,4 @@ extension SHPFileMultiPointRecord: SHPFileRecord {
     points = try parser.points.parse(data)
     endByte = parser.points.end - 1
   }
-}
-
-// MARK: Equatable
-
-extension SHPFileMultiPointRecord: Equatable {}
-
-func == (lhs: SHPFileMultiPointRecord, rhs: SHPFileMultiPointRecord) -> Bool {
-  return (
-    lhs.recordNumber == rhs.recordNumber &&
-      lhs.box == rhs.box &&
-      lhs.points == rhs.points
-  )
 }

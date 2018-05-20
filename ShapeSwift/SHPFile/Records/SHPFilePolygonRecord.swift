@@ -27,7 +27,7 @@ extension SHPFilePolygonRecord {
 
 // MARK: Record
 
-struct SHPFilePolygonRecord {
+struct SHPFilePolygonRecord: Equatable {
   let recordNumber: Int
   let box: BoundingBoxXY
   let parts: [Int]
@@ -45,17 +45,4 @@ extension SHPFilePolygonRecord: SHPFileRecord {
     points = try parser.points.parse(data)
     endByte = parser.points.end - 1
   }
-}
-
-// MARK: Equatable
-
-extension SHPFilePolygonRecord: Equatable {}
-
-func == (lhs: SHPFilePolygonRecord, rhs: SHPFilePolygonRecord) -> Bool {
-  return (
-    lhs.recordNumber == rhs.recordNumber &&
-      lhs.box == rhs.box &&
-      lhs.points == rhs.points &&
-      lhs.parts == rhs.parts
-  )
 }

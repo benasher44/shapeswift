@@ -48,7 +48,7 @@ extension SHPFilePolyShapeConvertible {
   private func shape(forPart part: Int, count: Int) -> Shape.PolySubShape? {
     var points = Array<Shape.PolySubShape.PointShape>()
     points.reserveCapacity(count)
-    // Build the part, but only inlude points, if the point is not a consecutive duplicate
+    // Build the part, but only include points, if the point is not a consecutive duplicate
     var lastPoint: Shape.PolySubShape.PointShape? = nil
     for i in part..<(part + count) {
       let point = coordinate(atIndex: i)

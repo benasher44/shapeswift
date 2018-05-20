@@ -6,57 +6,33 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-struct BoundingBoxXY {
+struct BoundingBoxXY: Equatable {
   let x: Coordinate2DBounds
   let y: Coordinate2DBounds
 }
 
-func == (lhs: BoundingBoxXY, rhs: BoundingBoxXY) -> Bool {
-  return lhs.x == rhs.x && lhs.y == rhs.y
-}
-
-extension BoundingBoxXY: Equatable {}
-
-struct BoundingBoxXYZM {
+struct BoundingBoxXYZM: Equatable {
   let x: Coordinate2DBounds
   let y: Coordinate2DBounds
   let z: Coordinate2DBounds
   let m: Coordinate2DBounds
 }
 
-struct Coordinate2D {
+struct Coordinate2D: Equatable {
   let x: Double
   let y: Double
 }
 
-struct Coordinate3D {
+struct Coordinate3D: Equatable {
   let x: Double
   let y: Double
   let z: Double
 }
 
-func == (lhs: Coordinate2D, rhs: Coordinate2D) -> Bool {
-  return lhs.x == rhs.x && lhs.y == rhs.y
-}
-
-extension Coordinate2D: Equatable {}
-
-func == (lhs: Coordinate3D, rhs: Coordinate3D) -> Bool {
-  return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
-}
-
-extension Coordinate3D: Equatable {}
-
-struct Coordinate2DBounds {
+struct Coordinate2DBounds: Equatable {
   let min: Double
   let max: Double
 }
-
-func == (lhs: Coordinate2DBounds, rhs: Coordinate2DBounds) -> Bool {
-  return lhs.min == rhs.min && lhs.max == rhs.max
-}
-
-extension Coordinate2DBounds: Equatable {}
 
 enum MultiPatchPartType: Int {
   case triangleStrip = 0

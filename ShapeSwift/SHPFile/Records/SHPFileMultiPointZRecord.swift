@@ -8,7 +8,7 @@
 
 // MARK: Record
 
-struct SHPFileMultiPointZRecord {
+struct SHPFileMultiPointZRecord: Equatable {
   let recordNumber: Int
   let box: BoundingBoxXY
   let points: [Coordinate2D]
@@ -61,20 +61,4 @@ extension SHPFileMultiPointZRecord {
       measures = ShapeDataArrayParser<LittleEndian<Double>>(start: mBounds.end, count: numPoints)
     }
   }
-}
-
-// MARK: Equatable
-
-extension SHPFileMultiPointZRecord: Equatable {}
-
-func == (lhs: SHPFileMultiPointZRecord, rhs: SHPFileMultiPointZRecord) -> Bool {
-  return (
-    lhs.recordNumber == rhs.recordNumber &&
-      lhs.box == rhs.box &&
-      lhs.points == rhs.points &&
-      lhs.zBounds == rhs.zBounds &&
-      lhs.zValues == rhs.zValues &&
-      lhs.mBounds == rhs.mBounds &&
-      lhs.measures == rhs.measures
-  )
 }

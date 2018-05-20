@@ -20,7 +20,7 @@ extension SHPFilePointRecord {
 
 // MARK: Record
 
-struct SHPFilePointRecord {
+struct SHPFilePointRecord: Equatable {
   let recordNumber: Int
   let point: Coordinate2D
 }
@@ -35,11 +35,3 @@ extension SHPFilePointRecord: SHPFileRecord {
     endByte = parser.point.end - 1
   }
 }
-
-// MARK: Equatable
-
-func == (lhs: SHPFilePointRecord, rhs: SHPFilePointRecord) -> Bool {
-  return lhs.recordNumber == rhs.recordNumber && lhs.point == rhs.point
-}
-
-extension SHPFilePointRecord: Equatable {}
