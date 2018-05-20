@@ -67,72 +67,45 @@ protocol SingleByteParseable: ByteParseable {
   init?(data: Data, location: Int)
 }
 
+// MARK: - ByteParseable Implementations
+
 extension SingleByteParseable {
-  static var byteWidth: Int {
-    return 1
-  }
+  static var byteWidth: Int { return 1 }
 }
+
+// MARK: FixedWidthInteger
 
 extension ByteParseable where Self: FixedWidthInteger {
-    static var byteWidth: Int { return Self.bitWidth / 8 }
+  static var byteWidth: Int { return Self.bitWidth / 8 }
 }
 
-extension RawRepresentable where Self.RawValue: ByteParseable {
-    static var byteWidth: Int { return Self.RawValue.byteWidth }
-}
-
-extension Int32: ByteParseable {}
-extension UInt32: ByteParseable {}
-extension Int16: ByteParseable {}
-
-extension Int32: BigEndianByteParseable {
+extension BigEndianByteParseable where Self: FixedWidthInteger {
   init?(bigEndianData data: Data, start: Int) {
-    let bitPattern: Int32 = type(of: self).bitPattern(fromData: data, start: start)
-    self = Int32(bigEndian: bitPattern)
+    let bitPattern: Self = ShapeSwift.bitPattern(fromData: data, start: start)
+    self.init(bigEndian: bitPattern)
   }
 }
 
-extension Int32: LittleEndianByteParseable {
+extension LittleEndianByteParseable where Self: FixedWidthInteger {
   init?(littleEndianData data: Data, start: Int) {
-    let bitPattern: Int32 = type(of: self).bitPattern(fromData: data, start: start)
-    self = Int32(littleEndian: bitPattern)
+    let bitPattern: Self = ShapeSwift.bitPattern(fromData: data, start: start)
+    self.init(littleEndian: bitPattern)
   }
 }
 
-extension UInt32: LittleEndianByteParseable {
-  init?(littleEndianData data: Data, start: Int) {
-    let bitPattern: UInt32 = type(of: self).bitPattern(fromData: data, start: start)
-    self = UInt32(littleEndian: bitPattern)
-  }
-}
-
-extension Int8: SingleByteParseable {
-  typealias ValueT = Int8
+extension SingleByteParseable where Self: FixedWidthInteger {
+  typealias ValueT = Self
   init?(data: Data, location: Int) {
-    self = ShapeSwift.bitPattern(fromData: data, start: location, byteWidth: 1)
+    self = ShapeSwift.bitPattern(fromData: data, start: location)
   }
 }
 
-extension UInt8: SingleByteParseable {
-  typealias ValueT = UInt8
-  init?(data: Data, location: Int) {
-    self = ShapeSwift.bitPattern(fromData: data, start: location, byteWidth: 1)
-  }
-}
+extension Int32: BigEndianByteParseable, LittleEndianByteParseable {}
+extension UInt32: BigEndianByteParseable, LittleEndianByteParseable {}
+extension Int16: BigEndianByteParseable, LittleEndianByteParseable {}
 
-extension Int16: BigEndianByteParseable {
-  init?(bigEndianData data: Data, start: Int) {
-    let bitPattern: Int16 = type(of: self).bitPattern(fromData: data, start: start)
-    self = Int16(bigEndian: bitPattern)
-  }
-}
-
-extension Int16: LittleEndianByteParseable {
-  init?(littleEndianData data: Data, start: Int) {
-    let bitPattern: Int16 = type(of: self).bitPattern(fromData: data, start: start)
-    self = Int16(littleEndian: bitPattern)
-  }
-}
+extension Int8: SingleByteParseable {}
+extension UInt8: SingleByteParseable {}
 
 extension Bool: SingleByteParseable {
   typealias ValueT = Int8
@@ -147,21 +120,21 @@ extension Double: ByteParseable {
 
 extension Double: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
-    let bitPattern: UInt64 = type(of: self).bitPattern(fromData: data, start: start)
+    let bitPattern: UInt64 = ShapeSwift.bitPattern(fromData: data, start: start)
     self = Double(bitPattern: bitPattern)
   }
 }
 
-fileprivate extension ByteParseable {
-  static func bitPattern<T>(fromData data: Data, start: Int) -> T {
-    return ShapeSwift.bitPattern(fromData: data, start: start, byteWidth: byteWidth)
+// MARK: - Helper Functions
+
+private func bitPattern<T>(fromData data: Data, start: Int) -> T {
+  return data.withUnsafeBytes { (bytePointer: UnsafePointer<Byte>) -> T in
+    UnsafeRawPointer(bytePointer.advanced(by: start)).bindMemory(to: T.self, capacity: 1).pointee
   }
 }
 
-fileprivate func bitPattern<T>(fromData data: Data, start: Int, byteWidth: Int) -> T {
-  return data.withUnsafeBytes { (bytePointer: UnsafePointer<Byte>) -> T in
-    bytePointer.advanced(by: start).withMemoryRebound(to: T.self, capacity: byteWidth) { pointer in
-      return pointer.pointee
-    }
-  }
+// MARK: - RawRepresentable
+
+extension RawRepresentable where Self.RawValue: ByteParseable {
+  static var byteWidth: Int { return Self.RawValue.byteWidth }
 }
