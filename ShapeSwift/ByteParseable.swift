@@ -52,7 +52,7 @@ enum ByteParseableError: Error {
 }
 
 protocol ByteParseable {
-  static var sizeBytes: Int { get }
+  static var byteWidth: Int { get }
 }
 
 protocol BigEndianByteParseable: ByteParseable {
@@ -68,18 +68,18 @@ protocol SingleByteParseable: ByteParseable {
 }
 
 extension SingleByteParseable {
-  static var sizeBytes: Int {
+  static var byteWidth: Int {
     return 1
   }
 }
 
-extension Int32: ByteParseable {
-  static let sizeBytes = 4
+extension ByteParseable where Self: FixedWidthInteger {
+    static var byteWidth: Int { return Self.bitWidth / 8 }
 }
 
-extension UInt32: ByteParseable {
-  static let sizeBytes = 4
-}
+extension Int32: ByteParseable {}
+extension UInt32: ByteParseable {}
+extension Int16: ByteParseable {}
 
 extension Int32: BigEndianByteParseable {
   init?(bigEndianData data: Data, start: Int) {
@@ -102,22 +102,17 @@ extension UInt32: LittleEndianByteParseable {
   }
 }
 
-// todo(noah): there's a lot duplicated between Int32 and Int16, could be cleaned up
-extension Int16: ByteParseable {
-  static let sizeBytes = 2
-}
-
 extension Int8: SingleByteParseable {
   typealias ValueT = Int8
   init?(data: Data, location: Int) {
-    self = dataBitPattern(fromData: data, start: location, sizeBytes: 1)
+    self = ShapeSwift.bitPattern(fromData: data, start: location, byteWidth: 1)
   }
 }
 
 extension UInt8: SingleByteParseable {
   typealias ValueT = UInt8
   init?(data: Data, location: Int) {
-    self = dataBitPattern(fromData: data, start: location, sizeBytes: 1)
+    self = ShapeSwift.bitPattern(fromData: data, start: location, byteWidth: 1)
   }
 }
 
@@ -143,7 +138,7 @@ extension Bool: SingleByteParseable {
 }
 
 extension Double: ByteParseable {
-  static let sizeBytes = 8
+  static let byteWidth = 8
 }
 
 extension Double: LittleEndianByteParseable {
@@ -155,13 +150,13 @@ extension Double: LittleEndianByteParseable {
 
 fileprivate extension ByteParseable {
   static func bitPattern<T>(fromData data: Data, start: Int) -> T {
-    return dataBitPattern(fromData: data, start: start, sizeBytes: sizeBytes)
+    return ShapeSwift.bitPattern(fromData: data, start: start, byteWidth: byteWidth)
   }
 }
 
-fileprivate func dataBitPattern<T>(fromData data: Data, start: Int, sizeBytes: Int) -> T {
+fileprivate func bitPattern<T>(fromData data: Data, start: Int, byteWidth: Int) -> T {
   return data.withUnsafeBytes { (bytePointer: UnsafePointer<Byte>) -> T in
-    bytePointer.advanced(by: start).withMemoryRebound(to: T.self, capacity: sizeBytes) { pointer in
+    bytePointer.advanced(by: start).withMemoryRebound(to: T.self, capacity: byteWidth) { pointer in
       return pointer.pointee
     }
   }

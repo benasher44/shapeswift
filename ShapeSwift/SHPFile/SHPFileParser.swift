@@ -31,9 +31,9 @@ extension SHPFileParser: IteratorProtocol {
   func next() -> SHPFileParseResult<Record>? {
     if currentByteOffset < header.fileLength {
       let recordHeader = try! SHPFileRecordHeader(data: data, start: currentByteOffset)
-      currentByteOffset += SHPFileRecordHeader.sizeBytes
+      currentByteOffset += SHPFileRecordHeader.byteWidth
       let shapeType = ShapeType(littleEndianData: data, start: currentByteOffset)!
-      let recordStart = currentByteOffset + ShapeType.sizeBytes
+      let recordStart = currentByteOffset + ShapeType.byteWidth
       let recordRange: Range = recordStart..<(currentByteOffset + recordHeader.contentLength)
       currentByteOffset += recordHeader.contentLength
       if shapeType == .null {

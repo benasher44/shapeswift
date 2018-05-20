@@ -36,9 +36,9 @@ protocol LittleEndianByteEncodable: ByteParseable {
  have a LittleEndianByteEncodable and you want to represent it as a ByteEncodable, wrap it in this struct.
  */
 struct LittleEndianEncoded<EncodedType: LittleEndianByteEncodable>: ByteEncodable {
-  static var sizeBytes: Int {
+  static var byteWidth: Int {
     get {
-      return EncodedType.sizeBytes
+      return EncodedType.byteWidth
     }
   }
   let value: EncodedType
@@ -49,9 +49,9 @@ struct LittleEndianEncoded<EncodedType: LittleEndianByteEncodable>: ByteEncodabl
 
 /// A wrapper for a BigEndianByteEncodable value (the wrapper itself being ByteEncodable)
 struct BigEndianEncoded<EncodedType: BigEndianByteEncodable>: ByteEncodable {
-  static var sizeBytes: Int {
+  static var byteWidth: Int {
     get {
-      return EncodedType.sizeBytes
+      return EncodedType.byteWidth
     }
   }
   let value: EncodedType
@@ -82,19 +82,19 @@ func toByteArray<T>(value: T, size: Int) -> [Byte] {
 
 extension Double: LittleEndianByteEncodable {
   func encodeLittleEndian() -> [Byte] {
-    return toByteArray(value: self, size: type(of: self).sizeBytes)
+    return toByteArray(value: self, size: type(of: self).byteWidth)
   }
 }
 
 extension Int32: LittleEndianByteEncodable {
   func encodeLittleEndian() -> [Byte] {
-    return toByteArray(value: self, size: type(of: self).sizeBytes)
+    return toByteArray(value: self, size: type(of: self).byteWidth)
   }
 }
 
 extension Int32: BigEndianByteEncodable {
   func encodeBigEndian() -> [Byte] {
-    return toByteArray(value: self, size: type(of: self).sizeBytes).reversed()
+    return toByteArray(value: self, size: type(of: self).byteWidth).reversed()
   }
 }
 

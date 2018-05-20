@@ -15,7 +15,7 @@ struct ShapeDataParser<T: ByteOrdered> {
 
 extension ShapeDataParser where T.ValueT: ByteParseable {
   var end: Int {
-    return start + T.ValueT.sizeBytes
+    return start + T.ValueT.byteWidth
   }
 }
 
@@ -72,13 +72,13 @@ struct ShapeDataArrayParser<T: ByteOrdered> where T.ValueT: ByteParseable {
   let count: Int
 
   var end: Int {
-    return start + (count * T.ValueT.sizeBytes)
+    return start + (count * T.ValueT.byteWidth)
   }
 
   fileprivate func iterParse(_ data: Data, _ parser: (_ data: Data, _ start: Int) -> T.ValueT?) throws -> [T.ValueT] {
     var values = Array<T.ValueT>()
     values.reserveCapacity(count)
-    for byteOffset in stride(from: start, to: end, by: T.ValueT.sizeBytes) {
+    for byteOffset in stride(from: start, to: end, by: T.ValueT.byteWidth) {
       if let value = parser(data, byteOffset) {
         values.append(value)
       } else {

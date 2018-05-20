@@ -7,7 +7,7 @@
 //
 
 struct SHPFileRecordHeader {
-  static let sizeBytes = 8
+  static let byteWidth = 8
   let recordNumber: Int
   let contentLength: Int
 }
@@ -18,7 +18,7 @@ extension SHPFileRecordHeader {
     let contentLength: ShapeDataParser<BigEndian<Int32>>
     init(start: Int) {
       recordNumber = ShapeDataParser<BigEndian<Int32>>(start: start)
-      contentLength = ShapeDataParser<BigEndian<Int32>>(start: start + Int32.sizeBytes)
+      contentLength = ShapeDataParser<BigEndian<Int32>>(start: start + Int32.byteWidth)
     }
   }
 

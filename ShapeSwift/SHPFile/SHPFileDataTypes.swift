@@ -85,59 +85,59 @@ enum ShapeType: Int {
 }
 
 extension BoundingBoxXY: ByteParseable {
-  static let sizeBytes = Double.sizeBytes * 4
+  static let byteWidth = Double.byteWidth * 4
 }
 
 extension BoundingBoxXY: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
     self = BoundingBoxXY(x: Coordinate2DBounds(min: Double(littleEndianData: data, start: start)!,
-                                             max: Double(littleEndianData: data, start: start + Double.sizeBytes * 2)!),
-                         y: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + Double.sizeBytes)!,
-                                             max: Double(littleEndianData: data, start: start + 3 * Double.sizeBytes)!))
+                                             max: Double(littleEndianData: data, start: start + Double.byteWidth * 2)!),
+                         y: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + Double.byteWidth)!,
+                                             max: Double(littleEndianData: data, start: start + 3 * Double.byteWidth)!))
   }
 }
 
 extension BoundingBoxXYZM: ByteParseable {
-  static let sizeBytes = Double.sizeBytes * 8
+  static let byteWidth = Double.byteWidth * 8
 }
 
 extension BoundingBoxXYZM: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
     self = BoundingBoxXYZM(x: Coordinate2DBounds(min: Double(littleEndianData: data, start: start)!,
-                                               max: Double(littleEndianData: data, start: start + 2 * Double.sizeBytes)!),
-                           y: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + Double.sizeBytes)!,
-                                               max: Double(littleEndianData: data, start: start + 3 * Double.sizeBytes)!),
-                           z: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + 4 * Double.sizeBytes)!,
-                                               max: Double(littleEndianData: data, start: start + 5 * Double.sizeBytes)!),
-                           m: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + 6 * Double.sizeBytes)!,
-                                               max: Double(littleEndianData: data, start: start + 7 * Double.sizeBytes)!))
+                                               max: Double(littleEndianData: data, start: start + 2 * Double.byteWidth)!),
+                           y: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + Double.byteWidth)!,
+                                               max: Double(littleEndianData: data, start: start + 3 * Double.byteWidth)!),
+                           z: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + 4 * Double.byteWidth)!,
+                                               max: Double(littleEndianData: data, start: start + 5 * Double.byteWidth)!),
+                           m: Coordinate2DBounds(min: Double(littleEndianData: data, start: start + 6 * Double.byteWidth)!,
+                                               max: Double(littleEndianData: data, start: start + 7 * Double.byteWidth)!))
   }
 }
 
 extension Coordinate2D: ByteParseable {
-  static let sizeBytes = Double.sizeBytes * 2
+  static let byteWidth = Double.byteWidth * 2
 }
 
 extension Coordinate2D: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
     self = Coordinate2D(x: Double(littleEndianData: data, start: start)!,
-                      y: Double(littleEndianData: data, start: start + Double.sizeBytes)!)
+                      y: Double(littleEndianData: data, start: start + Double.byteWidth)!)
   }
 }
 
 extension Coordinate2DBounds: ByteParseable {
-  static let sizeBytes = Double.sizeBytes * 2
+  static let byteWidth = Double.byteWidth * 2
 }
 
 extension Coordinate2DBounds: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
     self = Coordinate2DBounds(min: Double(littleEndianData: data, start: start)!,
-                            max: Double(littleEndianData: data, start: start + Double.sizeBytes)!)
+                            max: Double(littleEndianData: data, start: start + Double.byteWidth)!)
   }
 }
 
 extension MultiPatchPartType: ByteParseable {
-  static let sizeBytes = Int32.sizeBytes
+  static let byteWidth = Int32.byteWidth
 }
 
 extension MultiPatchPartType: LittleEndianByteParseable {
@@ -151,7 +151,7 @@ extension MultiPatchPartType: LittleEndianByteParseable {
 }
 
 extension ShapeType: ByteParseable {
-  static let sizeBytes = Int32.sizeBytes
+  static let byteWidth = Int32.byteWidth
 }
 
 extension ShapeType: LittleEndianByteParseable {
