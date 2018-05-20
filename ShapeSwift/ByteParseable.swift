@@ -77,6 +77,10 @@ extension ByteParseable where Self: FixedWidthInteger {
     static var byteWidth: Int { return Self.bitWidth / 8 }
 }
 
+extension RawRepresentable where Self.RawValue: ByteParseable {
+    static var byteWidth: Int { return Self.RawValue.byteWidth }
+}
+
 extension Int32: ByteParseable {}
 extension UInt32: ByteParseable {}
 extension Int16: ByteParseable {}

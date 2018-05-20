@@ -34,7 +34,7 @@ struct Coordinate2DBounds: Equatable {
   let max: Double
 }
 
-enum MultiPatchPartType: Int {
+enum MultiPatchPartType: Int32, ByteParseable {
   case triangleStrip = 0
   case triangleFan = 1
   case outerRing = 2
@@ -43,7 +43,7 @@ enum MultiPatchPartType: Int {
   case ring = 5
 }
 
-enum ShapeType: Int {
+enum ShapeType: Int32, ByteParseable {
   case null = 0
   case point = 1
   case polyLine = 3
@@ -112,13 +112,9 @@ extension Coordinate2DBounds: LittleEndianByteParseable {
   }
 }
 
-extension MultiPatchPartType: ByteParseable {
-  static let byteWidth = Int32.byteWidth
-}
-
 extension MultiPatchPartType: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
-    if let type = MultiPatchPartType(rawValue: Int(Int32(littleEndianData: data, start: start)!)) {
+    if let type = MultiPatchPartType(rawValue: Int32(littleEndianData: data, start: start)!) {
       self = type
     } else {
       return nil
@@ -126,13 +122,9 @@ extension MultiPatchPartType: LittleEndianByteParseable {
   }
 }
 
-extension ShapeType: ByteParseable {
-  static let byteWidth = Int32.byteWidth
-}
-
 extension ShapeType: LittleEndianByteParseable {
   init?(littleEndianData data: Data, start: Int) {
-    if let type = ShapeType(rawValue: Int(Int32(littleEndianData: data, start: start)!)) {
+    if let type = ShapeType(rawValue: Int32(littleEndianData: data, start: start)!) {
       self = type
     } else {
       return nil
