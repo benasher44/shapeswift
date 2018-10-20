@@ -58,9 +58,13 @@ func parseRecord<Record: SHPFileRecord>(recordNumber: Int, data: Data, range: Ra
   let record = try Record(recordNumber: recordNumber, data: data, range: range, endByte: &endByte)
   let byteRange: Range = range.lowerBound..<endByte + 1 // Skip the first 4 bytes because of the shape type
   if endByte == 0 {
-    throw ByteParseableError.boundsUnchecked(type: Record.self as! ByteParseable.Type)
+    throw ByteParseableError.unknownBounds(type: Record.self)
   } else if byteRange != range {
-    throw ByteParseableError.outOfBounds(expectedBounds: range, actualBounds: byteRange)
+    throw ByteParseableError.mismatchedBounds(
+      type: Record.self,
+      expectedBounds: range,
+      actualBounds: byteRange
+    )
   }
   return record
 }
