@@ -15,43 +15,43 @@
 extension DBFFileHeader {
   struct Parser {
     // note: everything in the header is little endian
-    let fileInfo: ShapeDataParser<EndianAgnostic<Byte>>
+    let fileInfo: ShapeDataParser<Byte, LittleEndian>
 
     // Date of last update; in YYMMDD format.  Each byte contains the number as a binary.  YY is added to a base of 1900 decimal to determine the actual year. Therefore, YY has possible values from 0x00-0xFF, which allows for a range from 1900-2155.
-    let dateYear: ShapeDataParser<EndianAgnostic<Byte>>
-    let dateMonth: ShapeDataParser<EndianAgnostic<Byte>>
-    let dateDay: ShapeDataParser<EndianAgnostic<Byte>>
+    let dateYear: ShapeDataParser<Byte, LittleEndian>
+    let dateMonth: ShapeDataParser<Byte, LittleEndian>
+    let dateDay: ShapeDataParser<Byte, LittleEndian>
 
-    let numRecords: ShapeDataParser<LittleEndian<Int32>>
-    let length: ShapeDataParser<LittleEndian<Int16>>
-    let recordLength: ShapeDataParser<LittleEndian<Int16>>
+    let numRecords: ShapeDataParser<Int32, LittleEndian>
+    let length: ShapeDataParser<Int16, LittleEndian>
+    let recordLength: ShapeDataParser<Int16, LittleEndian>
 
-    let firstRecordPosition: ShapeDataParser<LittleEndian<Int16>>
+    let firstRecordPosition: ShapeDataParser<Int16, LittleEndian>
 
     // Flag indicating incomplete dBASE IV transaction.
-    let transactionFlag: ShapeDataParser<EndianAgnostic<Byte>>
+    let transactionFlag: ShapeDataParser<Byte, LittleEndian>
     // dBASE IV encryption flag.
-    let encryptionFlag: ShapeDataParser<EndianAgnostic<Byte>>
-    let productionMDXFlag: ShapeDataParser<EndianAgnostic<Byte>>
+    let encryptionFlag: ShapeDataParser<Byte, LittleEndian>
+    let productionMDXFlag: ShapeDataParser<Byte, LittleEndian>
 
-    let driverIdentifier: ShapeDataParser<EndianAgnostic<Byte>>
+    let driverIdentifier: ShapeDataParser<Byte, LittleEndian>
     let driverName: ShapeDataStringParser
 
     init(start: Int) {
-      fileInfo = ShapeDataParser<EndianAgnostic<Byte>>(start: start)
-      dateYear = ShapeDataParser<EndianAgnostic<Byte>>(start: fileInfo.end)
-      dateMonth = ShapeDataParser<EndianAgnostic<Byte>>(start: dateYear.end)
-      dateDay = ShapeDataParser<EndianAgnostic<Byte>>(start: dateMonth.end)
+      fileInfo = ShapeDataParser<Byte, LittleEndian>(start: start)
+      dateYear = ShapeDataParser<Byte, LittleEndian>(start: fileInfo.end)
+      dateMonth = ShapeDataParser<Byte, LittleEndian>(start: dateYear.end)
+      dateDay = ShapeDataParser<Byte, LittleEndian>(start: dateMonth.end)
 
-      numRecords = ShapeDataParser<LittleEndian<Int32>>(start: dateDay.end)
-      length = ShapeDataParser<LittleEndian<Int16>>(start: numRecords.end)
-      recordLength = ShapeDataParser<LittleEndian<Int16>>(start: length.end)
+      numRecords = ShapeDataParser<Int32, LittleEndian>(start: dateDay.end)
+      length = ShapeDataParser<Int16, LittleEndian>(start: numRecords.end)
+      recordLength = ShapeDataParser<Int16, LittleEndian>(start: length.end)
 
-      firstRecordPosition = ShapeDataParser<LittleEndian<Int16>>(start: recordLength.end)
-      transactionFlag = ShapeDataParser<EndianAgnostic<Byte>>(start: firstRecordPosition.end + 2)
-      encryptionFlag = ShapeDataParser<EndianAgnostic<Byte>>(start: transactionFlag.end)
-      productionMDXFlag = ShapeDataParser<EndianAgnostic<Byte>>(start: encryptionFlag.end + 12)
-      driverIdentifier = ShapeDataParser<EndianAgnostic<Byte>>(start: productionMDXFlag.end)
+      firstRecordPosition = ShapeDataParser<Int16, LittleEndian>(start: recordLength.end)
+      transactionFlag = ShapeDataParser<Byte, LittleEndian>(start: firstRecordPosition.end + 2)
+      encryptionFlag = ShapeDataParser<Byte, LittleEndian>(start: transactionFlag.end)
+      productionMDXFlag = ShapeDataParser<Byte, LittleEndian>(start: encryptionFlag.end + 12)
+      driverIdentifier = ShapeDataParser<Byte, LittleEndian>(start: productionMDXFlag.end)
 
       // TODO(noah): do we need a different encoding? probably ascii, everything else is ascii
       // TODO(noah): this "driver name" might not even exist, based on test data

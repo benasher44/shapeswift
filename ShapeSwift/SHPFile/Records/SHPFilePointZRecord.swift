@@ -9,15 +9,15 @@
 // MARK: Parser
 
 struct SHPFilePointZRecordParser {
-  let x: ShapeDataParser<LittleEndian<Double>>
-  let y: ShapeDataParser<LittleEndian<Double>>
-  let z: ShapeDataParser<LittleEndian<Double>>
-  let m: ShapeDataParser<LittleEndian<Double>>
+  let x: ShapeDataParser<Double, LittleEndian>
+  let y: ShapeDataParser<Double, LittleEndian>
+  let z: ShapeDataParser<Double, LittleEndian>
+  let m: ShapeDataParser<Double, LittleEndian>
   init(start: Int) {
-    x = ShapeDataParser<LittleEndian<Double>>(start: start)
-    y = ShapeDataParser<LittleEndian<Double>>(start: x.end)
-    z = ShapeDataParser<LittleEndian<Double>>(start: y.end)
-    m = ShapeDataParser<LittleEndian<Double>>(start: z.end)
+    x = ShapeDataParser<Double, LittleEndian>(start: start)
+    y = ShapeDataParser<Double, LittleEndian>(start: x.end)
+    z = ShapeDataParser<Double, LittleEndian>(start: y.end)
+    m = ShapeDataParser<Double, LittleEndian>(start: z.end)
   }
 }
 

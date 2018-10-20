@@ -10,21 +10,21 @@
 
 extension SHPFilePolyLineMRecord {
   struct Parser {
-    let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-    let parts: ShapeDataArrayParser<LittleEndian<Int32>>
-    let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-    let mBounds: ShapeDataParser<LittleEndian<Coordinate2DBounds>>
-    let measures: ShapeDataArrayParser<LittleEndian<Double>>
+    let box: ShapeDataParser<BoundingBoxXY, LittleEndian>
+    let parts: ShapeDataArrayParser<Int32, LittleEndian>
+    let points: ShapeDataArrayParser<Coordinate2D, LittleEndian>
+    let mBounds: ShapeDataParser<Coordinate2DBounds, LittleEndian>
+    let measures: ShapeDataArrayParser<Double, LittleEndian>
     init(data: Data, start: Int) throws {
-      box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-      let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
+      box = ShapeDataParser<BoundingBoxXY, LittleEndian>(start: start)
+      let numPartsParser = ShapeDataParser<Int32, LittleEndian>(start: box.end)
       let numParts = try Int(numPartsParser.parse(data))
-      let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
+      let numPointsParser = ShapeDataParser<Int32, LittleEndian>(start: numPartsParser.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
-      points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
-      mBounds = ShapeDataParser<LittleEndian<Coordinate2DBounds>>(start: points.end)
-      measures = ShapeDataArrayParser<LittleEndian<Double>>(start: mBounds.end, count: numPoints)
+      parts = ShapeDataArrayParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
+      points = ShapeDataArrayParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
+      mBounds = ShapeDataParser<Coordinate2DBounds, LittleEndian>(start: points.end)
+      measures = ShapeDataArrayParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
     }
   }
 }

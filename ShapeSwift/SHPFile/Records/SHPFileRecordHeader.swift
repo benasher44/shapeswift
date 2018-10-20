@@ -14,11 +14,11 @@ struct SHPFileRecordHeader {
 
 extension SHPFileRecordHeader {
   struct Parser {
-    let recordNumber: ShapeDataParser<BigEndian<Int32>>
-    let contentLength: ShapeDataParser<BigEndian<Int32>>
+    let recordNumber: ShapeDataParser<Int32, BigEndian>
+    let contentLength: ShapeDataParser<Int32, BigEndian>
     init(start: Int) {
-      recordNumber = ShapeDataParser<BigEndian<Int32>>(start: start)
-      contentLength = ShapeDataParser<BigEndian<Int32>>(start: start + Int32.byteWidth)
+      recordNumber = ShapeDataParser<Int32, BigEndian>(start: start)
+      contentLength = ShapeDataParser<Int32, BigEndian>(start: start + Int32.byteWidth)
     }
   }
 

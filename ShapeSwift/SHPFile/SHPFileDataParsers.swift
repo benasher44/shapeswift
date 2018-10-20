@@ -9,42 +9,32 @@
 // TODO(noah): These are not unique to Shapefile, we can use them for DBF too. Let's rename them to
 // DataParser instead of ShapeDataParser, etc.
 
-struct ShapeDataParser<T: ByteOrdered> {
+struct ShapeDataParser<Value: ByteParseable, Order: ByteOrder> {
   let start: Int
 }
 
-extension ShapeDataParser where T.ValueT: ByteParseable {
+extension ShapeDataParser {
   var end: Int {
-    return start + T.ValueT.byteWidth
+    return start + Value.byteWidth
   }
 }
 
-extension ShapeDataParser where T: LittleEndianByteOrdered {
-  func parse(_ data: Data) throws -> T.ValueT {
-    if let value = T.ValueT(littleEndianData: data, start: start) {
+extension ShapeDataParser where Value: LittleEndianByteParseable, Order == LittleEndian {
+  func parse(_ data: Data) throws -> Value {
+    if let value = Value(littleEndianData: data, start: start) {
       return value
     } else {
-      throw ByteParseableError.notParseable(type: T.ValueT.self)
+      throw ByteParseableError.notParseable(type: Value.self)
     }
   }
 }
 
-extension ShapeDataParser where T: BigEndianByteOrdered {
-  func parse(_ data: Data) throws -> T.ValueT {
-    if let value = T.ValueT(bigEndianData: data, start: start) {
+extension ShapeDataParser where Value: BigEndianByteParseable, Order == BigEndian {
+  func parse(_ data: Data) throws -> Value {
+    if let value = Value(bigEndianData: data, start: start) {
       return value
     } else {
-      throw ByteParseableError.notParseable(type: T.ValueT.self)
-    }
-  }
-}
-
-extension ShapeDataParser where T: SingleByteOrdered {
-  func parse(_ data: Data) throws -> T.ValueT {
-    if let value = T.ValueT(data: data, location: start) {
-      return value
-    } else {
-      throw ByteParseableError.notParseable(type: T.ValueT.self)
+      throw ByteParseableError.notParseable(type: Value.self)
     }
   }
 }
@@ -67,40 +57,40 @@ struct ShapeDataStringParser {
   }
 }
 
-struct ShapeDataArrayParser<T: ByteOrdered> where T.ValueT: ByteParseable {
+struct ShapeDataArrayParser<Value: ByteParseable, Order: ByteOrder> {
   let start: Int
   let count: Int
 
   var end: Int {
-    return start + (count * T.ValueT.byteWidth)
+    return start + (count * Value.byteWidth)
   }
 
-  fileprivate func iterParse(_ data: Data, _ parser: (_ data: Data, _ start: Int) -> T.ValueT?) throws -> [T.ValueT] {
-    var values = Array<T.ValueT>()
+  fileprivate func iterParse(_ data: Data, _ parser: (_ data: Data, _ start: Int) -> Value?) throws -> [Value] {
+    var values = Array<Value>()
     values.reserveCapacity(count)
-    for byteOffset in stride(from: start, to: end, by: T.ValueT.byteWidth) {
+    for byteOffset in stride(from: start, to: end, by: Value.byteWidth) {
       if let value = parser(data, byteOffset) {
         values.append(value)
       } else {
-        throw ByteParseableError.notParseable(type: T.ValueT.self)
+        throw ByteParseableError.notParseable(type: Value.self)
       }
     }
     return values
   }
 }
 
-extension ShapeDataArrayParser where T: LittleEndianByteOrdered {
-  func parse(_ data: Data) throws -> [T.ValueT] {
+extension ShapeDataArrayParser where Value: LittleEndianByteParseable, Order == LittleEndian {
+  func parse(_ data: Data) throws -> [Value] {
     return try iterParse(data) { data, start in
-      return T.ValueT(littleEndianData: data, start: start)
+      return Value(littleEndianData: data, start: start)
     }
   }
 }
 
-extension ShapeDataArrayParser where T: BigEndianByteOrdered {
-  func parse(_ data: Data) throws -> [T.ValueT] {
+extension ShapeDataArrayParser where Value: BigEndianByteParseable, Order == BigEndian {
+  func parse(_ data: Data) throws -> [Value] {
     return try iterParse(data) { data, start in
-      return T.ValueT(bigEndianData: data, start: start)
+      return Value(bigEndianData: data, start: start)
     }
   }
 }

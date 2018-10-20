@@ -19,20 +19,20 @@ extension DBFFileFieldDescriptor {
   struct Parser {
     let name: ShapeDataStringParser // note: need to account for zeros here. also it's 32 bytes
     let type: ShapeDataStringParser // only one character ASCII encoded string
-    let fieldLength: ShapeDataParser<EndianAgnostic<Int8>>
-    let decimalCount: ShapeDataParser<EndianAgnostic<Int8>>
-    let productionMDXFlag: ShapeDataParser<EndianAgnostic<Bool>>
-    let nextAutoIncrementValue: ShapeDataParser<LittleEndian<UInt32>>
+    let fieldLength: ShapeDataParser<Int8, LittleEndian>
+    let decimalCount: ShapeDataParser<Int8, LittleEndian>
+    let productionMDXFlag: ShapeDataParser<Bool, LittleEndian>
+    let nextAutoIncrementValue: ShapeDataParser<UInt32, LittleEndian>
 
     init(start: Int) {
       name = ShapeDataStringParser(start: start, count: 32, encoding: .ascii)
       type = ShapeDataStringParser(start: name.end, count: 1, encoding: .ascii)
-      fieldLength = ShapeDataParser<EndianAgnostic<Int8>>(start: type.end)
-      decimalCount = ShapeDataParser<EndianAgnostic<Int8>>(start: fieldLength.end)
-      productionMDXFlag = ShapeDataParser<EndianAgnostic<Bool>>(start: decimalCount.end)
+      fieldLength = ShapeDataParser<Int8, LittleEndian>(start: type.end)
+      decimalCount = ShapeDataParser<Int8, LittleEndian>(start: fieldLength.end)
+      productionMDXFlag = ShapeDataParser<Bool, LittleEndian>(start: decimalCount.end)
 
       // TODO(noah): this might need to be Int32 instead of UInt32
-      nextAutoIncrementValue = ShapeDataParser<LittleEndian<UInt32>>(start: productionMDXFlag.end)
+      nextAutoIncrementValue = ShapeDataParser<UInt32, LittleEndian>(start: productionMDXFlag.end)
     }
   }
 }

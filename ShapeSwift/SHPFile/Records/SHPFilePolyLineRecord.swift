@@ -10,17 +10,17 @@
 
 extension SHPFilePolyLineRecord {
   struct Parser {
-    let box: ShapeDataParser<LittleEndian<BoundingBoxXY>>
-    let points: ShapeDataArrayParser<LittleEndian<Coordinate2D>>
-    let parts: ShapeDataArrayParser<LittleEndian<Int32>>
+    let box: ShapeDataParser<BoundingBoxXY, LittleEndian>
+    let points: ShapeDataArrayParser<Coordinate2D, LittleEndian>
+    let parts: ShapeDataArrayParser<Int32, LittleEndian>
     init(data: Data, start: Int) throws {
-      box = ShapeDataParser<LittleEndian<BoundingBoxXY>>(start: start)
-      let numPartsParser = ShapeDataParser<LittleEndian<Int32>>(start: box.end)
-      let numPointsParser = ShapeDataParser<LittleEndian<Int32>>(start: numPartsParser.end)
+      box = ShapeDataParser<BoundingBoxXY, LittleEndian>(start: start)
+      let numPartsParser = ShapeDataParser<Int32, LittleEndian>(start: box.end)
+      let numPointsParser = ShapeDataParser<Int32, LittleEndian>(start: numPartsParser.end)
       let numPoints = try Int(numPointsParser.parse(data))
       let numParts = try Int(numPartsParser.parse(data))
-      parts = ShapeDataArrayParser<LittleEndian<Int32>>(start: numPointsParser.end, count: numParts)
-      points = ShapeDataArrayParser<LittleEndian<Coordinate2D>>(start: parts.end, count: numPoints)
+      parts = ShapeDataArrayParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
+      points = ShapeDataArrayParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
     }
   }
 }

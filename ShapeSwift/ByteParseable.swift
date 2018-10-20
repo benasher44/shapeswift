@@ -8,70 +8,39 @@
 
 typealias Byte = UInt8
 
-/// Container for a type that should be parsed from big endian bytes
-struct BigEndian<T: BigEndianByteParseable> {
-  let value: T
-}
+/// Groups the phantom types to use for configuring parsers to parse types in a
+/// particular byte order
+protocol ByteOrder {}
 
-struct EndianAgnostic<T: SingleByteParseable> {
-  let value: T
-}
+// Phantom type to use when parsing little-endian numbers
+enum LittleEndian: ByteOrder {}
 
-/// Container for a type that should be parsed from little endian bytes
-struct LittleEndian<T: LittleEndianByteParseable> {
-  let value: T
-}
+// Phantom type to use when parsing little-endian numbers
+enum BigEndian: ByteOrder {}
 
-/// Empty protocol to allow constraining to ghost types that are ByteOrdered
-protocol ByteOrdered {
-  associatedtype ValueT
-}
-
-/// Allow constraining to ghost types that contain value types that can be parsed from big endian bytes
-protocol BigEndianByteOrdered: ByteOrdered where ValueT: BigEndianByteParseable {}
-
-/// Allow constraining to ghost types that contain value types that can be parsed from little endian bytes
-protocol LittleEndianByteOrdered: ByteOrdered where ValueT: LittleEndianByteParseable {}
-
-protocol SingleByteOrdered: ByteOrdered where ValueT: SingleByteParseable {}
-
-extension BigEndian: BigEndianByteOrdered {
-  typealias ValueT = T
-}
-extension LittleEndian: LittleEndianByteOrdered {
-  typealias ValueT = T
-}
-extension EndianAgnostic: SingleByteOrdered {
-  typealias ValueT = T
-}
-
+/// Errors that can occur parsing `ByteParesable` types
 enum ByteParseableError: Error {
   case notParseable(type: Any.Type)
   case boundsUnchecked(type: ByteParseable.Type)
   case outOfBounds(expectedBounds: Range<Int>, actualBounds: Range<Int>)
 }
 
+/// Types that can be parsed from binary bytes
 protocol ByteParseable {
   static var byteWidth: Int { get }
 }
 
+/// Types that be parsed from big-endian binary bytes
 protocol BigEndianByteParseable: ByteParseable {
   init?(bigEndianData data: Data, start: Int)
 }
 
+/// Types that be parsed from little-endian binary bytes
 protocol LittleEndianByteParseable: ByteParseable {
   init?(littleEndianData data: Data, start: Int)
 }
 
-protocol SingleByteParseable: ByteParseable {
-  init?(data: Data, location: Int)
-}
-
 // MARK: - ByteParseable Implementations
-
-extension SingleByteParseable {
-  static var byteWidth: Int { return 1 }
-}
 
 // MARK: FixedWidthInteger
 
@@ -93,24 +62,17 @@ extension LittleEndianByteParseable where Self: FixedWidthInteger {
   }
 }
 
-extension SingleByteParseable where Self: FixedWidthInteger {
-  typealias ValueT = Self
-  init?(data: Data, location: Int) {
-    self = ShapeSwift.bitPattern(fromData: data, start: location)
-  }
-}
-
 extension Int32: BigEndianByteParseable, LittleEndianByteParseable {}
 extension UInt32: BigEndianByteParseable, LittleEndianByteParseable {}
 extension Int16: BigEndianByteParseable, LittleEndianByteParseable {}
 
-extension Int8: SingleByteParseable {}
-extension UInt8: SingleByteParseable {}
+extension Int8: LittleEndianByteParseable {}
+extension UInt8: LittleEndianByteParseable {}
 
-extension Bool: SingleByteParseable {
-  typealias ValueT = Int8
-  init?(data: Data, location: Int) {
-    self = Int8(data: data, location: location) != 0
+extension Bool: LittleEndianByteParseable {
+  static var byteWidth: Int { return 1 }
+  init?(littleEndianData data: Data, start: Int) {
+    self = UInt8(littleEndianData: data, start: start) != 0
   }
 }
 
