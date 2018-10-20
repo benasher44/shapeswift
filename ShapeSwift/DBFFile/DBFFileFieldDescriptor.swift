@@ -21,6 +21,7 @@ extension DBFFileFieldDescriptor {
     let type: StringDataParser // only one character ASCII encoded string
     let fieldLength: ByteParseableDataParser<Int8, LittleEndian>
     let decimalCount: ByteParseableDataParser<Int8, LittleEndian>
+    //TODO(noah): is this little endian or big endian?
     let productionMDXFlag: ByteParseableDataParser<Bool, LittleEndian>
     let nextAutoIncrementValue: ByteParseableDataParser<UInt32, LittleEndian>
 
