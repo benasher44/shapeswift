@@ -206,12 +206,12 @@
 			isa = PBXGroup;
 			children = (
 				1359F2AE1D7E616100A06596 /* SHPFileMultiPointShape.swift */,
-				A8D3E8241D79E25200E57759 /* SHPFilePolygonShape.swift */,
-				A8F9C7DE1D79E4EE00D0B886 /* SHPFilePolyLineShape.swift */,
-				A8D3E8221D79E1E800E57759 /* SHPFilePolyShape.swift */,
 				A8FEDA331D6F5835008AE593 /* SHPFilePointMShape.swift */,
 				A8FEDA2F1D6F5759008AE593 /* SHPFilePointShape.swift */,
 				A8FEDA311D6F57F8008AE593 /* SHPFilePointZShape.swift */,
+				A8D3E8241D79E25200E57759 /* SHPFilePolygonShape.swift */,
+				A8F9C7DE1D79E4EE00D0B886 /* SHPFilePolyLineShape.swift */,
+				A8D3E8221D79E1E800E57759 /* SHPFilePolyShape.swift */,
 				138E4D291D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift */,
 			);
 			path = Shapes;
@@ -306,12 +306,12 @@
 			isa = PBXGroup;
 			children = (
 				4FE4E18A1D6F4EEC0096D529 /* DBFFileDataTypes.swift */,
+				4F03A3BC1DDE1DFD003323F2 /* DBFFileFieldDescriptor.swift */,
 				4FB2AAC11D66121800CEE708 /* DBFFileHeader.swift */,
 				4FB2AAC21D66121800CEE708 /* DBFFileHeaderFlags.swift */,
 				4FE4E18C1D6F55D40096D529 /* DBFFileParseError.swift */,
 				4FEB3E281CB6300A0012D170 /* DBFFileParser.swift */,
 				4F03A3B81DDE1BB1003323F2 /* String+DBFParsing.swift */,
-				4F03A3BC1DDE1DFD003323F2 /* DBFFileFieldDescriptor.swift */,
 			);
 			path = DBFFile;
 			sourceTree = "<group>";
@@ -349,12 +349,12 @@
 				A8FEDA2B1D6F535C008AE593 /* SHPFilePointMRecord.swift */,
 				A8D63D4B1D5CE01700FA32C9 /* SHPFilePointRecord.swift */,
 				A8D63D4C1D5CE01700FA32C9 /* SHPFilePointZRecord.swift */,
-				A8ACD6731D4BADF40082357C /* SHPFilePolyLineMRecord.swift */,
-				A8D63D501D5CE01700FA32C9 /* SHPFilePolyLineRecord.swift */,
-				A8D63D511D5CE01700FA32C9 /* SHPFilePolyLineZRecord.swift */,
 				A8D63D4D1D5CE01700FA32C9 /* SHPFilePolygonMRecord.swift */,
 				A8D63D4E1D5CE01700FA32C9 /* SHPFilePolygonRecord.swift */,
 				A8D63D4F1D5CE01700FA32C9 /* SHPFilePolygonZRecord.swift */,
+				A8ACD6731D4BADF40082357C /* SHPFilePolyLineMRecord.swift */,
+				A8D63D501D5CE01700FA32C9 /* SHPFilePolyLineRecord.swift */,
+				A8D63D511D5CE01700FA32C9 /* SHPFilePolyLineZRecord.swift */,
 				A8DA53A91D53A44B00FCEBCD /* SHPFileRecordHeader.swift */,
 			);
 			path = Records;
