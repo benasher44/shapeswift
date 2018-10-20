@@ -11,13 +11,13 @@
 extension SHPFileMultiPointRecord {
   private struct Parser {
     let box: ByteParseableDataParser<BoundingBoxXY, LittleEndian>
-    let points: ByteParseableArrayDataParser<Coordinate2D, LittleEndian>
+    let points: ByteParseableSequentialDataParser<Coordinate2D, LittleEndian>
 
     init(data: Data, start: Int) throws {
       box = ByteParseableDataParser<BoundingBoxXY, LittleEndian>(start: start)
       let numPointsParser = ByteParseableDataParser<Int32, LittleEndian>(start: box.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      points = ByteParseableArrayDataParser<Coordinate2D, LittleEndian>(start: numPointsParser.end, count: numPoints)
+      points = ByteParseableSequentialDataParser<Coordinate2D, LittleEndian>(start: numPointsParser.end, count: numPoints)
     }
   }
 }

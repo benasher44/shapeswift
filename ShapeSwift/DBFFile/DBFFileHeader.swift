@@ -55,7 +55,7 @@ extension DBFFileHeader {
 
       // TODO(noah): do we need a different encoding? probably ascii, everything else is ascii
       // TODO(noah): this "driver name" might not even exist, based on test data
-      driverName = StringDataParser(start: driverIdentifier.end + 2, count: 32, encoding: .ascii)
+      driverName = StringDataParser(start: driverIdentifier.end + 2, count: 32)
     }
   }
 }
@@ -100,6 +100,6 @@ struct DBFFileHeader {
     transactionFlag = try parser.transactionFlag.parse(data)
     encryptionFlag = try parser.encryptionFlag.parse(data)
     driverIdentifier = try parser.driverIdentifier.parse(data)
-    driverName = try parser.driverName.parse(data).nullStripped()
+    driverName = try parser.driverName.parseAsciiString(data)
   }
 }

@@ -26,8 +26,8 @@ extension DBFFileFieldDescriptor {
     let nextAutoIncrementValue: ByteParseableDataParser<UInt32, LittleEndian>
 
     init(start: Int) {
-      name = StringDataParser(start: start, count: 32, encoding: .ascii)
-      type = StringDataParser(start: name.end, count: 1, encoding: .ascii)
+      name = StringDataParser(start: start, count: 32)
+      type = StringDataParser(start: name.end, count: 1)
       fieldLength = ByteParseableDataParser<Int8, LittleEndian>(start: type.end)
       decimalCount = ByteParseableDataParser<Int8, LittleEndian>(start: fieldLength.end)
       productionMDXFlag = ByteParseableDataParser<Bool, LittleEndian>(start: decimalCount.end)

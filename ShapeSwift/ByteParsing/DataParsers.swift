@@ -34,25 +34,7 @@ extension ByteParseableDataParser where Value: BigEndianByteParseable, Order == 
   }
 }
 
-struct StringDataParser {
-  let start: Int
-  let count: Int
-  let encoding: String.Encoding
-
-  var end: Int {
-    return start + count
-  }
-
-  func parse(_ data: Data) throws -> String {
-    if let string = String(data: data.subdata(in: start..<(end)), encoding: encoding) {
-      return string
-    } else {
-      throw ByteParseableError.notParseable(type: String.self)
-    }
-  }
-}
-
-struct ByteParseableArrayDataParser<Value: ByteParseable, Order: ByteOrder> {
+struct ByteParseableSequentialDataParser<Value: ByteParseable, Order: ByteOrder> {
   let start: Int
   let count: Int
 
@@ -74,7 +56,7 @@ struct ByteParseableArrayDataParser<Value: ByteParseable, Order: ByteOrder> {
   }
 }
 
-extension ByteParseableArrayDataParser where Value: LittleEndianByteParseable, Order == LittleEndian {
+extension ByteParseableSequentialDataParser where Value: LittleEndianByteParseable, Order == LittleEndian {
   func parse(_ data: Data) throws -> [Value] {
     return try iterParse(data) { data, start in
       return Value(littleEndianData: data, start: start)
@@ -82,10 +64,21 @@ extension ByteParseableArrayDataParser where Value: LittleEndianByteParseable, O
   }
 }
 
-extension ByteParseableArrayDataParser where Value: BigEndianByteParseable, Order == BigEndian {
+extension ByteParseableSequentialDataParser where Value: BigEndianByteParseable, Order == BigEndian {
   func parse(_ data: Data) throws -> [Value] {
     return try iterParse(data) { data, start in
       return Value(bigEndianData: data, start: start)
     }
   }
 }
+
+extension ByteParseableSequentialDataParser where Value == CChar, Order == LittleEndian {
+  func parseAsciiString(_ data: Data) throws -> String {
+    return String(
+      decoding: try self.parse(data).map { Unicode.ASCII.CodeUnit($0) },
+      as: Unicode.ASCII.self
+    )
+  }
+}
+
+typealias StringDataParser = ByteParseableSequentialDataParser<CChar, LittleEndian>

@@ -11,16 +11,16 @@
 extension SHPFilePolygonRecord {
   private struct Parser {
     let box: ByteParseableDataParser<BoundingBoxXY, LittleEndian>
-    let parts: ByteParseableArrayDataParser<Int32, LittleEndian>
-    let points: ByteParseableArrayDataParser<Coordinate2D, LittleEndian>
+    let parts: ByteParseableSequentialDataParser<Int32, LittleEndian>
+    let points: ByteParseableSequentialDataParser<Coordinate2D, LittleEndian>
     init(data: Data, start: Int) throws {
       box = ByteParseableDataParser<BoundingBoxXY, LittleEndian>(start: start)
       let numPartsParser = ByteParseableDataParser<Int32, LittleEndian>(start: box.end)
       let numParts = try Int(numPartsParser.parse(data))
       let numPointsParser = ByteParseableDataParser<Int32, LittleEndian>(start: numPartsParser.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      parts = ByteParseableArrayDataParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
-      points = ByteParseableArrayDataParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
+      parts = ByteParseableSequentialDataParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
+      points = ByteParseableSequentialDataParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
     }
   }
 }
