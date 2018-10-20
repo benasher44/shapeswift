@@ -72,8 +72,7 @@ extension Data {
 // MARK: ByteEncodable extensions
 
 func toByteArray<T>(value: T, size: Int) -> [Byte] {
-  var mutableValue = value
-  return withUnsafePointer(to: &mutableValue) { pointer in
+  return withUnsafePointer(to: value) { pointer in
     return pointer.withMemoryRebound(to: Byte.self, capacity: size) { bytePointer in
       Array(UnsafeBufferPointer(start: bytePointer, count: size))
     }
