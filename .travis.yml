@@ -1,12 +1,10 @@
 language: Objective-C
-osx_image: xcode9.3
+osx_image: xcode10
 env:
   - NSUnbufferedIO=YES
 before_install:
-  - rvm get head
-  - ./scripts/travis/prep_keychain.sh
+  - bundle install --with ci --without=documentation --path vendor
 install:
-  - bundle install --with ci --without=documentation --path ../travis_bundle_dir
   - bundle exec pod install
 script: xcodebuild -workspace ShapeSwift.xcworkspace -scheme ShapeSwift -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone SE' -enableCodeCoverage YES test
 
