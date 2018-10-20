@@ -15,7 +15,7 @@ struct SHPFileHeader {
 }
 
 extension SHPFileHeader {
-  struct Parser {
+  private struct Parser {
     let fileCode = ByteParseableDataParser<Int32, BigEndian>(start: 0)
     let fileLength = ByteParseableDataParser<Int32, BigEndian>(start: 24)
     let version = ByteParseableDataParser<Int32, LittleEndian>(start: 28)

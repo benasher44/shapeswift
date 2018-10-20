@@ -9,7 +9,7 @@
 // MARK: Parser
 
 extension SHPFileMultiPointMRecord {
-  struct Parser {
+  private struct Parser {
     let box: ByteParseableDataParser<BoundingBoxXY, LittleEndian>
     let points: ByteParseableArrayDataParser<Coordinate2D, LittleEndian>
     let mBounds: ByteParseableDataParser<Coordinate2DBounds, LittleEndian>

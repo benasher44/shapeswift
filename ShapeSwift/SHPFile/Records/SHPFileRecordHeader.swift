@@ -13,7 +13,7 @@ struct SHPFileRecordHeader {
 }
 
 extension SHPFileRecordHeader {
-  struct Parser {
+  private struct Parser {
     let recordNumber: ByteParseableDataParser<Int32, BigEndian>
     let contentLength: ByteParseableDataParser<Int32, BigEndian>
     init(start: Int) {

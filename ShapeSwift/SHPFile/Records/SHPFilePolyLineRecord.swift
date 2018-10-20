@@ -9,7 +9,7 @@
 // MARK: Parser
 
 extension SHPFilePolyLineRecord {
-  struct Parser {
+  private struct Parser {
     let box: ByteParseableDataParser<BoundingBoxXY, LittleEndian>
     let points: ByteParseableArrayDataParser<Coordinate2D, LittleEndian>
     let parts: ByteParseableArrayDataParser<Int32, LittleEndian>

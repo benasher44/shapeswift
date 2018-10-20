@@ -9,7 +9,7 @@
 // MARK: Parser
 
 extension SHPFilePointRecord {
-  struct Parser {
+  private struct Parser {
     let point: ByteParseableDataParser<Coordinate2D, LittleEndian>
 
     init(start: Int) {

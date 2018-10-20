@@ -16,7 +16,7 @@ struct DBFFileFieldDescriptor {
 }
 
 extension DBFFileFieldDescriptor {
-  struct Parser {
+  private struct Parser {
     let name: StringDataParser // note: need to account for zeros here. also it's 32 bytes
     let type: StringDataParser // only one character ASCII encoded string
     let fieldLength: ByteParseableDataParser<Int8, LittleEndian>

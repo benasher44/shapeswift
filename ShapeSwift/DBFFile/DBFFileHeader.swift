@@ -13,7 +13,7 @@
 // http://www.dbase.com/KnowledgeBase/int/db7_file_fmt.htm
 
 extension DBFFileHeader {
-  struct Parser {
+  private struct Parser {
     // note: everything in the header is little endian
     let fileInfo: ByteParseableDataParser<Byte, LittleEndian>
 

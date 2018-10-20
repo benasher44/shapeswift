@@ -9,7 +9,7 @@
 // MARK: Multipatch
 
 extension SHPFileMultiPatchRecord {
-  struct Parser {
+  private struct Parser {
     let box: ByteParseableDataParser<BoundingBoxXY, LittleEndian>
     let parts: ByteParseableArrayDataParser<Int32, LittleEndian>
     let partTypes: ByteParseableArrayDataParser<MultiPatchPartType, LittleEndian>
