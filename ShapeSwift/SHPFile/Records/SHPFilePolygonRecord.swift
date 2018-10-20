@@ -10,17 +10,17 @@
 
 extension SHPFilePolygonRecord {
   struct Parser {
-    let box: ShapeDataParser<BoundingBoxXY, LittleEndian>
-    let parts: ShapeDataArrayParser<Int32, LittleEndian>
-    let points: ShapeDataArrayParser<Coordinate2D, LittleEndian>
+    let box: ByteParseableDataParser<BoundingBoxXY, LittleEndian>
+    let parts: ByteParseableArrayDataParser<Int32, LittleEndian>
+    let points: ByteParseableArrayDataParser<Coordinate2D, LittleEndian>
     init(data: Data, start: Int) throws {
-      box = ShapeDataParser<BoundingBoxXY, LittleEndian>(start: start)
-      let numPartsParser = ShapeDataParser<Int32, LittleEndian>(start: box.end)
+      box = ByteParseableDataParser<BoundingBoxXY, LittleEndian>(start: start)
+      let numPartsParser = ByteParseableDataParser<Int32, LittleEndian>(start: box.end)
       let numParts = try Int(numPartsParser.parse(data))
-      let numPointsParser = ShapeDataParser<Int32, LittleEndian>(start: numPartsParser.end)
+      let numPointsParser = ByteParseableDataParser<Int32, LittleEndian>(start: numPartsParser.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      parts = ShapeDataArrayParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
-      points = ShapeDataArrayParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
+      parts = ByteParseableArrayDataParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
+      points = ByteParseableArrayDataParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
     }
   }
 }

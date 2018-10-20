@@ -15,7 +15,7 @@ protocol ByteOrder {}
 // Phantom type to use when parsing little-endian numbers
 enum LittleEndian: ByteOrder {}
 
-// Phantom type to use when parsing little-endian numbers
+// Phantom type to use when parsing big-endian numbers
 enum BigEndian: ByteOrder {}
 
 /// Errors that can occur parsing `ByteParesable` types

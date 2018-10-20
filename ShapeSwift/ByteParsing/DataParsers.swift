@@ -6,20 +6,15 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-// TODO(noah): These are not unique to Shapefile, we can use them for DBF too. Let's rename them to
-// DataParser instead of ShapeDataParser, etc.
-
-struct ShapeDataParser<Value: ByteParseable, Order: ByteOrder> {
+struct ByteParseableDataParser<Value: ByteParseable, Order: ByteOrder> {
   let start: Int
 }
 
-extension ShapeDataParser {
-  var end: Int {
-    return start + Value.byteWidth
-  }
+extension ByteParseableDataParser {
+  var end: Int { return start + Value.byteWidth }
 }
 
-extension ShapeDataParser where Value: LittleEndianByteParseable, Order == LittleEndian {
+extension ByteParseableDataParser where Value: LittleEndianByteParseable, Order == LittleEndian {
   func parse(_ data: Data) throws -> Value {
     if let value = Value(littleEndianData: data, start: start) {
       return value
@@ -29,7 +24,7 @@ extension ShapeDataParser where Value: LittleEndianByteParseable, Order == Littl
   }
 }
 
-extension ShapeDataParser where Value: BigEndianByteParseable, Order == BigEndian {
+extension ByteParseableDataParser where Value: BigEndianByteParseable, Order == BigEndian {
   func parse(_ data: Data) throws -> Value {
     if let value = Value(bigEndianData: data, start: start) {
       return value
@@ -39,7 +34,7 @@ extension ShapeDataParser where Value: BigEndianByteParseable, Order == BigEndia
   }
 }
 
-struct ShapeDataStringParser {
+struct StringDataParser {
   let start: Int
   let count: Int
   let encoding: String.Encoding
@@ -57,7 +52,7 @@ struct ShapeDataStringParser {
   }
 }
 
-struct ShapeDataArrayParser<Value: ByteParseable, Order: ByteOrder> {
+struct ByteParseableArrayDataParser<Value: ByteParseable, Order: ByteOrder> {
   let start: Int
   let count: Int
 
@@ -79,7 +74,7 @@ struct ShapeDataArrayParser<Value: ByteParseable, Order: ByteOrder> {
   }
 }
 
-extension ShapeDataArrayParser where Value: LittleEndianByteParseable, Order == LittleEndian {
+extension ByteParseableArrayDataParser where Value: LittleEndianByteParseable, Order == LittleEndian {
   func parse(_ data: Data) throws -> [Value] {
     return try iterParse(data) { data, start in
       return Value(littleEndianData: data, start: start)
@@ -87,7 +82,7 @@ extension ShapeDataArrayParser where Value: LittleEndianByteParseable, Order == 
   }
 }
 
-extension ShapeDataArrayParser where Value: BigEndianByteParseable, Order == BigEndian {
+extension ByteParseableArrayDataParser where Value: BigEndianByteParseable, Order == BigEndian {
   func parse(_ data: Data) throws -> [Value] {
     return try iterParse(data) { data, start in
       return Value(bigEndianData: data, start: start)

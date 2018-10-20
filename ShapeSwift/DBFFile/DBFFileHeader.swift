@@ -15,47 +15,47 @@
 extension DBFFileHeader {
   struct Parser {
     // note: everything in the header is little endian
-    let fileInfo: ShapeDataParser<Byte, LittleEndian>
+    let fileInfo: ByteParseableDataParser<Byte, LittleEndian>
 
     // Date of last update; in YYMMDD format.  Each byte contains the number as a binary.  YY is added to a base of 1900 decimal to determine the actual year. Therefore, YY has possible values from 0x00-0xFF, which allows for a range from 1900-2155.
-    let dateYear: ShapeDataParser<Byte, LittleEndian>
-    let dateMonth: ShapeDataParser<Byte, LittleEndian>
-    let dateDay: ShapeDataParser<Byte, LittleEndian>
+    let dateYear: ByteParseableDataParser<Byte, LittleEndian>
+    let dateMonth: ByteParseableDataParser<Byte, LittleEndian>
+    let dateDay: ByteParseableDataParser<Byte, LittleEndian>
 
-    let numRecords: ShapeDataParser<Int32, LittleEndian>
-    let length: ShapeDataParser<Int16, LittleEndian>
-    let recordLength: ShapeDataParser<Int16, LittleEndian>
+    let numRecords: ByteParseableDataParser<Int32, LittleEndian>
+    let length: ByteParseableDataParser<Int16, LittleEndian>
+    let recordLength: ByteParseableDataParser<Int16, LittleEndian>
 
-    let firstRecordPosition: ShapeDataParser<Int16, LittleEndian>
+    let firstRecordPosition: ByteParseableDataParser<Int16, LittleEndian>
 
     // Flag indicating incomplete dBASE IV transaction.
-    let transactionFlag: ShapeDataParser<Byte, LittleEndian>
+    let transactionFlag: ByteParseableDataParser<Byte, LittleEndian>
     // dBASE IV encryption flag.
-    let encryptionFlag: ShapeDataParser<Byte, LittleEndian>
-    let productionMDXFlag: ShapeDataParser<Byte, LittleEndian>
+    let encryptionFlag: ByteParseableDataParser<Byte, LittleEndian>
+    let productionMDXFlag: ByteParseableDataParser<Byte, LittleEndian>
 
-    let driverIdentifier: ShapeDataParser<Byte, LittleEndian>
-    let driverName: ShapeDataStringParser
+    let driverIdentifier: ByteParseableDataParser<Byte, LittleEndian>
+    let driverName: StringDataParser
 
     init(start: Int) {
-      fileInfo = ShapeDataParser<Byte, LittleEndian>(start: start)
-      dateYear = ShapeDataParser<Byte, LittleEndian>(start: fileInfo.end)
-      dateMonth = ShapeDataParser<Byte, LittleEndian>(start: dateYear.end)
-      dateDay = ShapeDataParser<Byte, LittleEndian>(start: dateMonth.end)
+      fileInfo = ByteParseableDataParser<Byte, LittleEndian>(start: start)
+      dateYear = ByteParseableDataParser<Byte, LittleEndian>(start: fileInfo.end)
+      dateMonth = ByteParseableDataParser<Byte, LittleEndian>(start: dateYear.end)
+      dateDay = ByteParseableDataParser<Byte, LittleEndian>(start: dateMonth.end)
 
-      numRecords = ShapeDataParser<Int32, LittleEndian>(start: dateDay.end)
-      length = ShapeDataParser<Int16, LittleEndian>(start: numRecords.end)
-      recordLength = ShapeDataParser<Int16, LittleEndian>(start: length.end)
+      numRecords = ByteParseableDataParser<Int32, LittleEndian>(start: dateDay.end)
+      length = ByteParseableDataParser<Int16, LittleEndian>(start: numRecords.end)
+      recordLength = ByteParseableDataParser<Int16, LittleEndian>(start: length.end)
 
-      firstRecordPosition = ShapeDataParser<Int16, LittleEndian>(start: recordLength.end)
-      transactionFlag = ShapeDataParser<Byte, LittleEndian>(start: firstRecordPosition.end + 2)
-      encryptionFlag = ShapeDataParser<Byte, LittleEndian>(start: transactionFlag.end)
-      productionMDXFlag = ShapeDataParser<Byte, LittleEndian>(start: encryptionFlag.end + 12)
-      driverIdentifier = ShapeDataParser<Byte, LittleEndian>(start: productionMDXFlag.end)
+      firstRecordPosition = ByteParseableDataParser<Int16, LittleEndian>(start: recordLength.end)
+      transactionFlag = ByteParseableDataParser<Byte, LittleEndian>(start: firstRecordPosition.end + 2)
+      encryptionFlag = ByteParseableDataParser<Byte, LittleEndian>(start: transactionFlag.end)
+      productionMDXFlag = ByteParseableDataParser<Byte, LittleEndian>(start: encryptionFlag.end + 12)
+      driverIdentifier = ByteParseableDataParser<Byte, LittleEndian>(start: productionMDXFlag.end)
 
       // TODO(noah): do we need a different encoding? probably ascii, everything else is ascii
       // TODO(noah): this "driver name" might not even exist, based on test data
-      driverName = ShapeDataStringParser(start: driverIdentifier.end + 2, count: 32, encoding: .ascii)
+      driverName = StringDataParser(start: driverIdentifier.end + 2, count: 32, encoding: .ascii)
     }
   }
 }

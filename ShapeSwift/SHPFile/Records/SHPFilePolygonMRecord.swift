@@ -10,21 +10,21 @@
 
 extension SHPFilePolygonMRecord {
   struct Parser {
-    let box: ShapeDataParser<BoundingBoxXY, LittleEndian>
-    let parts: ShapeDataArrayParser<Int32, LittleEndian>
-    let points: ShapeDataArrayParser<Coordinate2D, LittleEndian>
-    let mBounds: ShapeDataParser<Coordinate2DBounds, LittleEndian>
-    let measures: ShapeDataArrayParser<Double, LittleEndian>
+    let box: ByteParseableDataParser<BoundingBoxXY, LittleEndian>
+    let parts: ByteParseableArrayDataParser<Int32, LittleEndian>
+    let points: ByteParseableArrayDataParser<Coordinate2D, LittleEndian>
+    let mBounds: ByteParseableDataParser<Coordinate2DBounds, LittleEndian>
+    let measures: ByteParseableArrayDataParser<Double, LittleEndian>
     init(data: Data, start: Int) throws {
-      box = ShapeDataParser<BoundingBoxXY, LittleEndian>(start: start)
-      let numPartsParser = ShapeDataParser<Int32, LittleEndian>(start: box.end)
+      box = ByteParseableDataParser<BoundingBoxXY, LittleEndian>(start: start)
+      let numPartsParser = ByteParseableDataParser<Int32, LittleEndian>(start: box.end)
       let numParts = try Int(numPartsParser.parse(data))
-      let numPointsParser = ShapeDataParser<Int32, LittleEndian>(start: numPartsParser.end)
+      let numPointsParser = ByteParseableDataParser<Int32, LittleEndian>(start: numPartsParser.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      parts = ShapeDataArrayParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
-      points = ShapeDataArrayParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
-      mBounds = ShapeDataParser<Coordinate2DBounds, LittleEndian>(start: points.end)
-      measures = ShapeDataArrayParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
+      parts = ByteParseableArrayDataParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
+      points = ByteParseableArrayDataParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
+      mBounds = ByteParseableDataParser<Coordinate2DBounds, LittleEndian>(start: points.end)
+      measures = ByteParseableArrayDataParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
     }
   }
 }
