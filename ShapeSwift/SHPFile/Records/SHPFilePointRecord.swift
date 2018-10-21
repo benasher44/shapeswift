@@ -13,7 +13,7 @@ extension SHPFilePointRecord {
     let point: ByteParser<Coordinate2D, LittleEndian>
 
     init(start: Int) {
-      point = ByteParser<Coordinate2D, LittleEndian>(start: start)
+      self.point = ByteParser<Coordinate2D, LittleEndian>(start: start)
     }
   }
 }
@@ -31,7 +31,7 @@ extension SHPFilePointRecord: SHPFileRecord {
   init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
     self.recordNumber = recordNumber
     let parser = Parser(start: range.lowerBound)
-    point = try parser.point.parse(data)
+    self.point = try parser.point.parse(data)
     endByte = parser.point.end - 1
   }
 }

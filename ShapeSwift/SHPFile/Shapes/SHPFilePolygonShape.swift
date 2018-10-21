@@ -18,7 +18,7 @@ extension SHPFilePolygonShape: SHPFileShape {
 extension SHPFilePolygonShape: SHPFilePolyShapeProtocol {
   init(boundingBox: BoundingBoxXY, subShapes: [Ring<SHPFilePointShape>]) {
     self.boundingBox = boundingBox
-    rings = subShapes
+    self.rings = subShapes
   }
 }
 
@@ -51,7 +51,7 @@ extension SHPFilePolygonZShape: SHPFileShape {
 extension SHPFilePolygonZShape: SHPFilePolyShapeProtocol {
   init(boundingBox: BoundingBoxXY, subShapes: [Ring<SHPFilePointZShape>]) {
     self.boundingBox = boundingBox
-    rings = subShapes
+    self.rings = subShapes
   }
 }
 
@@ -90,7 +90,7 @@ extension SHPFilePolygonMShape: SHPFileShape {
 extension SHPFilePolygonMShape: SHPFilePolyShapeProtocol {
   init(boundingBox: BoundingBoxXY, subShapes: [Ring<SHPFilePointMShape>]) {
     self.boundingBox = boundingBox
-    rings = subShapes
+    self.rings = subShapes
   }
 }
 
@@ -98,11 +98,11 @@ extension SHPFilePolygonMRecord: SHPFilePolyShapeConvertible {
   typealias Shape = SHPFilePolygonMShape
 
   var pointCount: Int {
-    return points.count
+    return self.points.count
   }
 
   func coordinate(atIndex index: Int) -> SHPFilePointMShape {
-    let point = points[index]
+    let point = self.points[index]
     let m: Double?
     if !measures.isEmpty {
       m = measures[index]

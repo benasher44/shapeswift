@@ -16,15 +16,15 @@ extension SHPFilePolygonMRecord {
     let mBounds: ByteParser<Coordinate2DBounds, LittleEndian>
     let measures: ByteParser<Double, LittleEndian>
     init(data: Data, start: Int) throws {
-      box = ByteParser<BoundingBoxXY, LittleEndian>(start: start)
+      self.box = ByteParser<BoundingBoxXY, LittleEndian>(start: start)
       let numPartsParser = ByteParser<Int32, LittleEndian>(start: box.end)
       let numParts = try Int(numPartsParser.parse(data))
       let numPointsParser = ByteParser<Int32, LittleEndian>(start: numPartsParser.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      parts = ByteParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
-      points = ByteParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
-      mBounds = ByteParser<Coordinate2DBounds, LittleEndian>(start: points.end)
-      measures = ByteParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
+      self.parts = ByteParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
+      self.points = ByteParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
+      self.mBounds = ByteParser<Coordinate2DBounds, LittleEndian>(start: points.end)
+      self.measures = ByteParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
     }
   }
 }
@@ -46,16 +46,16 @@ extension SHPFilePolygonMRecord: SHPFileRecord {
   init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
     self.recordNumber = recordNumber
     let parser = try Parser(data: data, start: range.lowerBound)
-    box = try parser.box.parse(data)
-    parts = try parser.parts.parse(data).map(Int.init)
-    points = try parser.points.parse(data)
+    self.box = try parser.box.parse(data)
+    self.parts = try parser.parts.parse(data).map(Int.init)
+    self.points = try parser.points.parse(data)
     if range.contains(parser.mBounds.start) {
-      mBounds = try valueOrNilIfNoDataValue(parser.mBounds.parse(data))
-      measures = try parser.measures.parse(data).compactMap(valueOrNilIfNoDataValue)
+      self.mBounds = try valueOrNilIfNoDataValue(parser.mBounds.parse(data))
+      self.measures = try parser.measures.parse(data).compactMap(valueOrNilIfNoDataValue)
       endByte = parser.measures.end - 1
     } else {
-      mBounds = nil
-      measures = []
+      self.mBounds = nil
+      self.measures = []
       endByte = parser.points.end - 1
     }
   }

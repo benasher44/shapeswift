@@ -26,14 +26,14 @@ extension DBFFileFieldDescriptor {
     let nextAutoIncrementValue: ByteParser<UInt32, LittleEndian>
 
     init(start: Int) {
-      name = StringDataParser(start: start, count: 32)
-      type = StringDataParser(start: name.end, count: 1)
-      fieldLength = ByteParser<Int8, LittleEndian>(start: type.end)
-      decimalCount = ByteParser<Int8, LittleEndian>(start: fieldLength.end)
-      productionMDXFlag = ByteParser<Bool, LittleEndian>(start: decimalCount.end)
+      self.name = StringDataParser(start: start, count: 32)
+      self.type = StringDataParser(start: name.end, count: 1)
+      self.fieldLength = ByteParser<Int8, LittleEndian>(start: type.end)
+      self.decimalCount = ByteParser<Int8, LittleEndian>(start: fieldLength.end)
+      self.productionMDXFlag = ByteParser<Bool, LittleEndian>(start: decimalCount.end)
 
       // TODO(noah): this might need to be Int32 instead of UInt32
-      nextAutoIncrementValue = ByteParser<UInt32, LittleEndian>(start: productionMDXFlag.end)
+      self.nextAutoIncrementValue = ByteParser<UInt32, LittleEndian>(start: productionMDXFlag.end)
     }
   }
 }

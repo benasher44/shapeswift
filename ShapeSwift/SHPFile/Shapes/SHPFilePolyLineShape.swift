@@ -18,7 +18,7 @@ extension SHPFilePolyLineShape: SHPFileShape {
 extension SHPFilePolyLineShape: SHPFilePolyShapeProtocol {
   init(boundingBox: BoundingBoxXY, subShapes: [Line<SHPFilePointShape>]) {
     self.boundingBox = boundingBox
-    lines = subShapes
+    self.lines = subShapes
   }
 }
 
@@ -51,7 +51,7 @@ extension SHPFilePolyLineZShape: SHPFileShape {
 extension SHPFilePolyLineZShape: SHPFilePolyShapeProtocol {
   init(boundingBox: BoundingBoxXY, subShapes: [Line<SHPFilePointZShape>]) {
     self.boundingBox = boundingBox
-    lines = subShapes
+    self.lines = subShapes
   }
 }
 
@@ -90,7 +90,7 @@ extension SHPFilePolyLineMShape: SHPFileShape {
 extension SHPFilePolyLineMShape: SHPFilePolyShapeProtocol {
   init(boundingBox: BoundingBoxXY, subShapes: [Line<SHPFilePointMShape>]) {
     self.boundingBox = boundingBox
-    lines = subShapes
+    self.lines = subShapes
   }
 }
 

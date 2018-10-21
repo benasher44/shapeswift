@@ -14,9 +14,9 @@ final class SHPFileParser<Shape: SHPFileShape> where Shape.Record: SHPFileShapeC
   fileprivate var currentByteOffset = 0
 
   init(fileURL: URL) throws {
-    data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
-    header = try SHPFileHeader(data: data)
-    currentByteOffset = headerRange.upperBound
+    self.data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+    self.header = try SHPFileHeader(data: data)
+    self.currentByteOffset = headerRange.upperBound
   }
 }
 

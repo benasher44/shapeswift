@@ -18,7 +18,7 @@ struct ByteParser<Value: ByteParseable, Order: ByteOrder> {
 }
 
 extension ByteParser {
-  var end: Int { return start + (count * Value.byteWidth) }
+  var end: Int { return self.start + (self.count * Value.byteWidth) }
 }
 
 /// MARK: - Single Value Parsing

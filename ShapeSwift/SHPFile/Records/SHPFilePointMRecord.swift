@@ -13,8 +13,8 @@ struct SHPFilePointMRecordParser {
   let y: ByteParser<Double, LittleEndian>
   let m: ByteParser<Double, LittleEndian>
   init(start: Int) {
-    x = ByteParser<Double, LittleEndian>(start: start)
-    y = ByteParser<Double, LittleEndian>(start: x.end)
+    self.x = ByteParser<Double, LittleEndian>(start: start)
+    self.y = ByteParser<Double, LittleEndian>(start: x.end)
     m = ByteParser<Double, LittleEndian>(start: y.end)
   }
 }
@@ -34,8 +34,8 @@ extension SHPFilePointMRecord: SHPFileRecord {
   init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
     self.recordNumber = recordNumber
     let parser = SHPFilePointMRecordParser(start: range.lowerBound)
-    x = try parser.x.parse(data)
-    y = try parser.y.parse(data)
+    self.x = try parser.x.parse(data)
+    self.y = try parser.y.parse(data)
     if range.contains(parser.m.start) {
       m = valueOrNilIfNoDataValue(try parser.m.parse(data))
       endByte = parser.m.end - 1

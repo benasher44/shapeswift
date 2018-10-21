@@ -18,7 +18,7 @@ final class DBFFileParser {
   fileprivate let header: DBFFileHeader
 
   init(fileURL: URL) throws {
-    data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
-    header = try DBFFileHeader(data: data, start: 0)
+    self.data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+    self.header = try DBFFileHeader(data: data, start: 0)
   }
 }

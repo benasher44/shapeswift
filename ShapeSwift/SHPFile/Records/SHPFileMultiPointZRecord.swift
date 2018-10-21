@@ -24,17 +24,17 @@ extension SHPFileMultiPointZRecord: SHPFileRecord {
   init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
     self.recordNumber = recordNumber
     let parser = try Parser(data: data, start: range.lowerBound)
-    box = try parser.box.parse(data)
-    points = try parser.points.parse(data)
-    zBounds = try parser.zBounds.parse(data)
-    zValues = try parser.zValues.parse(data)
+    self.box = try parser.box.parse(data)
+    self.points = try parser.points.parse(data)
+    self.zBounds = try parser.zBounds.parse(data)
+    self.zValues = try parser.zValues.parse(data)
     if range.contains(parser.mBounds.start) {
-      mBounds = try valueOrNilIfNoDataValue(parser.mBounds.parse(data))
-      measures = try parser.measures.parse(data).compactMap(valueOrNilIfNoDataValue)
+      self.mBounds = try valueOrNilIfNoDataValue(parser.mBounds.parse(data))
+      self.measures = try parser.measures.parse(data).compactMap(valueOrNilIfNoDataValue)
       endByte = parser.measures.end - 1
     } else {
-      mBounds = nil
-      measures = []
+      self.mBounds = nil
+      self.measures = []
       endByte = parser.zValues.end - 1
     }
   }
@@ -51,14 +51,14 @@ extension SHPFileMultiPointZRecord {
     let mBounds: ByteParser<Coordinate2DBounds, LittleEndian>
     let measures: ByteParser<Double, LittleEndian>
     init(data: Data, start: Int) throws {
-      box = ByteParser<BoundingBoxXY, LittleEndian>(start: start)
+      self.box = ByteParser<BoundingBoxXY, LittleEndian>(start: start)
       let numPointsParser = ByteParser<Int32, LittleEndian>(start: box.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      points = ByteParser<Coordinate2D, LittleEndian>(start: numPointsParser.end, count: numPoints)
-      zBounds = ByteParser<Coordinate2DBounds, LittleEndian>(start: points.end)
-      zValues = ByteParser<Double, LittleEndian>(start: zBounds.end, count: numPoints)
-      mBounds = ByteParser<Coordinate2DBounds, LittleEndian>(start: zValues.end)
-      measures = ByteParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
+      self.points = ByteParser<Coordinate2D, LittleEndian>(start: numPointsParser.end, count: numPoints)
+      self.zBounds = ByteParser<Coordinate2DBounds, LittleEndian>(start: points.end)
+      self.zValues = ByteParser<Double, LittleEndian>(start: zBounds.end, count: numPoints)
+      self.mBounds = ByteParser<Coordinate2DBounds, LittleEndian>(start: zValues.end)
+      self.measures = ByteParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
     }
   }
 }

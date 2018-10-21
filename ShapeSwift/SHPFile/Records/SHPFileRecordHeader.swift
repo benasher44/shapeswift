@@ -17,14 +17,14 @@ extension SHPFileRecordHeader {
     let recordNumber: ByteParser<Int32, BigEndian>
     let contentLength: ByteParser<Int32, BigEndian>
     init(start: Int) {
-      recordNumber = ByteParser<Int32, BigEndian>(start: start)
-      contentLength = ByteParser<Int32, BigEndian>(start: start + Int32.byteWidth)
+      self.recordNumber = ByteParser<Int32, BigEndian>(start: start)
+      self.contentLength = ByteParser<Int32, BigEndian>(start: start + Int32.byteWidth)
     }
   }
 
   init(data: Data, start: Int) throws {
     let parser = Parser(start: start)
-    recordNumber = try Int(parser.recordNumber.parse(data))
-    contentLength = try Int(parser.contentLength.parse(data)) * 2 // This value is the length in words, so multiply * 2 to get bytes
+    self.recordNumber = try Int(parser.recordNumber.parse(data))
+    self.contentLength = try Int(parser.contentLength.parse(data)) * 2 // This value is the length in words, so multiply * 2 to get bytes
   }
 }

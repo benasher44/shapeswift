@@ -14,10 +14,10 @@ extension SHPFileMultiPointRecord {
     let points: ByteParser<Coordinate2D, LittleEndian>
 
     init(data: Data, start: Int) throws {
-      box = ByteParser<BoundingBoxXY, LittleEndian>(start: start)
+      self.box = ByteParser<BoundingBoxXY, LittleEndian>(start: start)
       let numPointsParser = ByteParser<Int32, LittleEndian>(start: box.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      points = ByteParser<Coordinate2D, LittleEndian>(start: numPointsParser.end, count: numPoints)
+      self.points = ByteParser<Coordinate2D, LittleEndian>(start: numPointsParser.end, count: numPoints)
     }
   }
 }
@@ -36,8 +36,8 @@ extension SHPFileMultiPointRecord: SHPFileRecord {
   init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) throws {
     self.recordNumber = recordNumber
     let parser = try Parser(data: data, start: range.lowerBound)
-    box = try parser.box.parse(data)
-    points = try parser.points.parse(data)
+    self.box = try parser.box.parse(data)
+    self.points = try parser.points.parse(data)
     endByte = parser.points.end - 1
   }
 }

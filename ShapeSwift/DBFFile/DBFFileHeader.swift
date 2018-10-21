@@ -38,24 +38,24 @@ extension DBFFileHeader {
     let driverName: StringDataParser
 
     init(start: Int) {
-      fileInfo = ByteParser<Byte, LittleEndian>(start: start)
-      dateYear = ByteParser<Byte, LittleEndian>(start: fileInfo.end)
-      dateMonth = ByteParser<Byte, LittleEndian>(start: dateYear.end)
-      dateDay = ByteParser<Byte, LittleEndian>(start: dateMonth.end)
+      self.fileInfo = ByteParser<Byte, LittleEndian>(start: start)
+      self.dateYear = ByteParser<Byte, LittleEndian>(start: fileInfo.end)
+      self.dateMonth = ByteParser<Byte, LittleEndian>(start: dateYear.end)
+      self.dateDay = ByteParser<Byte, LittleEndian>(start: dateMonth.end)
 
-      numRecords = ByteParser<Int32, LittleEndian>(start: dateDay.end)
-      length = ByteParser<Int16, LittleEndian>(start: numRecords.end)
-      recordLength = ByteParser<Int16, LittleEndian>(start: length.end)
+      self.numRecords = ByteParser<Int32, LittleEndian>(start: dateDay.end)
+      self.length = ByteParser<Int16, LittleEndian>(start: numRecords.end)
+      self.recordLength = ByteParser<Int16, LittleEndian>(start: length.end)
 
-      firstRecordPosition = ByteParser<Int16, LittleEndian>(start: recordLength.end)
-      transactionFlag = ByteParser<Byte, LittleEndian>(start: firstRecordPosition.end + 2)
-      encryptionFlag = ByteParser<Byte, LittleEndian>(start: transactionFlag.end)
-      productionMDXFlag = ByteParser<Byte, LittleEndian>(start: encryptionFlag.end + 12)
-      driverIdentifier = ByteParser<Byte, LittleEndian>(start: productionMDXFlag.end)
+      self.firstRecordPosition = ByteParser<Int16, LittleEndian>(start: recordLength.end)
+      self.transactionFlag = ByteParser<Byte, LittleEndian>(start: firstRecordPosition.end + 2)
+      self.encryptionFlag = ByteParser<Byte, LittleEndian>(start: transactionFlag.end)
+      self.productionMDXFlag = ByteParser<Byte, LittleEndian>(start: encryptionFlag.end + 12)
+      self.driverIdentifier = ByteParser<Byte, LittleEndian>(start: productionMDXFlag.end)
 
       // TODO(noah): do we need a different encoding? probably ascii, everything else is ascii
       // TODO(noah): this "driver name" might not even exist, based on test data
-      driverName = StringDataParser(start: driverIdentifier.end + 2, count: 32)
+      self.driverName = StringDataParser(start: driverIdentifier.end + 2, count: 32)
     }
   }
 }
@@ -78,7 +78,7 @@ struct DBFFileHeader {
 
   init(data: Data, start: Int) throws {
     let parser = Parser(start: start)
-    fileInfo = try parser.fileInfo.parse(data)
+    self.fileInfo = try parser.fileInfo.parse(data)
 
     let dateComponents = DateComponents(
       // From the spec: "YY is added to a base of 1900 decimal to determine the actual year."
@@ -90,16 +90,16 @@ struct DBFFileHeader {
     guard let updatedDate = calendar.date(from: dateComponents) else {
       throw DBFFileParseError.invalidDate(dateComponents: dateComponents)
     }
-    lastUpdated = updatedDate
+    self.lastUpdated = updatedDate
 
-    numRecords = Int(try parser.numRecords.parse(data))
-    length = Int(try parser.length.parse(data))
-    recordLength = Int(try parser.recordLength.parse(data))
+    self.numRecords = Int(try parser.numRecords.parse(data))
+    self.length = Int(try parser.length.parse(data))
+    self.recordLength = Int(try parser.recordLength.parse(data))
 
-    firstRecordPosition = Int(try parser.firstRecordPosition.parse(data))
-    transactionFlag = try parser.transactionFlag.parse(data)
-    encryptionFlag = try parser.encryptionFlag.parse(data)
-    driverIdentifier = try parser.driverIdentifier.parse(data)
-    driverName = try parser.driverName.parseAsciiString(data)
+    self.firstRecordPosition = Int(try parser.firstRecordPosition.parse(data))
+    self.transactionFlag = try parser.transactionFlag.parse(data)
+    self.encryptionFlag = try parser.encryptionFlag.parse(data)
+    self.driverIdentifier = try parser.driverIdentifier.parse(data)
+    self.driverName = try parser.driverName.parseAsciiString(data)
   }
 }
