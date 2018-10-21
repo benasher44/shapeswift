@@ -64,7 +64,7 @@ extension ByteParser {
 
 extension ByteParser where Value: LittleEndianByteParseable, Order == LittleEndian {
   func parse(_ data: Data) throws -> [Value] {
-    return try parseValues(data) { data, start in
+    return try self.parseValues(data) { data, start in
       return Value(littleEndianData: data, start: start)
     }
   }
@@ -72,7 +72,7 @@ extension ByteParser where Value: LittleEndianByteParseable, Order == LittleEndi
 
 extension ByteParser where Value: BigEndianByteParseable, Order == BigEndian {
   func parse(_ data: Data) throws -> [Value] {
-    return try parseValues(data) { data, start in
+    return try self.parseValues(data) { data, start in
       return Value(bigEndianData: data, start: start)
     }
   }

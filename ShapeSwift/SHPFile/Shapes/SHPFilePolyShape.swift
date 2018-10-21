@@ -33,14 +33,14 @@ extension SHPFilePolyShapeConvertible {
     for part in parts {
       if let prevPart = prevPart {
         let count = part - prevPart
-        shape(forPart: prevPart, count: count).flatMap({ subShapes.append($0) })
+        self.shape(forPart: prevPart, count: count).flatMap({ subShapes.append($0) })
       }
       prevPart = part
     }
     // The above loop body won't operate on the last part, so create the last line
     if let lastPart = prevPart {
       let intLastPart = Int(lastPart)
-      shape(forPart: intLastPart, count: pointCount - intLastPart).flatMap({ subShapes.append($0) })
+      self.shape(forPart: intLastPart, count: pointCount - intLastPart).flatMap({ subShapes.append($0) })
     }
     return Shape(boundingBox: box, subShapes: subShapes)
   }
