@@ -6,16 +6,26 @@
 //  Copyright © 2016 Benjamin Asher. All rights reserved.
 //
 
-struct ByteParseableDataParser<Value: ByteParseable, Order: ByteOrder> {
+struct ByteParser<Value: ByteParseable, Order: ByteOrder> {
   let start: Int
+  let count: Int
+
+  init(start: Int, count: Int = 1) {
+    precondition(count > 0, "count must be non-zero: \(count)")
+    self.start = start
+    self.count = count
+  }
 }
 
-extension ByteParseableDataParser {
-  var end: Int { return start + Value.byteWidth }
+extension ByteParser {
+  var end: Int { return start + (count * Value.byteWidth) }
 }
 
-extension ByteParseableDataParser where Value: LittleEndianByteParseable, Order == LittleEndian {
+/// MARK: - Single Value Parsing
+
+extension ByteParser where Value: LittleEndianByteParseable, Order == LittleEndian {
   func parse(_ data: Data) throws -> Value {
+    precondition(count == 1, "Parsing a single value with an invalid count: \(count)")
     if let value = Value(littleEndianData: data, start: start) {
       return value
     } else {
@@ -24,8 +34,9 @@ extension ByteParseableDataParser where Value: LittleEndianByteParseable, Order 
   }
 }
 
-extension ByteParseableDataParser where Value: BigEndianByteParseable, Order == BigEndian {
+extension ByteParser where Value: BigEndianByteParseable, Order == BigEndian {
   func parse(_ data: Data) throws -> Value {
+    precondition(count == 1, "Parsing a single value with an invalid count: \(count)")
     if let value = Value(bigEndianData: data, start: start) {
       return value
     } else {
@@ -34,15 +45,10 @@ extension ByteParseableDataParser where Value: BigEndianByteParseable, Order == 
   }
 }
 
-struct ByteParseableSequentialDataParser<Value: ByteParseable, Order: ByteOrder> {
-  let start: Int
-  let count: Int
+/// MARK: - Value Sequence Parsing
 
-  var end: Int {
-    return start + (count * Value.byteWidth)
-  }
-
-  fileprivate func iterParse(_ data: Data, _ parser: (_ data: Data, _ start: Int) -> Value?) throws -> [Value] {
+extension ByteParser {
+  private func parseValues(_ data: Data, _ parser: (_ data: Data, _ start: Int) -> Value?) throws -> [Value] {
     var values = Array<Value>()
     values.reserveCapacity(count)
     for byteOffset in stride(from: start, to: end, by: Value.byteWidth) {
@@ -56,23 +62,23 @@ struct ByteParseableSequentialDataParser<Value: ByteParseable, Order: ByteOrder>
   }
 }
 
-extension ByteParseableSequentialDataParser where Value: LittleEndianByteParseable, Order == LittleEndian {
+extension ByteParser where Value: LittleEndianByteParseable, Order == LittleEndian {
   func parse(_ data: Data) throws -> [Value] {
-    return try iterParse(data) { data, start in
+    return try parseValues(data) { data, start in
       return Value(littleEndianData: data, start: start)
     }
   }
 }
 
-extension ByteParseableSequentialDataParser where Value: BigEndianByteParseable, Order == BigEndian {
+extension ByteParser where Value: BigEndianByteParseable, Order == BigEndian {
   func parse(_ data: Data) throws -> [Value] {
-    return try iterParse(data) { data, start in
+    return try parseValues(data) { data, start in
       return Value(bigEndianData: data, start: start)
     }
   }
 }
 
-extension ByteParseableSequentialDataParser where Value == CChar, Order == LittleEndian {
+extension ByteParser where Value == CChar, Order == LittleEndian {
   func parseAsciiString(_ data: Data) throws -> String {
     return String(
       decoding: try self.parse(data).map { Unicode.ASCII.CodeUnit($0) },
@@ -81,4 +87,4 @@ extension ByteParseableSequentialDataParser where Value == CChar, Order == Littl
   }
 }
 
-typealias StringDataParser = ByteParseableSequentialDataParser<CChar, LittleEndian>
+typealias StringDataParser = ByteParser<CChar, LittleEndian>

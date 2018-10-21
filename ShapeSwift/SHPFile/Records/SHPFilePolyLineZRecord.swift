@@ -10,25 +10,25 @@
 
 extension SHPFilePolyLineZRecord {
   private struct Parser {
-    let box: ByteParseableDataParser<BoundingBoxXY, LittleEndian>
-    let parts: ByteParseableSequentialDataParser<Int32, LittleEndian>
-    let points: ByteParseableSequentialDataParser<Coordinate2D, LittleEndian>
-    let zBounds: ByteParseableDataParser<Coordinate2DBounds, LittleEndian>
-    let zValues: ByteParseableSequentialDataParser<Double, LittleEndian>
-    let mBounds: ByteParseableDataParser<Coordinate2DBounds, LittleEndian>
-    let measures: ByteParseableSequentialDataParser<Double, LittleEndian>
+    let box: ByteParser<BoundingBoxXY, LittleEndian>
+    let parts: ByteParser<Int32, LittleEndian>
+    let points: ByteParser<Coordinate2D, LittleEndian>
+    let zBounds: ByteParser<Coordinate2DBounds, LittleEndian>
+    let zValues: ByteParser<Double, LittleEndian>
+    let mBounds: ByteParser<Coordinate2DBounds, LittleEndian>
+    let measures: ByteParser<Double, LittleEndian>
     init(data: Data, start: Int) throws {
-      box = ByteParseableDataParser<BoundingBoxXY, LittleEndian>(start: start)
-      let numPartsParser = ByteParseableDataParser<Int32, LittleEndian>(start: box.end)
+      box = ByteParser<BoundingBoxXY, LittleEndian>(start: start)
+      let numPartsParser = ByteParser<Int32, LittleEndian>(start: box.end)
       let numParts = try Int(numPartsParser.parse(data))
-      let numPointsParser = ByteParseableDataParser<Int32, LittleEndian>(start: numPartsParser.end)
+      let numPointsParser = ByteParser<Int32, LittleEndian>(start: numPartsParser.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      parts = ByteParseableSequentialDataParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
-      points = ByteParseableSequentialDataParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
-      zBounds = ByteParseableDataParser<Coordinate2DBounds, LittleEndian>(start: points.end)
-      zValues = ByteParseableSequentialDataParser<Double, LittleEndian>(start: zBounds.end, count: numPoints)
-      mBounds = ByteParseableDataParser<Coordinate2DBounds, LittleEndian>(start: zValues.end)
-      measures = ByteParseableSequentialDataParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
+      parts = ByteParser<Int32, LittleEndian>(start: numPointsParser.end, count: numParts)
+      points = ByteParser<Coordinate2D, LittleEndian>(start: parts.end, count: numPoints)
+      zBounds = ByteParser<Coordinate2DBounds, LittleEndian>(start: points.end)
+      zValues = ByteParser<Double, LittleEndian>(start: zBounds.end, count: numPoints)
+      mBounds = ByteParser<Coordinate2DBounds, LittleEndian>(start: zValues.end)
+      measures = ByteParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
     }
   }
 }

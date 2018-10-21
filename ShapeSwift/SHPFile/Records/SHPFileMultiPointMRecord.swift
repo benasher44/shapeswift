@@ -10,17 +10,17 @@
 
 extension SHPFileMultiPointMRecord {
   private struct Parser {
-    let box: ByteParseableDataParser<BoundingBoxXY, LittleEndian>
-    let points: ByteParseableSequentialDataParser<Coordinate2D, LittleEndian>
-    let mBounds: ByteParseableDataParser<Coordinate2DBounds, LittleEndian>
-    let measures: ByteParseableSequentialDataParser<Double, LittleEndian>
+    let box: ByteParser<BoundingBoxXY, LittleEndian>
+    let points: ByteParser<Coordinate2D, LittleEndian>
+    let mBounds: ByteParser<Coordinate2DBounds, LittleEndian>
+    let measures: ByteParser<Double, LittleEndian>
     init(data: Data, start: Int) throws {
-      box = ByteParseableDataParser<BoundingBoxXY, LittleEndian>(start: start)
-      let numPointsParser = ByteParseableDataParser<Int32, LittleEndian>(start: box.end)
+      box = ByteParser<BoundingBoxXY, LittleEndian>(start: start)
+      let numPointsParser = ByteParser<Int32, LittleEndian>(start: box.end)
       let numPoints = try Int(numPointsParser.parse(data))
-      points = ByteParseableSequentialDataParser<Coordinate2D, LittleEndian>(start: numPointsParser.end, count: numPoints)
-      mBounds = ByteParseableDataParser<Coordinate2DBounds, LittleEndian>(start: points.end)
-      measures = ByteParseableSequentialDataParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
+      points = ByteParser<Coordinate2D, LittleEndian>(start: numPointsParser.end, count: numPoints)
+      mBounds = ByteParser<Coordinate2DBounds, LittleEndian>(start: points.end)
+      measures = ByteParser<Double, LittleEndian>(start: mBounds.end, count: numPoints)
     }
   }
 }

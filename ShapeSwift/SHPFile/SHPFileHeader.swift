@@ -16,11 +16,11 @@ struct SHPFileHeader {
 
 extension SHPFileHeader {
   private struct Parser {
-    let fileCode = ByteParseableDataParser<Int32, BigEndian>(start: 0)
-    let fileLength = ByteParseableDataParser<Int32, BigEndian>(start: 24)
-    let version = ByteParseableDataParser<Int32, LittleEndian>(start: 28)
-    let shapeType = ByteParseableDataParser<ShapeType, LittleEndian>(start: 32)
-    let boundingBox = ByteParseableDataParser<BoundingBoxXYZM, LittleEndian>(start: 36)
+    let fileCode = ByteParser<Int32, BigEndian>(start: 0)
+    let fileLength = ByteParser<Int32, BigEndian>(start: 24)
+    let version = ByteParser<Int32, LittleEndian>(start: 28)
+    let shapeType = ByteParser<ShapeType, LittleEndian>(start: 32)
+    let boundingBox = ByteParser<BoundingBoxXYZM, LittleEndian>(start: 36)
   }
 
   init(data: Data) throws {

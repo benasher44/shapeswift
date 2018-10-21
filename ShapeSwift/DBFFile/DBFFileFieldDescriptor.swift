@@ -19,21 +19,21 @@ extension DBFFileFieldDescriptor {
   private struct Parser {
     let name: StringDataParser // note: need to account for zeros here. also it's 32 bytes
     let type: StringDataParser // only one character ASCII encoded string
-    let fieldLength: ByteParseableDataParser<Int8, LittleEndian>
-    let decimalCount: ByteParseableDataParser<Int8, LittleEndian>
+    let fieldLength: ByteParser<Int8, LittleEndian>
+    let decimalCount: ByteParser<Int8, LittleEndian>
     //TODO(noah): is this little endian or big endian?
-    let productionMDXFlag: ByteParseableDataParser<Bool, LittleEndian>
-    let nextAutoIncrementValue: ByteParseableDataParser<UInt32, LittleEndian>
+    let productionMDXFlag: ByteParser<Bool, LittleEndian>
+    let nextAutoIncrementValue: ByteParser<UInt32, LittleEndian>
 
     init(start: Int) {
       name = StringDataParser(start: start, count: 32)
       type = StringDataParser(start: name.end, count: 1)
-      fieldLength = ByteParseableDataParser<Int8, LittleEndian>(start: type.end)
-      decimalCount = ByteParseableDataParser<Int8, LittleEndian>(start: fieldLength.end)
-      productionMDXFlag = ByteParseableDataParser<Bool, LittleEndian>(start: decimalCount.end)
+      fieldLength = ByteParser<Int8, LittleEndian>(start: type.end)
+      decimalCount = ByteParser<Int8, LittleEndian>(start: fieldLength.end)
+      productionMDXFlag = ByteParser<Bool, LittleEndian>(start: decimalCount.end)
 
       // TODO(noah): this might need to be Int32 instead of UInt32
-      nextAutoIncrementValue = ByteParseableDataParser<UInt32, LittleEndian>(start: productionMDXFlag.end)
+      nextAutoIncrementValue = ByteParser<UInt32, LittleEndian>(start: productionMDXFlag.end)
     }
   }
 }

@@ -10,10 +10,10 @@
 
 extension SHPFilePointRecord {
   private struct Parser {
-    let point: ByteParseableDataParser<Coordinate2D, LittleEndian>
+    let point: ByteParser<Coordinate2D, LittleEndian>
 
     init(start: Int) {
-      point = ByteParseableDataParser<Coordinate2D, LittleEndian>(start: start)
+      point = ByteParser<Coordinate2D, LittleEndian>(start: start)
     }
   }
 }

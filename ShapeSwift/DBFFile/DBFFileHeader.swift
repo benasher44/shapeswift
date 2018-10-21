@@ -15,43 +15,43 @@
 extension DBFFileHeader {
   private struct Parser {
     // note: everything in the header is little endian
-    let fileInfo: ByteParseableDataParser<Byte, LittleEndian>
+    let fileInfo: ByteParser<Byte, LittleEndian>
 
     // Date of last update; in YYMMDD format.  Each byte contains the number as a binary.  YY is added to a base of 1900 decimal to determine the actual year. Therefore, YY has possible values from 0x00-0xFF, which allows for a range from 1900-2155.
-    let dateYear: ByteParseableDataParser<Byte, LittleEndian>
-    let dateMonth: ByteParseableDataParser<Byte, LittleEndian>
-    let dateDay: ByteParseableDataParser<Byte, LittleEndian>
+    let dateYear: ByteParser<Byte, LittleEndian>
+    let dateMonth: ByteParser<Byte, LittleEndian>
+    let dateDay: ByteParser<Byte, LittleEndian>
 
-    let numRecords: ByteParseableDataParser<Int32, LittleEndian>
-    let length: ByteParseableDataParser<Int16, LittleEndian>
-    let recordLength: ByteParseableDataParser<Int16, LittleEndian>
+    let numRecords: ByteParser<Int32, LittleEndian>
+    let length: ByteParser<Int16, LittleEndian>
+    let recordLength: ByteParser<Int16, LittleEndian>
 
-    let firstRecordPosition: ByteParseableDataParser<Int16, LittleEndian>
+    let firstRecordPosition: ByteParser<Int16, LittleEndian>
 
     // Flag indicating incomplete dBASE IV transaction.
-    let transactionFlag: ByteParseableDataParser<Byte, LittleEndian>
+    let transactionFlag: ByteParser<Byte, LittleEndian>
     // dBASE IV encryption flag.
-    let encryptionFlag: ByteParseableDataParser<Byte, LittleEndian>
-    let productionMDXFlag: ByteParseableDataParser<Byte, LittleEndian>
+    let encryptionFlag: ByteParser<Byte, LittleEndian>
+    let productionMDXFlag: ByteParser<Byte, LittleEndian>
 
-    let driverIdentifier: ByteParseableDataParser<Byte, LittleEndian>
+    let driverIdentifier: ByteParser<Byte, LittleEndian>
     let driverName: StringDataParser
 
     init(start: Int) {
-      fileInfo = ByteParseableDataParser<Byte, LittleEndian>(start: start)
-      dateYear = ByteParseableDataParser<Byte, LittleEndian>(start: fileInfo.end)
-      dateMonth = ByteParseableDataParser<Byte, LittleEndian>(start: dateYear.end)
-      dateDay = ByteParseableDataParser<Byte, LittleEndian>(start: dateMonth.end)
+      fileInfo = ByteParser<Byte, LittleEndian>(start: start)
+      dateYear = ByteParser<Byte, LittleEndian>(start: fileInfo.end)
+      dateMonth = ByteParser<Byte, LittleEndian>(start: dateYear.end)
+      dateDay = ByteParser<Byte, LittleEndian>(start: dateMonth.end)
 
-      numRecords = ByteParseableDataParser<Int32, LittleEndian>(start: dateDay.end)
-      length = ByteParseableDataParser<Int16, LittleEndian>(start: numRecords.end)
-      recordLength = ByteParseableDataParser<Int16, LittleEndian>(start: length.end)
+      numRecords = ByteParser<Int32, LittleEndian>(start: dateDay.end)
+      length = ByteParser<Int16, LittleEndian>(start: numRecords.end)
+      recordLength = ByteParser<Int16, LittleEndian>(start: length.end)
 
-      firstRecordPosition = ByteParseableDataParser<Int16, LittleEndian>(start: recordLength.end)
-      transactionFlag = ByteParseableDataParser<Byte, LittleEndian>(start: firstRecordPosition.end + 2)
-      encryptionFlag = ByteParseableDataParser<Byte, LittleEndian>(start: transactionFlag.end)
-      productionMDXFlag = ByteParseableDataParser<Byte, LittleEndian>(start: encryptionFlag.end + 12)
-      driverIdentifier = ByteParseableDataParser<Byte, LittleEndian>(start: productionMDXFlag.end)
+      firstRecordPosition = ByteParser<Int16, LittleEndian>(start: recordLength.end)
+      transactionFlag = ByteParser<Byte, LittleEndian>(start: firstRecordPosition.end + 2)
+      encryptionFlag = ByteParser<Byte, LittleEndian>(start: transactionFlag.end)
+      productionMDXFlag = ByteParser<Byte, LittleEndian>(start: encryptionFlag.end + 12)
+      driverIdentifier = ByteParser<Byte, LittleEndian>(start: productionMDXFlag.end)
 
       // TODO(noah): do we need a different encoding? probably ascii, everything else is ascii
       // TODO(noah): this "driver name" might not even exist, based on test data
