@@ -80,8 +80,18 @@ extension ByteParser where Value: BigEndianByteParseable, Order == BigEndian {
 
 extension ByteParser where Value == CChar, Order == LittleEndian {
   func parseAsciiString(_ data: Data) throws -> String {
+    let characters = try self.parse(data).map { Unicode.ASCII.CodeUnit($0) }
+    let characterSequence: ArraySlice<Unicode.ASCII.CodeUnit>
+
+    /// If the last character is null, exclude it
+    if characters.last == 0 {
+      characterSequence = characters.dropLast()
+    } else {
+      characterSequence = characters[...]
+    }
+
     return String(
-      decoding: try self.parse(data).map { Unicode.ASCII.CodeUnit($0) },
+      decoding: characterSequence,
       as: Unicode.ASCII.self
     )
   }
