@@ -8,7 +8,7 @@
 
 struct SHPFilePolygonShape {
   let boundingBox: BoundingBoxXY
-  let rings: [Ring<SHPFilePointShape>]
+  let rings: [Ring<Coordinate2D>]
 }
 
 extension SHPFilePolygonShape: SHPFileShape {
@@ -16,7 +16,7 @@ extension SHPFilePolygonShape: SHPFileShape {
 }
 
 extension SHPFilePolygonShape: SHPFilePolyShapeProtocol {
-  init(boundingBox: BoundingBoxXY, subShapes: [Ring<SHPFilePointShape>]) {
+  init(boundingBox: BoundingBoxXY, subShapes: [Ring<Coordinate2D>]) {
     self.boundingBox = boundingBox
     self.rings = subShapes
   }
@@ -29,9 +29,8 @@ extension SHPFilePolygonRecord: SHPFilePolyShapeConvertible {
     return points.count
   }
 
-  func coordinate(atIndex index: Int) -> SHPFilePointShape {
-    let point = points[index]
-    return SHPFilePointShape(x: point.x, y: point.y)
+  func coordinate(atIndex index: Int) -> Coordinate2D {
+    return self.points[index]
   }
 }
 
@@ -41,7 +40,7 @@ extension SHPFilePolygonRecord: SHPFileShapeConvertible {}
 
 struct SHPFilePolygonZShape {
   let boundingBox: BoundingBoxXY
-  let rings: [Ring<SHPFilePointZShape>]
+  let rings: [Ring<Coordinate4D>]
 }
 
 extension SHPFilePolygonZShape: SHPFileShape {
@@ -49,7 +48,7 @@ extension SHPFilePolygonZShape: SHPFileShape {
 }
 
 extension SHPFilePolygonZShape: SHPFilePolyShapeProtocol {
-  init(boundingBox: BoundingBoxXY, subShapes: [Ring<SHPFilePointZShape>]) {
+  init(boundingBox: BoundingBoxXY, subShapes: [Ring<Coordinate4D>]) {
     self.boundingBox = boundingBox
     self.rings = subShapes
   }
@@ -62,15 +61,15 @@ extension SHPFilePolygonZRecord: SHPFilePolyShapeConvertible {
     return points.count
   }
 
-  func coordinate(atIndex index: Int) -> SHPFilePointZShape {
-    let point = points[index]
+  func coordinate(atIndex index: Int) -> Coordinate4D {
+    let point = self.points[index]
     let m: Double?
-    if !measures.isEmpty {
-      m = measures[index]
+    if !self.measures.isEmpty {
+      m = self.measures[index]
     } else {
       m = nil
     }
-    return SHPFilePointZShape(x: point.x, y: point.y, z: zValues[index], m: m)
+    return Coordinate4D(x: point.x, y: point.y, z: self.zValues[index], m: m)
   }
 }
 
@@ -80,7 +79,7 @@ extension SHPFilePolygonZRecord: SHPFileShapeConvertible {}
 
 struct SHPFilePolygonMShape {
   let boundingBox: BoundingBoxXY
-  let rings: [Ring<SHPFilePointMShape>]
+  let rings: [Ring<Coordinate3DM>]
 }
 
 extension SHPFilePolygonMShape: SHPFileShape {
@@ -88,7 +87,7 @@ extension SHPFilePolygonMShape: SHPFileShape {
 }
 
 extension SHPFilePolygonMShape: SHPFilePolyShapeProtocol {
-  init(boundingBox: BoundingBoxXY, subShapes: [Ring<SHPFilePointMShape>]) {
+  init(boundingBox: BoundingBoxXY, subShapes: [Ring<Coordinate3DM>]) {
     self.boundingBox = boundingBox
     self.rings = subShapes
   }
@@ -101,7 +100,7 @@ extension SHPFilePolygonMRecord: SHPFilePolyShapeConvertible {
     return self.points.count
   }
 
-  func coordinate(atIndex index: Int) -> SHPFilePointMShape {
+  func coordinate(atIndex index: Int) -> Coordinate3DM {
     let point = self.points[index]
     let m: Double?
     if !measures.isEmpty {
@@ -109,7 +108,7 @@ extension SHPFilePolygonMRecord: SHPFilePolyShapeConvertible {
     } else {
       m = nil
     }
-    return SHPFilePointMShape(x: point.x, y: point.y, m: m)
+    return Coordinate3DM(x: point.x, y: point.y, m: m)
   }
 }
 

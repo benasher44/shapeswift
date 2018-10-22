@@ -15,14 +15,12 @@ struct Ring<Point: Equatable> {
 }
 
 extension Line: SHPFilePolySubShape {
-  typealias PointShape = Point
   static var minPoints: Int {
     return 2
   }
 }
 
 extension Ring: SHPFilePolySubShape {
-  typealias PointShape = Point
   static var minPoints: Int {
     return 3
   }

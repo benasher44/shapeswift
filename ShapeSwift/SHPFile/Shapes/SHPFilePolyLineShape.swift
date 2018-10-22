@@ -8,7 +8,7 @@
 
 struct SHPFilePolyLineShape {
   let boundingBox: BoundingBoxXY
-  let lines: [Line<SHPFilePointShape>]
+  let lines: [Line<Coordinate2D>]
 }
 
 extension SHPFilePolyLineShape: SHPFileShape {
@@ -16,7 +16,7 @@ extension SHPFilePolyLineShape: SHPFileShape {
 }
 
 extension SHPFilePolyLineShape: SHPFilePolyShapeProtocol {
-  init(boundingBox: BoundingBoxXY, subShapes: [Line<SHPFilePointShape>]) {
+  init(boundingBox: BoundingBoxXY, subShapes: [Line<Coordinate2D>]) {
     self.boundingBox = boundingBox
     self.lines = subShapes
   }
@@ -26,12 +26,11 @@ extension SHPFilePolyLineRecord: SHPFilePolyShapeConvertible {
   typealias Shape = SHPFilePolyLineShape
 
   var pointCount: Int {
-    return points.count
+    return self.points.count
   }
 
-  func coordinate(atIndex index: Int) -> SHPFilePointShape {
-    let point = points[index]
-    return SHPFilePointShape(x: point.x, y: point.y)
+  func coordinate(atIndex index: Int) -> Coordinate2D {
+    return self.points[index]
   }
 }
 
@@ -41,7 +40,7 @@ extension SHPFilePolyLineRecord: SHPFileShapeConvertible {}
 
 struct SHPFilePolyLineZShape {
   let boundingBox: BoundingBoxXY
-  let lines: [Line<SHPFilePointZShape>]
+  let lines: [Line<Coordinate4D>]
 }
 
 extension SHPFilePolyLineZShape: SHPFileShape {
@@ -49,7 +48,7 @@ extension SHPFilePolyLineZShape: SHPFileShape {
 }
 
 extension SHPFilePolyLineZShape: SHPFilePolyShapeProtocol {
-  init(boundingBox: BoundingBoxXY, subShapes: [Line<SHPFilePointZShape>]) {
+  init(boundingBox: BoundingBoxXY, subShapes: [Line<Coordinate4D>]) {
     self.boundingBox = boundingBox
     self.lines = subShapes
   }
@@ -62,15 +61,15 @@ extension SHPFilePolyLineZRecord: SHPFilePolyShapeConvertible {
     return points.count
   }
 
-  func coordinate(atIndex index: Int) -> SHPFilePointZShape {
-    let point = points[index]
+  func coordinate(atIndex index: Int) -> Coordinate4D {
+    let point = self.points[index]
     let m: Double?
-    if !measures.isEmpty {
-      m = measures[index]
+    if !self.measures.isEmpty {
+      m = self.measures[index]
     } else {
       m = nil
     }
-    return SHPFilePointZShape(x: point.x, y: point.y, z: zValues[index], m: m)
+    return Coordinate4D(x: point.x, y: point.y, z: self.zValues[index], m: m)
   }
 }
 
@@ -80,7 +79,7 @@ extension SHPFilePolyLineZRecord: SHPFileShapeConvertible {}
 
 struct SHPFilePolyLineMShape {
   let boundingBox: BoundingBoxXY
-  let lines: [Line<SHPFilePointMShape>]
+  let lines: [Line<Coordinate3DM>]
 }
 
 extension SHPFilePolyLineMShape: SHPFileShape {
@@ -88,7 +87,7 @@ extension SHPFilePolyLineMShape: SHPFileShape {
 }
 
 extension SHPFilePolyLineMShape: SHPFilePolyShapeProtocol {
-  init(boundingBox: BoundingBoxXY, subShapes: [Line<SHPFilePointMShape>]) {
+  init(boundingBox: BoundingBoxXY, subShapes: [Line<Coordinate3DM>]) {
     self.boundingBox = boundingBox
     self.lines = subShapes
   }
@@ -98,18 +97,18 @@ extension SHPFilePolyLineMRecord: SHPFilePolyShapeConvertible {
   typealias Shape = SHPFilePolyLineMShape
 
   var pointCount: Int {
-    return points.count
+    return self.points.count
   }
 
-  func coordinate(atIndex index: Int) -> SHPFilePointMShape {
-    let point = points[index]
+  func coordinate(atIndex index: Int) -> Coordinate3DM {
+    let point = self.points[index]
     let m: Double?
-    if !measures.isEmpty {
-      m = measures[index]
+    if !self.measures.isEmpty {
+      m = self.measures[index]
     } else {
       m = nil
     }
-    return SHPFilePointMShape(x: point.x, y: point.y, m: m)
+    return Coordinate3DM(x: point.x, y: point.y, m: m)
   }
 }
 

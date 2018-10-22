@@ -7,9 +7,9 @@
 //
 
 protocol SHPFilePolySubShape {
-  associatedtype PointShape: Equatable
+  associatedtype Point: Equatable
   static var minPoints: Int { get }
-  init(points: [PointShape])
+  init(points: [Point])
 }
 
 protocol SHPFilePolyShapeProtocol {
@@ -22,7 +22,7 @@ protocol SHPFilePolyShapeConvertible {
   var parts: [Int] { get }
   var pointCount: Int { get }
   var box: BoundingBoxXY { get }
-  func coordinate(atIndex index: Int) -> Shape.PolySubShape.PointShape
+  func coordinate(atIndex index: Int) -> Shape.PolySubShape.Point
 }
 
 extension SHPFilePolyShapeConvertible {
@@ -46,10 +46,10 @@ extension SHPFilePolyShapeConvertible {
   }
 
   private func shape(forPart part: Int, count: Int) -> Shape.PolySubShape? {
-    var points = Array<Shape.PolySubShape.PointShape>()
+    var points = Array<Shape.PolySubShape.Point>()
     points.reserveCapacity(count)
     // Build the part, but only include points, if the point is not a consecutive duplicate
-    var lastPoint: Shape.PolySubShape.PointShape? = nil
+    var lastPoint: Shape.PolySubShape.Point? = nil
     for i in part..<(part + count) {
       let point = coordinate(atIndex: i)
       switch lastPoint {

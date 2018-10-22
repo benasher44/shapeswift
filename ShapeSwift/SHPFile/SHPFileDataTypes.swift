@@ -29,6 +29,19 @@ struct Coordinate3D: Equatable {
   let z: Double
 }
 
+struct Coordinate3DM: Equatable {
+  let x: Double
+  let y: Double
+  let m: Double?
+}
+
+struct Coordinate4D: Equatable {
+  let x: Double
+  let y: Double
+  let z: Double
+  let m: Double?
+}
+
 struct Coordinate2DBounds: Equatable {
   let min: Double
   let max: Double
