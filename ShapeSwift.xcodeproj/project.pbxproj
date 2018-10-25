@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1307257A217BBF40004ED9DF /* SHPFileMultiPatchShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13072579217BBF40004ED9DF /* SHPFileMultiPatchShape.swift */; };
 		130A9F961D5EB99D0083E45F /* SHPFileShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130A9F951D5EB99D0083E45F /* SHPFileShape.swift */; };
 		134AEFF01D675930009877FC /* ByteEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134AEFEF1D675930009877FC /* ByteEncodable.swift */; };
 		1359F2AF1D7E616100A06596 /* SHPFileMultiPointShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1359F2AE1D7E616100A06596 /* SHPFileMultiPointShape.swift */; };
@@ -90,6 +91,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		13072579217BBF40004ED9DF /* SHPFileMultiPatchShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHPFileMultiPatchShape.swift; sourceTree = "<group>"; };
 		130A9F951D5EB99D0083E45F /* SHPFileShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileShape.swift; sourceTree = "<group>"; };
 		134AEFEF1D675930009877FC /* ByteEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteEncodable.swift; sourceTree = "<group>"; };
 		1359F2AE1D7E616100A06596 /* SHPFileMultiPointShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHPFileMultiPointShape.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 		130A9F971D5EBAB90083E45F /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
+				13072579217BBF40004ED9DF /* SHPFileMultiPatchShape.swift */,
 				1359F2AE1D7E616100A06596 /* SHPFileMultiPointShape.swift */,
 				A8FEDA331D6F5835008AE593 /* SHPFilePointMShape.swift */,
 				A8FEDA2F1D6F5759008AE593 /* SHPFilePointShape.swift */,
@@ -624,6 +627,7 @@
 				138E4D2A1D60C3D400DDCE64 /* SHPFileShapeDataTypes.swift in Sources */,
 				4FB2AAC41D66121800CEE708 /* DBFFileHeaderFlags.swift in Sources */,
 				A8FEDA301D6F5759008AE593 /* SHPFilePointShape.swift in Sources */,
+				1307257A217BBF40004ED9DF /* SHPFileMultiPatchShape.swift in Sources */,
 				A8D63D531D5CE01700FA32C9 /* SHPFileMultiPointMRecord.swift in Sources */,
 				A8ACD6841D4BADF40082357C /* SHPFilePolyLineMRecord.swift in Sources */,
 				A8D3E8251D79E25200E57759 /* SHPFilePolygonShape.swift in Sources */,
