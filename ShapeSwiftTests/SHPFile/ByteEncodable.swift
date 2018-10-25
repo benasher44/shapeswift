@@ -37,9 +37,7 @@ protocol LittleEndianByteEncodable: ByteParseable {
  */
 struct LittleEndianEncoded<EncodedType: LittleEndianByteEncodable>: ByteEncodable {
   static var byteWidth: Int {
-    get {
-      return EncodedType.byteWidth
-    }
+    return EncodedType.byteWidth
   }
   let value: EncodedType
   func encode() -> [Byte] {
@@ -50,9 +48,7 @@ struct LittleEndianEncoded<EncodedType: LittleEndianByteEncodable>: ByteEncodabl
 /// A wrapper for a BigEndianByteEncodable value (the wrapper itself being ByteEncodable)
 struct BigEndianEncoded<EncodedType: BigEndianByteEncodable>: ByteEncodable {
   static var byteWidth: Int {
-    get {
-      return EncodedType.byteWidth
-    }
+    return EncodedType.byteWidth
   }
   let value: EncodedType
   func encode() -> [Byte] {

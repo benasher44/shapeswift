@@ -27,7 +27,7 @@ protocol SHPFilePolyShapeConvertible {
 
 extension SHPFilePolyShapeConvertible {
   func makeShape() -> Shape {
-    var subShapes = Array<Shape.PolySubShape>()
+    var subShapes = [Shape.PolySubShape]()
     subShapes.reserveCapacity(parts.count)
     var prevPart: Int? = nil
     for part in parts {
@@ -46,7 +46,7 @@ extension SHPFilePolyShapeConvertible {
   }
 
   private func shape(forPart part: Int, count: Int) -> Shape.PolySubShape? {
-    var points = Array<Shape.PolySubShape.Point>()
+    var points = [Shape.PolySubShape.Point]()
     points.reserveCapacity(count)
     // Build the part, but only include points, if the point is not a consecutive duplicate
     var lastPoint: Shape.PolySubShape.Point? = nil

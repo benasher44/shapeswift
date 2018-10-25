@@ -49,7 +49,7 @@ extension ByteParser where Value: BigEndianByteParseable, Order == BigEndian {
 
 extension ByteParser {
   private func parseValues(_ data: Data, _ parser: (_ data: Data, _ start: Int) -> Value?) throws -> [Value] {
-    var values = Array<Value>()
+    var values = [Value]()
     values.reserveCapacity(count)
     for byteOffset in stride(from: start, to: end, by: Value.byteWidth) {
       if let value = parser(data, byteOffset) {
