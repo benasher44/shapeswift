@@ -28,21 +28,17 @@ protocol SHPFilePolyShapeConvertible {
 extension SHPFilePolyShapeConvertible {
   func makeShape() -> Shape {
     var subShapes = [Shape.PolySubShape]()
-    subShapes.reserveCapacity(parts.count)
-    var prevPart: Int? = nil
-    for part in parts {
-      if let prevPart = prevPart {
-        let count = part - prevPart
-        self.shape(forPart: prevPart, count: count).flatMap({ subShapes.append($0) })
-      }
-      prevPart = part
+    subShapes.reserveCapacity(self.parts.count)
+    for (prevPart, part) in zip(self.parts, self.parts.dropFirst()) {
+      let count = part - prevPart
+      self.shape(forPart: prevPart, count: count).flatMap({ subShapes.append($0) })
     }
     // The above loop body won't operate on the last part, so create the last line
-    if let lastPart = prevPart {
+    if let lastPart = self.parts.last {
       let intLastPart = Int(lastPart)
-      self.shape(forPart: intLastPart, count: pointCount - intLastPart).flatMap({ subShapes.append($0) })
+      self.shape(forPart: intLastPart, count: self.pointCount - intLastPart).flatMap({ subShapes.append($0) })
     }
-    return Shape(boundingBox: box, subShapes: subShapes)
+    return Shape(boundingBox: self.box, subShapes: subShapes)
   }
 
   private func shape(forPart part: Int, count: Int) -> Shape.PolySubShape? {
