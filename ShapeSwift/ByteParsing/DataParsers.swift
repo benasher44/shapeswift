@@ -25,7 +25,7 @@ extension ByteParser {
 
 extension ByteParser where Value: LittleEndianByteParseable, Order == LittleEndian {
   func parse(_ data: Data) throws -> Value {
-    precondition(count == 1, "Parsing a single value with an invalid count: \(count)")
+    precondition(self.count == 1, "Parsing a single value with an invalid count: \(self.count)")
     if let value = Value(littleEndianData: data, start: start) {
       return value
     } else {
@@ -36,7 +36,7 @@ extension ByteParser where Value: LittleEndianByteParseable, Order == LittleEndi
 
 extension ByteParser where Value: BigEndianByteParseable, Order == BigEndian {
   func parse(_ data: Data) throws -> Value {
-    precondition(count == 1, "Parsing a single value with an invalid count: \(count)")
+    precondition(self.count == 1, "Parsing a single value with an invalid count: \(self.count)")
     if let value = Value(bigEndianData: data, start: start) {
       return value
     } else {
@@ -50,7 +50,7 @@ extension ByteParser where Value: BigEndianByteParseable, Order == BigEndian {
 extension ByteParser {
   private func parseValues(_ data: Data, _ parser: (_ data: Data, _ start: Int) -> Value?) throws -> [Value] {
     var values = [Value]()
-    values.reserveCapacity(count)
+    values.reserveCapacity(self.count)
     for byteOffset in stride(from: start, to: end, by: Value.byteWidth) {
       if let value = parser(data, byteOffset) {
         values.append(value)
