@@ -6,5 +6,5 @@ scheme: ShapeSwift
 source_directory: ShapeSwift
 output_directory: tmp
 ignore:
-  - Pods
-  - ShapeSwiftTests
+  - Pods/*
+  - ShapeSwiftTests/*
