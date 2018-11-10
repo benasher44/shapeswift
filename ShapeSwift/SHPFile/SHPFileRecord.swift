@@ -36,14 +36,4 @@ protocol SHPFileRecord {
 
 struct SHPFileNullShapeRecord {
   let recordNumber: Int
-
-}
-
-extension SHPFileNullShapeRecord: SHPFileRecord {
-  static let shapeType = ShapeType.null
-
-  init(recordNumber: Int, data: Data, range: Range<Int>, endByte: inout Int) {
-    self.recordNumber = recordNumber
-    endByte = 0
-  }
 }
